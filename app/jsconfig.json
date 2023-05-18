@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "jsx": "react",
+    "jsx": "react",
+    "jsx": "react",
+    "jsx": "react",
+    "jsx": "react",
+    "maxNodeModuleJsDepth": 10,
+    "module": "nodenext",
+    "noEmit": true,
+    "strict": true
+  },
+  "typeAcquisition": {
+    "enable": false
+  }
+}

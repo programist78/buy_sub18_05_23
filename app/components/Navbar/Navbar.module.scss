@@ -1,0 +1,244 @@
+@use "../../styles/various.module.scss" as var;
+
+@media screen and (min-width: 768px) {
+    .menu{
+        display: none;
+    }
+    .premenu{
+        display: none;
+    }
+    .back{
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        align-items: center;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.1);
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+-webkit-backdrop-filter: 10px;
+backdrop-filter: blur(10px);
+        width: 100vw;
+        z-index: 10;
+        justify-content: space-around;
+    }
+    .logo{
+        font-family: 'Kalam';
+font-style: normal;
+font-weight: 400;
+font-size: 32px;
+line-height: 0;
+color: #ffffff;
+width: 260px;
+height: 48px;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0px 2px 15px rgba(0, 89, 255, 0.5);
+background: rgba(128, 185, 255, 0.5);
+background: rgb(82, 153, 246, 1);
+border-radius: 15px;
+// border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    .center{
+        display: flex;
+        flex-direction: row;
+        gap: 50%;
+        p{
+            font-family: 'Quicksand';
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 45px;
+color: var.$text-color;
+        }
+        p:hover{
+            transition: .35s;
+            text-shadow: 0px 2px 5px rgba(0, 148, 255, 0.5);
+        }
+    }
+    .contact:hover{
+        transform: scale(1.1);
+        transition: .35s;
+    }
+    .contact{
+        width: 159px;
+height: 48px;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+background: var.$base-blue;
+transition: .35s;
+
+box-shadow: 0px 2px 15px rgba(0, 89, 255, 0.5);
+border-radius: 15px;
+p{
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 45px;
+    color: #FFFFFF;
+
+}
+.contact_part{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 102px;
+    height: 100%;
+}
+
+.calendar_box{
+    height: 48px;
+    width: 57px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+}
+
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .back{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100vw;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+        -webkit-backdrop-filter: 10px;
+        backdrop-filter: blur(10px);
+        padding-left: 5%;
+        padding-right: 5%;
+                z-index: 10;
+                position: relative;
+                justify-content: space-between;
+    }
+    .logo{
+        font-family: 'Kalam';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #ffffff;
+width: 130px;
+height: 24px;
+// box-shadow: 0px 2px 15px rgba(0, 89, 255, 0.5);
+background: rgba(128, 185, 255, 0.5);
+background: rgb(82, 153, 246, 0.75);
+border-radius: 7.5px;
+// border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    .center{
+        display: none;
+    }
+    .contact{
+        display: none;
+    }
+    .animate_burger2{
+        opacity: 0.7;
+        z-index: 101 !important;
+        right: 30px;
+        margin-top: -18px;
+        left: auto;
+        position: absolute;
+        opacity: 0.5;
+      }
+      .backmenu{
+        display: flex;
+    
+        // height: 200px;
+        flex-direction: column;
+      }
+      .info_links{
+        position: absolute;
+        width: 70vw;
+        margin-top: -30px;
+        height: 40vw;
+        margin-left: -60vw;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid #FFFFFF;
+        -webkit-backdrop-filter: blur(2vw);
+        backdrop-filter: blur(2vw);
+        border-radius: 30px 30px 30px 30px;
+        z-index: 50 !important;
+        display: flex;
+        gap: 1.5vw;
+        padding-top: 1.5vw;
+        flex-direction: column;
+       align-items: center;
+       div{
+        @include var.nav_text_phone;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        height: 7vw;
+        justify-content: center;
+       }
+       div:hover{
+        
+        text-shadow: 1vw 1vw 0  rgba(55, 0, 255, 0.25);
+       }
+        // margin-top: 100px;
+      }
+    .box_contacts{
+      display: flex;
+      flex-direction: column;
+      gap: 6vw;
+      // margin-top: 7.5vw;
+      background-color: rgba(0, 0, 0, 0.65);
+      border-top: 1px solid rgb(45, 30, 252);
+      width: 100%  !important;
+      // height: 100%;
+      backdrop-filter: blur(25px);
+      border-radius: 30px 30px 30px 30px;
+      height: 20vw !important;
+      div{
+        div{
+          width: 9vw;
+          height: 9vw;
+          border-radius: 25%;
+          border: 1px solid rgba(143, 143, 255, 0.35);
+          // background-color: rgba(255, 255, 255, 0.75);
+          transition: .35s;
+          img{
+            width: 7vw;
+            height: 7vw;
+          }
+        }
+        div:hover{
+          transition: .35s;
+          background-color:rgba(255, 255, 255, 1) ;
+        }
+      }
+      .first_child{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 60%;
+        // gap: 1vw;
+      }
+      .second_child{
+        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        width: 45%;
+      }
+    }
+    
+    }
+    .preback{
+      z-index: 10000;
+      .animate_burger{
+        z-index: 500;
+        opacity: 0.7;
+      }
+}
