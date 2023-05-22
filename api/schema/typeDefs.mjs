@@ -7,7 +7,7 @@ const typeDefs = `#graphql
   }
   enum Role {
   USER
-  BUSINESS
+  BRAND
   ADMIN
   }
 
@@ -20,36 +20,77 @@ const typeDefs = `#graphql
   }
 
   type SocialMedia {
-    name: String
-    link: String
+    images: [String]
+    number: String
+    nick: String
+    id: String
   }
+
+  type PosterPost {
+    title: String
+  }
+
+  type BrandPost {
+    title: String
+    requirements: String
+    authorId: String
+    requestsId: [String]
+    acceptedId: [String]
+    images: [String]
+    payment: String
+    quantity: String
+  } 
+
+  type PosterPost {
+    title: String
+    text: String
+    authorId: String
+    postId: String
+    images: [String]
+    confirmed: Boolean
+  } 
+
+  type Coordinates {
+    latitude: Float
+    longitude: Float
+  }
+
 
 
   type User{
     id: ID
     fullname: String
-    nickname: String
     email: String
-    balance: String
     role: String
-    socialMedia: SocialMedia
-    posts: [String]
-    completedPosts: [String]
-    avatarUrl: String
+    socialMedia: [SocialMedia]
     confirmedEmail: Boolean
+    avatarUrl: String
+    pendingPosts: [String]
+    completedPosts: [String]
+    balance: Int
+    BrandPosts: [String]
+    completedBrandPosts: [String]
+    brandname: String
+    physicalLocation: [Coordinates]
   }
+
   type AuthPayload {
     user: User
     token: String
   }
 
-  type BusinessPost {
-    title: String
-    imageUrl: String
-  }
+
 
   type Query {
-  getAllBusinessPosts: [BusinessPost]
+  getAllBrandPosts(id: ID): [BrandPost]
+  getAllCompletedBrandPosts(id: ID): [BrandPost]
+  getAllPendingPosterPostsforBrand(id: ID): [PosterPost]
+  getAllCompletedPosterPostsforBrand(id: ID): [PosterPost]
+
+  getAllPendingPosterPosts(id: ID): [PosterPost]
+  getAllCompletedPosterPosts(id: ID): [PosterPost]
+
+  getProfile: User
   }
 
   type Image {
@@ -60,22 +101,71 @@ const typeDefs = `#graphql
 
 
   input LoginInput{
-    email: String
+    input: String
     password: String!
   }
 
   input RegisterInput{
     fullname: String!
-    nickname: String!
     email: String!
     password: String!
     confirm_password: String!
-    choose_role: String
+    brandname: String
+  }
+
+  input SocialMediaInput{
+    number: String!
+    nick: String!
+    email: String
+  }
+
+  input BrandPostInput {
+    title: String
+    requirements: String
+    authorId: String
+    payment: String
+    quantity: String
+  }
+
+  input PosterPostInput {
+    title: String
+    text: String
+    authorId: String
+    postId: String
+    }
+
+  input BrandPostUpdateInput {
+    title: String
+    requirements: String
+    id: ID
   }
 
   type Mutation {
     loginUser(about: LoginInput): AuthPayload
     registerUser(about: RegisterInput): AuthPayload
+    sendConfirmedEmail(email: String!): AuthPayload
+    changeStatus(id: ID, confirmationCode: String): User
+    forgotPassword(id: ID, confirmationCode: String, password: String): User
+    forgotPasswordSend(email: String): String
+    addAdmin(email: String): User
+
+    addSocialMedia(info: SocialMediaInput,  image: [Upload]!): User
+    deleteSocialMedia(email: String, id: String): User
+
+    createBrandPost(post: BrandPostInput!, image: [Upload]!): BrandPost
+    updateBrandPost(post: BrandPostUpdateInput, image: [Upload]): BrandPost
+    deleteBrandPost(id: ID): String
+    addLocation(latitude: Float, longitude: Float, id: ID): User
+
+    acceptPosterPost(brandPostId: ID, posterPostId: ID): String
+    declinePosterPost(brandPostId: ID, posterPostId: ID): String
+
+    createPosterPost(post: PosterPostInput!, image: [Upload]!): PosterPost
+
+    topupBalance(email: String, money: String): User
+    withdrawBalance(email: String, money: String): User
+
+    updatetoSchema(newfield: String, value: String): [User]
   }
 `;
 

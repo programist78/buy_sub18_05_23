@@ -3,13 +3,13 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config()
 
-export const issueAuthToken = (id, email, res, req) => {
+export const issueAuthToken = (email, role, res, req) => {
     let token =  jwt.sign({
-        id,
-        email
+        email,
+        role
         }, 
         process.env.SECRET_KEY, {
-        expiresIn: '30m'
+        expiresIn: '1d'
         }
     );
     return `Bearer ${token}`;

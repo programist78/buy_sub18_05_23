@@ -5,16 +5,10 @@ const User = new mongoose.Schema(
     fullname: {
       type: String
     },
-    nickname: {
-      type: String
-    },
     email: {
       type: String,
       required: true,
       unique: true,
-    },
-    balance: {
-      type: String
     },
     passwordHash: {
       type: String,
@@ -27,16 +21,33 @@ const User = new mongoose.Schema(
     socialMedia: {
       type: Array
     },
-    posts: {
+    confirmedEmail: {type: Boolean},
+    confirmationCode: { type: String }, 
+    avatarUrl: { type: String },
+    token: { type: String },
+    //for user
+    pendingPosts: {
       type: Array
     },
     completedPosts: {
       type: Array
     },
-    confirmedEmail: {type: Boolean},
-    confirmationCode: { type: String }, 
-    avatarUrl: { type: String },
-    token: { type: String }
+    balance: {
+      type: Number
+    },
+    //for Brand
+    BrandPosts: {
+      type: Array
+    },
+    completedBrandPosts: {
+      type: Array
+    },
+    brandname: {
+      type: String
+    },
+    physicalLocation: {
+      type: Object
+    },
   },
   {
     timestamps: true,
