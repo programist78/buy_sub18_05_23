@@ -4,6 +4,48 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    // gap: 150px;
+    gap: 200px;
+    height: auto;
     // min-height: 100vh;
+    div{
+        z-index: 2;
+    }
+}
+
+@mixin vector {
+    position: absolute;
+    z-index: 1;
+}
+.vector1{
+    right: -116px;
+    top: -154px;
+    @include vector
+}
+
+.vector2{
+    top: 707px;
+    left: -300px;
+    @include vector
+
+}
+
+.vector3{
+    top: 1686px;
+    right: -434px;
+    @include vector
+
+}
+
+.vector4{
+    left: -353px;
+    top: 2837px;
+    @include vector
+
+}
+
+.vector5{
+    right: -448px;
+    top: 5003px;
+    @include vector
+
 }

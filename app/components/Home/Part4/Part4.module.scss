@@ -1,0 +1,59 @@
+
+.back{
+    display: flex;
+    flex-direction: column;
+    width: 1122px;
+    height: 551px; 
+    align-items: center;
+    justify-content: center;
+    gap: 60px;   
+    background: #E3ECF3;
+    border-radius: 15px;
+}
+
+.comment{
+    display: flex;
+    flex-direction: column;
+    width: 895px;
+    align-items: center;
+    gap: 30px;
+    height: auto;
+}
+
+.text{
+    width: 641px;
+    text-align: start;
+}
+
+.description{
+    display: flex;
+    flex-direction: column;
+    margin-right: 30px;
+    margin-left: auto;
+    p{
+        color: black;
+        text-align: end;
+    }
+}
+
+.dots{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 44px;
+    div{
+        width: 10px;
+height: 10px;
+border-radius: 50%;
+background: none;
+border: 1px solid #767575;
+    }
+}
+
+.active{
+    background-color: white;
+}
+
+.unactive{
+    background-color: #767575;
+}

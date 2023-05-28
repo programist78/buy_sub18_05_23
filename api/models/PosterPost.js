@@ -14,7 +14,7 @@ const PosterPost = new mongoose.Schema(
         type: String,
         required: true,
     },
-    postId: {
+    brandId: {
         type: String,
         required: true
     },

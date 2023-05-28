@@ -3,14 +3,14 @@
 @use "./various.module.scss" as var;
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #FFFFFF;
-    --color: #3A3B57;
+    --background-color: #FEFCF2;
+    --color: #000000;
 }}
 
 @media (prefers-color-scheme: light) {
   :root {
-    --background-color: #FFFFFF;
-    --color: #3A3B57;
+    --background-color: #FEFCF2;
+    --color: #000000;
 }}
 
 * {
@@ -55,4 +55,53 @@ html::-webkit-scrollbar-thumb {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.15);
   transition: background-color 200ms linear;
+}
+
+
+.title{
+  font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 60px;
+// line-height: 40px;
+text-align: center;
+color: #000000;
+}
+
+.text{
+  font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 26px;
+line-height: 34px;
+text-align: center;
+color: #000000;
+}
+
+
+.b_button{
+  width: 212px;
+height: 69px;
+background: #0D0D0D;
+border-radius: 15px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 22px;
+line-height: 29px;
+text-align: center;
+color: #FFFFFF;
+border: none;
+}
+
+.footer_text{
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #525151;
 }

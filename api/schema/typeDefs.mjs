@@ -115,17 +115,10 @@ const typeDefs = `#graphql
 
   input SocialMediaInput{
     number: String!
-    nick: String!
+    link: String!
     email: String
   }
 
-  input BrandPostInput {
-    title: String
-    requirements: String
-    authorId: String
-    payment: String
-    quantity: String
-  }
 
   input PosterPostInput {
     title: String
@@ -149,16 +142,16 @@ const typeDefs = `#graphql
     forgotPasswordSend(email: String): String
     addAdmin(email: String): User
 
-    addSocialMedia(info: SocialMediaInput,  image: [Upload]!): User
-    deleteSocialMedia(email: String, id: String): User
+    addSocialMediaPoster(info: SocialMediaInput,  image: [Upload]!): User
+    deleteSocialMediaPoster(email: String, id: String): User
 
-    createBrandPost(post: BrandPostInput!, image: [Upload]!): BrandPost
-    updateBrandPost(post: BrandPostUpdateInput, image: [Upload]): BrandPost
-    deleteBrandPost(id: ID): String
+    addSocialMediaBrand(info: SocialMediaInput): User
+    deleteSocialMediaBrand(email: String, id: String): User
+
     addLocation(latitude: Float, longitude: Float, id: ID): User
 
-    acceptPosterPost(brandPostId: ID, posterPostId: ID): String
-    declinePosterPost(brandPostId: ID, posterPostId: ID): String
+    acceptPosterPost(brandId: ID, posterPostId: ID): String
+    declinePosterPost(brandId: ID, posterPostId: ID): String
 
     createPosterPost(post: PosterPostInput!, image: [Upload]!): PosterPost
 

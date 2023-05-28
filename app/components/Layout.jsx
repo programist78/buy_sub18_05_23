@@ -4,9 +4,9 @@ import { AuthContext } from "../hooks/AuthContext";
 import {useContext} from 'react'
 import { useDispatch } from "react-redux";
 import { addUsertoLocal } from "../redux/slices/auth";
-import { Poppins } from "next/font/google";
-const poppins = Poppins({
-    weight: ["100", "200", "300", "400", "500","600", "700", "800", "900"],
+import { DM_Sans } from "next/font/google";
+const dm_sans = DM_Sans({
+    weight: ["400", "500"],
     subsets: ["latin"],
     display: "swap"
 })
@@ -17,9 +17,8 @@ const Layout = ({ children }) => {
     {user ? dispatch(addUsertoLocal(user)) : null}
     return (
 <>
-<div className={poppins.className}>
-    
-<Navbar />
+<div className={dm_sans.className}>
+{/* <Navbar /> */}
 {children}
 <Footer />
 </div>

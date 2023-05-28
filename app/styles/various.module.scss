@@ -1,0 +1,25 @@
+$title-color: #000000;
+$text-color: #000000;
+
+
+
+@mixin nav_text_phone{
+    font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 23px;
+text-align: center;
+
+color: #000000;
+}
+
+@mixin text{
+    font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 26px;
+line-height: 34px;
+
+color: #000000;
+}

@@ -1,0 +1,30 @@
+@use "../../../styles/various.module.scss" as var;
+
+.back{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    width: 100vw;
+    padding-top: 217px;
+}
+
+.obj{
+    display: flex;
+    flex-direction: row;
+    width: 1122px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.circle{
+    width: 237px;
+height: 237px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+background: #FFFFFE;
+box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.15);
+border-radius: 50%;
+}

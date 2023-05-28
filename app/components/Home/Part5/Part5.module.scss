@@ -1,0 +1,20 @@
+.back{
+    display: flex;
+    flex-direction: row;
+    width: 1128px;
+    justify-content: space-around;
+    img{
+        margin-right: -150px;
+    }
+}
+
+.part1{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.text{
+    width: 667px;
+    text-align: start;
+}

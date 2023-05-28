@@ -35,32 +35,6 @@ const resolvers = {
                 return user
         },
         //brand
-        getAllBrandPosts: async(_parent, {id}, _context, _info) => {
-            const user = await User.findById(id)
-            if (!user) {
-                throw new GraphQLError("Invalid id given");
-            }
-            const list = await Promise.all(
-                user.BrandPosts.map((post) => {
-                    // return BrandPost.findById(post)
-                    return BrandPost.findById(post)
-                }),
-                )
-            return list
-        },
-        getAllCompletedBrandPosts: async(_parent, {id}, _context, _info) => {
-            const user = await User.findById(id)
-            if (!user) {
-                throw new GraphQLError("Invalid id given");
-            }
-            const list = await Promise.all(
-                user.completedBrandPosts.map((post) => {
-                    // return BrandPost.findById(post)
-                    return BrandPost.findById(post)
-                }),
-                )
-            return list
-        },
         getAllPendingPosterPostsforBrand:async(_parent, {id}, _context, _info) => {
             const brandpost = await BrandPost.findById(id)
             if (!brandpost) {
@@ -299,10 +273,10 @@ const resolvers = {
         }})
             return "Send!"
         },
-        //profile
-        addSocialMedia: async (parent, {info, image}, args) => {
+        //poster
+        addSocialMediaPoster: async (parent, {info, image}, args) => {
             let images = [];
-            const {number,nick, email} = info
+            const {number,link, email} = info
             for (let i = 0; i < image.length; i++) {
             const { createReadStream, filename, mimetype } = await image[i];
             const stream = createReadStream();
@@ -324,18 +298,20 @@ const resolvers = {
             console.log(info)
             const newuser = await User.findByIdAndUpdate(
                 user.id,
-                { $push: { socialMedia: {images, number, nick, id: socialMediaId} } },
+                { $push: { socialMedia: {images, number, link, id: socialMediaId} } },
                 { new: true }
             );
             return newuser
         },
-        deleteSocialMedia: async (parent, { id, email }, args) => {
+        deleteSocialMediaPoster: async (parent, { id, email }, args) => {
+            console.log(id)
             try {
               const user = await User.findOneAndUpdate(
                 { email },
-                { $pull: { socialMedia: [{ id }] } },
+                { $pull: { socialMedia: { id } } },
                 { new: true }
               );
+              
           
               if (!user) {
                 throw new GraphQLError("Invalid email given");
@@ -348,81 +324,118 @@ const resolvers = {
         },          
 
         //Brand
-        createBrandPost: async (parent,{ image, post }) => {
-            let images = [];
-            
-            for (let i = 0; i < image.length; i++) {
-            const { createReadStream, filename, mimetype } = await image[i];
-            const stream = createReadStream();
-            const assetUniqName = fileRenamer(filename);
-            let extension = mimetype.split("/")[1];
-            const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
-            await stream.pipe(fs.createWriteStream(pathName));
-            const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-            images.push(urlForArray);
+        addSocialMediaBrand: async (parent, {info}, args) => {
+            const {number,link, email} = info
+            let math = Math.random() * (43564389374833)
+            let socialMediaId = Math.round(math);
+            const user = await User.findOne(
+                {email}
+                );
+                if (!user) {
+                    throw new GraphQLError("Invalid email given");
             }
-            const {title, requirements, authorId, payment, quantity} = post
-            const postcreate = new BrandPost({ title, requirements,payment, authorId, images, quantity })
-            await postcreate.save()
+            console.log(info)
             const newuser = await User.findByIdAndUpdate(
-                authorId,
-                { $push: { BrandPosts: postcreate.id} },
+                user.id,
+                { $push: { socialMedia: {number, link, id: socialMediaId} } },
                 { new: true }
             );
-            return postcreate;
+            return newuser
         },
-        updateBrandPost: async (parent,{ image, post }) => {
-            let images = [];
-            
-            for (let i = 0; i < image.length; i++) {
-            const { createReadStream, filename, mimetype } = await image[i];
-            const stream = createReadStream();
-            const assetUniqName = fileRenamer(filename);
-            let extension = mimetype.split("/")[1];
-            const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
-            await stream.pipe(fs.createWriteStream(pathName));
-            const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-            images.push(urlForArray);
-            }
-            const {title, requirements, id} = post
-            console.log(post)
-            const postcreate = await BrandPost.findByIdAndUpdate(
-                id,
-                {title, requirements, images},
-                { new: true }
-            );
-            return postcreate
-        },
-        deleteBrandPost: async (parent, args, context, info) => {
-            const { id } = args
+        deleteSocialMediaBrand: async (parent, { id, email }, args) => {
             console.log(id)
-            const brandpost = await BrandPost.findById(id)
-            if (!brandpost) {
-                throw new GraphQLError("Post is undefined");
-            }
-            brandpostdelete = await BrandPost.findByIdAndDelete(id)
-            const user = await User.findByIdAndUpdate(
-                brandpost.authorId,
-                {$pull: { BrandPosts: id}},
+            try {
+              const user = await User.findOneAndUpdate(
+                { email },
+                { $pull: { socialMedia: { id } } },
                 { new: true }
-            );
-            return "Post deleted"
-        },
-        acceptPosterPost: async (parent, {brandPostId, posterPostId}, context, info) => {
+              );
+              
+          
+              if (!user) {
+                throw new GraphQLError("Invalid email given");
+              }
+          
+              return user;
+            } catch (error) {
+              throw new GraphQLError("Failed to delete social media", error);
+            }
+        },       
+        // createBrandPost: async (parent,{ image, post }) => {
+        //     let images = [];
+            
+        //     for (let i = 0; i < image.length; i++) {
+        //     const { createReadStream, filename, mimetype } = await image[i];
+        //     const stream = createReadStream();
+        //     const assetUniqName = fileRenamer(filename);
+        //     let extension = mimetype.split("/")[1];
+        //     const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+        //     await stream.pipe(fs.createWriteStream(pathName));
+        //     const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+        //     images.push(urlForArray);
+        //     }
+        //     const {title, requirements, authorId, payment, quantity} = post
+        //     const postcreate = new BrandPost({ title, requirements,payment, authorId, images, quantity })
+        //     await postcreate.save()
+        //     const newuser = await User.findByIdAndUpdate(
+        //         authorId,
+        //         { $push: { BrandPosts: postcreate.id} },
+        //         { new: true }
+        //     );
+        //     return postcreate;
+        // },
+        // updateBrandPost: async (parent,{ image, post }) => {
+        //     let images = [];
+            
+        //     for (let i = 0; i < image.length; i++) {
+        //     const { createReadStream, filename, mimetype } = await image[i];
+        //     const stream = createReadStream();
+        //     const assetUniqName = fileRenamer(filename);
+        //     let extension = mimetype.split("/")[1];
+        //     const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+        //     await stream.pipe(fs.createWriteStream(pathName));
+        //     const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+        //     images.push(urlForArray);
+        //     }
+        //     const {title, requirements, id} = post
+        //     console.log(post)
+        //     const postcreate = await BrandPost.findByIdAndUpdate(
+        //         id,
+        //         {title, requirements, images},
+        //         { new: true }
+        //     );
+        //     return postcreate
+        // },
+        // deleteBrandPost: async (parent, args, context, info) => {
+        //     const { id } = args
+        //     console.log(id)
+        //     const brandpost = await BrandPost.findById(id)
+        //     if (!brandpost) {
+        //         throw new GraphQLError("Post is undefined");
+        //     }
+        //     brandpostdelete = await BrandPost.findByIdAndDelete(id)
+        //     const user = await User.findByIdAndUpdate(
+        //         brandpost.authorId,
+        //         {$pull: { BrandPosts: id}},
+        //         { new: true }
+        //     );
+        //     return "Post deleted"
+        // },
+        acceptPosterPost: async (parent, {brandId, posterPostId}, context, info) => {
             const posterpost = await PosterPost.findOne({_id: posterPostId})
             if (!posterpost) {
                 throw new GraphQLError("Post from poster is undefined")
             }
-            const brandpost = await BrandPost.findOne({_id: brandPostId})
-            if (!brandpost) {
-                throw new GraphQLError("Post from brand is undefined")
+            const brand = await User.findOne({_id: brandId})
+            if (!brand) {
+                throw new GraphQLError("Such brand is undefined")
             }
-            if (!brandpost.requestsId.includes(posterPostId)) {
+            if (!brand.brandPendingPosts.includes(posterPostId)) {
                 throw new GraphQLError("Requested post not found");
               }
-            const newbrandpost = await BrandPost.findByIdAndUpdate(
-                brandPostId,
-                { $pull: { requestsId: posterPostId }, $push: { acceptedId: posterPostId }, $inc: { quantity: -1 } },
+            const newbrand = await User.findByIdAndUpdate(
+                brandId,
+                { $pull: { brandPendingPosts: posterPostId }, $push: { brandCompletedPosts: posterPostId }},
                 { new: true }
               );              
             const newposterpost = await PosterPost.findByIdAndUpdate(
@@ -432,13 +445,13 @@ const resolvers = {
             );
             const newposter = await User.findByIdAndUpdate(
                 posterpost.authorId,
-                { $pull: { pendingPosts: posterPostId }, $push: { completedPosts: posterPostId }, $inc: { balance: brandpost.payment } },
+                { $pull: { pendingPosts: posterPostId }, $push: { completedPosts: posterPostId }, $inc: { balance: brand.postPrice } },
                 { new: true }
               );
               
             return "Accept"
         },
-        declinePosterPost: async (parent, {brandPostId, posterPostId}, context, info) => {
+        declinePosterPost: async (parent, {brandId, posterPostId}, context, info) => {
             const posterpost = await PosterPost.findOne({_id: posterPostId})
             if (!posterpost) {
                 throw new GraphQLError("Post from poster is undefined")
@@ -492,21 +505,21 @@ const resolvers = {
             const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
             images.push(urlForArray);
             }
-            const {title, text, authorId, postId} = post
-            const brandpost = await BrandPost.findById(postId)
-            if (!brandpost) {
-                throw new GraphQLError("There is no such post");
+            const {title, text, authorId, brandId} = post
+            const brand = await User.findById(brandId)
+            if (!brand) {
+                throw new GraphQLError("There is no such brand");
             }
-            const postcreate = new PosterPost({ title, text, authorId,postId, images, confirmed: false })
+            const postcreate = new PosterPost({ title, text, authorId, brandId, images, confirmed: false })
             await postcreate.save()
             const newuser = await User.findByIdAndUpdate(
                 authorId,
                 { $push: { pendingPosts: postcreate.id} },
                 { new: true }
             );
-            const newrequest = await BrandPost.findByIdAndUpdate(
-                postId,
-                { $push: { requestsId: postcreate.id} },
+            const newrequest = await User.findByIdAndUpdate(
+                brandId,
+                { $push: { brandPendingPosts: postcreate.id} },
                 { new: true }
             );
             return postcreate;
