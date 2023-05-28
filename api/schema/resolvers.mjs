@@ -34,14 +34,18 @@ const resolvers = {
                 }
                 return user
         },
+        getProfiles: async(_parent, args, _context, _info) => {
+            const user = await User.find();
+                return user
+        },
         //brand
         getAllPendingPosterPostsforBrand:async(_parent, {id}, _context, _info) => {
-            const brandpost = await BrandPost.findById(id)
-            if (!brandpost) {
+            const brand = await User.findById(id)
+            if (!brand) {
                 throw new GraphQLError("Invalid id given");
             }
             const list = await Promise.all(
-                brandpost.requestsId.map((post) => {
+                brand.brandPendingPosts.map((post) => {
                     // return BrandPost.findById(post)
                     return PosterPost.findById(post)
                 }),
@@ -49,12 +53,12 @@ const resolvers = {
             return list
         }, 
         getAllCompletedPosterPostsforBrand:async(_parent, {id}, _context, _info) => {
-            const brandpost = await BrandPost.findById(id)
-            if (!brandpost) {
+            const brand = await User.findById(id)
+            if (!brand) {
                 throw new GraphQLError("Invalid id given");
             }
             const list = await Promise.all(
-                brandpost.acceptedId.map((post) => {
+                brand.brandCompletedPosts.map((post) => {
                     // return BrandPost.findById(post)
                     return PosterPost.findById(post)
                 }),
@@ -91,8 +95,9 @@ const resolvers = {
     },
     Mutation: {
         //authorisation
-        registerUser: async(parent, args, context, info) => {
-                const { fullname, brandname, email, password, confirm_password } = args.about
+        registerUser: async(parent, args, context, _info) => {
+                const { fullname, brandname, email, password, confirm_password, phone, brandDirection,latitude, longitude, postPrice  } = args.about
+        
             const already_exsist = await User.findOne({ email });
             if (already_exsist) {
             throw new GraphQLError("Email already exists");
@@ -123,9 +128,21 @@ const resolvers = {
            if (brand_exist) {
             throw new GraphQLError("Email already exists");
         }
-        user = new User({ fullname,email, passwordHash, role: "BRAND", confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: ""})
+        user = new User({ fullname,email, passwordHash, role: "BRAND", confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice})
         } else{
-            user = new User({ fullname,email, passwordHash, role: "USER", confirmedEmail: false, confirmationCode, avatarUrl, balance: 0})
+            const {number, link} = args.info
+            let images = [];
+            for (let i = 0; i < args.image.length; i++) {
+            const { createReadStream, filename, mimetype } = await args.image[i];
+            const stream = createReadStream();
+            const assetUniqName = fileRenamer(filename);
+            let extension = mimetype.split("/")[1];
+            const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+            await stream.pipe(fs.createWriteStream(pathName));
+            const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+            images.push(urlForArray);
+            }
+            user = new User({ fullname,email, passwordHash, role: "USER", confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, phone, socialMedia: {images, number, link} })
         }
             
             let result = await user.save()
@@ -166,9 +183,9 @@ const resolvers = {
             //             throw new GraphQLError("Invalid nickname given");
             //     }
             // }
-
+            const {password, email} = args.about
             let user = await User.findOne(
-            {nickname: input}
+            {email}
             );
             if (!user) {
             throw new GraphQLError("Invalid nickname given");
@@ -274,93 +291,93 @@ const resolvers = {
             return "Send!"
         },
         //poster
-        addSocialMediaPoster: async (parent, {info, image}, args) => {
-            let images = [];
-            const {number,link, email} = info
-            for (let i = 0; i < image.length; i++) {
-            const { createReadStream, filename, mimetype } = await image[i];
-            const stream = createReadStream();
-            const assetUniqName = fileRenamer(filename);
-            let extension = mimetype.split("/")[1];
-            const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
-            await stream.pipe(fs.createWriteStream(pathName));
-            const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-            images.push(urlForArray);
-            }
-            let math = Math.random() * (43564389374833)
-            let socialMediaId = Math.round(math);
-            const user = await User.findOne(
-                {email}
-                );
-                if (!user) {
-                    throw new GraphQLError("Invalid email given");
-            }
-            console.log(info)
-            const newuser = await User.findByIdAndUpdate(
-                user.id,
-                { $push: { socialMedia: {images, number, link, id: socialMediaId} } },
-                { new: true }
-            );
-            return newuser
-        },
-        deleteSocialMediaPoster: async (parent, { id, email }, args) => {
-            console.log(id)
-            try {
-              const user = await User.findOneAndUpdate(
-                { email },
-                { $pull: { socialMedia: { id } } },
-                { new: true }
-              );
+        // addSocialMediaPoster: async (parent, {info, image}, args) => {
+        //     let images = [];
+        //     const {number,link, email} = info
+        //     for (let i = 0; i < image.length; i++) {
+        //     const { createReadStream, filename, mimetype } = await image[i];
+        //     const stream = createReadStream();
+        //     const assetUniqName = fileRenamer(filename);
+        //     let extension = mimetype.split("/")[1];
+        //     const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+        //     await stream.pipe(fs.createWriteStream(pathName));
+        //     const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+        //     images.push(urlForArray);
+        //     }
+        //     let math = Math.random() * (43564389374833)
+        //     let socialMediaId = Math.round(math);
+        //     const user = await User.findOne(
+        //         {email}
+        //         );
+        //         if (!user) {
+        //             throw new GraphQLError("Invalid email given");
+        //     }
+        //     console.log(info)
+        //     const newuser = await User.findByIdAndUpdate(
+        //         user.id,
+        //         { $push: { socialMedia: {images, number, link, id: socialMediaId} } },
+        //         { new: true }
+        //     );
+        //     return newuser
+        // },
+        // deleteSocialMediaPoster: async (parent, { id, email }, args) => {
+        //     console.log(id)
+        //     try {
+        //       const user = await User.findOneAndUpdate(
+        //         { email },
+        //         { $pull: { socialMedia: { id } } },
+        //         { new: true }
+        //       );
               
           
-              if (!user) {
-                throw new GraphQLError("Invalid email given");
-              }
+        //       if (!user) {
+        //         throw new GraphQLError("Invalid email given");
+        //       }
           
-              return user;
-            } catch (error) {
-              throw new GraphQLError("Failed to delete social media", error);
-            }
-        },          
+        //       return user;
+        //     } catch (error) {
+        //       throw new GraphQLError("Failed to delete social media", error);
+        //     }
+        // },          
 
         //Brand
-        addSocialMediaBrand: async (parent, {info}, args) => {
-            const {number,link, email} = info
-            let math = Math.random() * (43564389374833)
-            let socialMediaId = Math.round(math);
-            const user = await User.findOne(
-                {email}
-                );
-                if (!user) {
-                    throw new GraphQLError("Invalid email given");
-            }
-            console.log(info)
-            const newuser = await User.findByIdAndUpdate(
-                user.id,
-                { $push: { socialMedia: {number, link, id: socialMediaId} } },
-                { new: true }
-            );
-            return newuser
-        },
-        deleteSocialMediaBrand: async (parent, { id, email }, args) => {
-            console.log(id)
-            try {
-              const user = await User.findOneAndUpdate(
-                { email },
-                { $pull: { socialMedia: { id } } },
-                { new: true }
-              );
+        // addSocialMediaBrand: async (parent, {info}, args) => {
+        //     const {number,link, email} = info
+        //     let math = Math.random() * (43564389374833)
+        //     let socialMediaId = Math.round(math);
+        //     const user = await User.findOne(
+        //         {email}
+        //         );
+        //         if (!user) {
+        //             throw new GraphQLError("Invalid email given");
+        //     }
+        //     console.log(info)
+        //     const newuser = await User.findByIdAndUpdate(
+        //         user.id,
+        //         { $push: { socialMedia: {number, link, id: socialMediaId} } },
+        //         { new: true }
+        //     );
+        //     return newuser
+        // },
+        // deleteSocialMediaBrand: async (parent, { id, email }, args) => {
+        //     console.log(id)
+        //     try {
+        //       const user = await User.findOneAndUpdate(
+        //         { email },
+        //         { $pull: { socialMedia: { id } } },
+        //         { new: true }
+        //       );
               
           
-              if (!user) {
-                throw new GraphQLError("Invalid email given");
-              }
+        //       if (!user) {
+        //         throw new GraphQLError("Invalid email given");
+        //       }
           
-              return user;
-            } catch (error) {
-              throw new GraphQLError("Failed to delete social media", error);
-            }
-        },       
+        //       return user;
+        //     } catch (error) {
+        //       throw new GraphQLError("Failed to delete social media", error);
+        //     }
+        // },       
         // createBrandPost: async (parent,{ image, post }) => {
         //     let images = [];
             
@@ -421,12 +438,13 @@ const resolvers = {
         //     );
         //     return "Post deleted"
         // },
-        acceptPosterPost: async (parent, {brandId, posterPostId}, context, info) => {
+        acceptPosterPost: async (parent, {posterPostId}, context, info) => {
             const posterpost = await PosterPost.findOne({_id: posterPostId})
             if (!posterpost) {
                 throw new GraphQLError("Post from poster is undefined")
             }
-            const brand = await User.findOne({_id: brandId})
+            console.log(posterpost.brandId)
+            const brand = await User.findOne({_id: posterpost.brandId})
             if (!brand) {
                 throw new GraphQLError("Such brand is undefined")
             }
@@ -434,7 +452,7 @@ const resolvers = {
                 throw new GraphQLError("Requested post not found");
               }
             const newbrand = await User.findByIdAndUpdate(
-                brandId,
+                posterpost.brandId,
                 { $pull: { brandPendingPosts: posterPostId }, $push: { brandCompletedPosts: posterPostId }},
                 { new: true }
               );              
@@ -451,21 +469,21 @@ const resolvers = {
               
             return "Accept"
         },
-        declinePosterPost: async (parent, {brandId, posterPostId}, context, info) => {
+        declinePosterPost: async (parent, {posterPostId}, context, info) => {
             const posterpost = await PosterPost.findOne({_id: posterPostId})
             if (!posterpost) {
                 throw new GraphQLError("Post from poster is undefined")
             }
-            const brandpost = await BrandPost.findOne({_id: brandPostId})
-            if (!brandpost) {
-                throw new GraphQLError("Post from brand is undefined")
+            const brand = await User.findOne({_id: posterpost.brandId})
+            if (!brand) {
+                throw new GraphQLError("Brand is undefined")
             }
-            if (!brandpost.requestsId.includes(posterPostId)) {
+            if (!brand.brandPendingPosts.includes(posterPostId)) {
                 throw new GraphQLError("Requested post not found");
               }
-            const newbrandpost = await BrandPost.findByIdAndUpdate(
-                brandPostId,
-                { $pull: { requestsId: posterPostId } },
+            const newbrandpost = await User.findByIdAndUpdate(
+                posterpost.brandId,
+                { $pull: { brandPendingPosts: posterPostId } },
                 { new: true }
               );              
             const newposter = await User.findByIdAndUpdate(
@@ -476,21 +494,21 @@ const resolvers = {
               
             return "Decline"
         },
-        addLocation: async (parent, {latitude, longitude, id}, context, info) => {
-            const user = await User.findById(id)
-            if (!user) {
-                throw new GraphQLError("User is undefined")
-            }
+        // addLocation: async (parent, {latitude, longitude, id}, context, info) => {
+        //     const user = await User.findById(id)
+        //     if (!user) {
+        //         throw new GraphQLError("User is undefined")
+        //     }
 
-            user.physicalLocation = {
-                latitude: latitude,
-                longitude: longitude,
-              };
+        //     user.physicalLocation = {
+        //         latitude: latitude,
+        //         longitude: longitude,
+        //       };
           
-              // Сохранение обновленного пользователя
-              await user.save();
-              return "Done!"
-        },
+        //       // Сохранение обновленного пользователя
+        //       await user.save();
+        //       return "Done!"
+        // },
         //poster
         createPosterPost: async (parent,{ image, post }) => {
             let images = [];
@@ -538,43 +556,43 @@ const resolvers = {
         return newadmin
         },
         //balance
-        topupBalance: async (_, args, context, info) => {
-            const { email, money } = args
-            const user = await User.findOne(
-            {email}
-            );
-            if (!user) {
-                throw new GraphQLError("Invalid email given");
-            }
-            const topUp = Number(money)
-            const newbalance = topUp + user.balance
-            const newuser = await User.findByIdAndUpdate(
-                user.id,
-                {balance: newbalance},
-                { new: true }
-            );
-            return newuser
-        },
-        withdrawBalance: async (_, args, context, info) => {
-            const { email, money } = args
-            const user = await User.findOne(
-            {email}
-            );
-            if (!user) {
-                throw new GraphQLError("Invalid email given - widthDraw");
-            }
-            if (money > user.balance) {
-                throw new GraphQLError("Not enough to withdraw");
-            }
-            const withdraw = Number(money)
-            const newbalance = user.balance - withdraw
-            const newuser = await User.findByIdAndUpdate(
-                user.id,
-                {balance: newbalance},
-                { new: true }
-            );
-            return newuser
-        },
+        // topupBalance: async (_, args, context, info) => {
+        //     const { email, money } = args
+        //     const user = await User.findOne(
+        //     {email}
+        //     );
+        //     if (!user) {
+        //         throw new GraphQLError("Invalid email given");
+        //     }
+        //     const topUp = Number(money)
+        //     const newbalance = topUp + user.balance
+        //     const newuser = await User.findByIdAndUpdate(
+        //         user.id,
+        //         {balance: newbalance},
+        //         { new: true }
+        //     );
+        //     return newuser
+        // },
+        // withdrawBalance: async (_, args, context, info) => {
+        //     const { email, money } = args
+        //     const user = await User.findOne(
+        //     {email}
+        //     );
+        //     if (!user) {
+        //         throw new GraphQLError("Invalid email given - widthDraw");
+        //     }
+        //     if (money > user.balance) {
+        //         throw new GraphQLError("Not enough to withdraw");
+        //     }
+        //     const withdraw = Number(money)
+        //     const newbalance = user.balance - withdraw
+        //     const newuser = await User.findByIdAndUpdate(
+        //         user.id,
+        //         {balance: newbalance},
+        //         { new: true }
+        //     );
+        //     return newuser
+        // },
         //dev
         updatetoSchema: async (_, args, context, info) => {
             const {newfield, value} = args

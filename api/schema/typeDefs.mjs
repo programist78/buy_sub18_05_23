@@ -23,7 +23,6 @@ const typeDefs = `#graphql
     images: [String]
     number: String
     nick: String
-    id: String
   }
 
   type PosterPost {
@@ -42,6 +41,7 @@ const typeDefs = `#graphql
   } 
 
   type PosterPost {
+    id: ID
     title: String
     text: String
     authorId: String
@@ -51,8 +51,8 @@ const typeDefs = `#graphql
   } 
 
   type Coordinates {
-    latitude: Float
-    longitude: Float
+    latitude: String
+    longitude: String
   }
 
 
@@ -65,13 +65,19 @@ const typeDefs = `#graphql
     socialMedia: [SocialMedia]
     confirmedEmail: Boolean
     avatarUrl: String
+    phone: String
     pendingPosts: [String]
     completedPosts: [String]
     balance: Int
-    BrandPosts: [String]
-    completedBrandPosts: [String]
+    brandPendingPosts: [String]
+    brandCompletedPosts: [String]
+    postPrice: Int
     brandname: String
-    physicalLocation: [Coordinates]
+    physicalLocation: Coordinates
+    brandDirection: String
+    plan: String
+    hasTrial: Boolean
+    endDate: String
   }
 
   type AuthPayload {
@@ -91,6 +97,7 @@ const typeDefs = `#graphql
   getAllCompletedPosterPosts(id: ID): [PosterPost]
 
   getProfile: User
+  getProfiles: [User]
   }
 
   type Image {
@@ -101,7 +108,7 @@ const typeDefs = `#graphql
 
 
   input LoginInput{
-    input: String
+    email: String
     password: String!
   }
 
@@ -111,12 +118,16 @@ const typeDefs = `#graphql
     password: String!
     confirm_password: String!
     brandname: String
+    phone: String
+    brandDirection: String
+    postPrice: String
+    latitude: Float
+    longitude: Float
   }
 
   input SocialMediaInput{
     number: String!
     link: String!
-    email: String
   }
 
 
@@ -124,7 +135,7 @@ const typeDefs = `#graphql
     title: String
     text: String
     authorId: String
-    postId: String
+    brandId: String
     }
 
   input BrandPostUpdateInput {
@@ -135,7 +146,7 @@ const typeDefs = `#graphql
 
   type Mutation {
     loginUser(about: LoginInput): AuthPayload
-    registerUser(about: RegisterInput): AuthPayload
+    registerUser(about: RegisterInput, info: SocialMediaInput,  image: [Upload]): AuthPayload
     sendConfirmedEmail(email: String!): AuthPayload
     changeStatus(id: ID, confirmationCode: String): User
     forgotPassword(id: ID, confirmationCode: String, password: String): User
@@ -150,8 +161,8 @@ const typeDefs = `#graphql
 
     addLocation(latitude: Float, longitude: Float, id: ID): User
 
-    acceptPosterPost(brandId: ID, posterPostId: ID): String
-    declinePosterPost(brandId: ID, posterPostId: ID): String
+    acceptPosterPost(posterPostId: ID): String
+    declinePosterPost(posterPostId: ID): String
 
     createPosterPost(post: PosterPostInput!, image: [Upload]!): PosterPost
 

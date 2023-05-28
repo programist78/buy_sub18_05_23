@@ -25,6 +25,7 @@ const User = new mongoose.Schema(
     confirmationCode: { type: String }, 
     avatarUrl: { type: String },
     token: { type: String },
+    phone: {type: String},
     //for posters
     pendingPosts: {
       type: Array
@@ -43,13 +44,16 @@ const User = new mongoose.Schema(
       type: Array
     },
     postPrice: {
-      type: String
+      type: Number
     },
     brandname: {
       type: String
     },
     physicalLocation: {
       type: Object
+    },
+    brandDirection: {
+      type: String
     },
     plan: { type: String, enum: ['none', 'month'], default: 'none' },
     hasTrial: { type: Boolean, default: false },
