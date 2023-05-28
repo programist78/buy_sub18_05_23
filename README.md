@@ -98,12 +98,14 @@ This is an example of how to list things you need to use the software and how to
   npm install
   ```
 
-### Installation Server
+### Installation
 
 1. Clone the repo
    ```sh
    git clone https://github.com/programist78/buy_sub18_05_23
    ```
+####Server part
+2. Open `api` folder
 3. Install NPM packages
    ```sh
    npm install
@@ -123,6 +125,14 @@ This is an example of how to list things you need to use the software and how to
    DEFAULT_FROM_EMAIL='email@gmail.com(your default email from https://app.sendgrid.com)'
    CLIENT='* - (acess for all frontend) / Your client link'
    ```
+####Client part
+6. Open `app` folder
+7. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Create `.env` in `app` folder
+5. Loading...
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
