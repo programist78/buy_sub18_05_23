@@ -20,7 +20,7 @@ async function startServer() {
   // Ensure the upload directory exists.
   await makeDir(fileURLToPath(UPLOAD_DIRECTORY_URL));
   const corsOptions = {
-    origin: "*",
+    origin: process.env.CLIENT,
     // 'http://localhost:3001', 'http://localhost:4000/graphql'],
     credentials: true,
     }
