@@ -149,7 +149,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Your Name - [@my_telegram](https://t.me/webXwizard) - web.wizard.ui.ux@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/programist78/buy_sub18_05_23)
+Project Link: [https://github.com/programist78/buy_sub18_05_23](https://github.com/programist78/buy_sub18_05_23)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
