@@ -12,7 +12,7 @@ import AWS from 'aws-sdk'
 import nodemailer from 'nodemailer'
 import sendgridTransport from 'nodemailer-sendgrid-transport';
 import validatePassword from '../helpers/validatePassword.js';
-import BrandPost from '../models/BrandPost.js';
+// import BrandPost from '../models/BrandPost.js';
 import PosterPost from '../models/PosterPost.js';
 const __dirname = path.resolve();
 dotenv.config()
@@ -226,7 +226,7 @@ const resolvers = {
                 return console.log(err)
             }})
              //end trans
-            return {user}
+             return "Done"
             } catch (err) {
                 throw (err.message);
             } 
@@ -247,7 +247,10 @@ const resolvers = {
                 {confirmedEmail: true},
                 { new: true }
             );
-            return newuser
+            if (!newuser) {
+                throw new GraphQLError("Something went wrong!")
+            }
+            return "Done"
         },
         forgotPassword: async (parent,{id, confirmationCode, password}, args) => {
             const user = await User.findOne(
@@ -267,7 +270,10 @@ const resolvers = {
                 {passwordHash},
                 { new: true }
             );
-            return newuser
+            if (!newuser) {
+                throw new GraphQLError("Something went wrong!")
+            }
+            return "Done"
         },
         forgotPasswordSend: async (parent,{email}, args) => {
             const user = await User.findOne(
@@ -443,6 +449,9 @@ const resolvers = {
             if (!posterpost) {
                 throw new GraphQLError("Post from poster is undefined")
             }
+            if (!posterpost.brandPendingPosts == true) {
+                throw new GraphQLError("This post already accepted");
+              }
             console.log(posterpost.brandId)
             const brand = await User.findOne({_id: posterpost.brandId})
             if (!brand) {
@@ -455,18 +464,26 @@ const resolvers = {
                 posterpost.brandId,
                 { $pull: { brandPendingPosts: posterPostId }, $push: { brandCompletedPosts: posterPostId }},
                 { new: true }
-              );              
+              );   
+              if (!newbrand) {
+                throw new GraphQLError("Some problems with this brand")
+            }
             const newposterpost = await PosterPost.findByIdAndUpdate(
                 posterPostId,
                 {confirmed: true},
                 { new: true }
             );
+            if (!newposterpost) {
+                throw new GraphQLError("Some problems with poster posts")
+            }
             const newposter = await User.findByIdAndUpdate(
                 posterpost.authorId,
                 { $pull: { pendingPosts: posterPostId }, $push: { completedPosts: posterPostId }, $inc: { balance: brand.postPrice } },
                 { new: true }
               );
-              
+              if (!newposter) {
+                throw new GraphQLError("Some problems with this poster")
+              }
             return "Accept"
         },
         declinePosterPost: async (parent, {posterPostId}, context, info) => {
@@ -553,7 +570,10 @@ const resolvers = {
             {role: "ADMIN"},
             { new: true }
         );
-        return newadmin
+        if (!newadmin) {
+            throw new GraphQLError("Something went wrong!")
+        }
+        return "Done"
         },
         //balance
         // topupBalance: async (_, args, context, info) => {

@@ -6,6 +6,7 @@
     position: relative;
     gap: 200px;
     height: auto;
+    overflow: hidden;
     // min-height: 100vh;
     div{
         z-index: 2;
@@ -38,7 +39,7 @@
 
 .vector4{
     left: -353px;
-    top: 2837px;
+    top: 2737px;
     @include vector
 
 }

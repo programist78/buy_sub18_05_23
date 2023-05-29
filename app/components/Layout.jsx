@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
     return (
 <>
 <div className={dm_sans.className}>
-{/* <Navbar /> */}
+<Navbar />
 {children}
 <Footer />
 </div>

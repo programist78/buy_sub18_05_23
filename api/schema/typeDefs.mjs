@@ -147,11 +147,11 @@ const typeDefs = `#graphql
   type Mutation {
     loginUser(about: LoginInput): AuthPayload
     registerUser(about: RegisterInput, info: SocialMediaInput,  image: [Upload]): AuthPayload
-    sendConfirmedEmail(email: String!): AuthPayload
-    changeStatus(id: ID, confirmationCode: String): User
-    forgotPassword(id: ID, confirmationCode: String, password: String): User
+    sendConfirmedEmail(email: String!): String
+    changeStatus(id: ID, confirmationCode: String): String
+    forgotPassword(id: ID, confirmationCode: String, password: String): String
     forgotPasswordSend(email: String): String
-    addAdmin(email: String): User
+    addAdmin(email: String): String
 
     addSocialMediaPoster(info: SocialMediaInput,  image: [Upload]!): User
     deleteSocialMediaPoster(email: String, id: String): User

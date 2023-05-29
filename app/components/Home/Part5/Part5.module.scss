@@ -12,9 +12,12 @@
     display: flex;
     flex-direction: column;
     gap: 50px;
+    align-items: center;
+    width: 1128px;
 }
 
 .text{
-    width: 667px;
-    text-align: start;
+    font-weight: 500;
+font-size: 36px;
+line-height: 47px;
 }

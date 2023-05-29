@@ -17,8 +17,8 @@ export default function HomeCom() {
 
         <Part1 />
         <Part2 />
-        <Part3 />
-        <Part4 />
+        {/* <Part3 /> */}
+        {/* <Part4 /> */}
         <Part5 />
         <Part6 />
     </div>

@@ -30,7 +30,8 @@ export default function PricingPage() {
     }
 
     return (
-        <>
+        <div style={{height: "1000px", paddingTop: "200px"}}>
+
             <Button onClick={() => handleSubscribeClick('price_abc123')}>Subscribe Now</Button>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
@@ -45,6 +46,7 @@ export default function PricingPage() {
                     </ModalBody>
                 </ModalContent>
             </Modal>
-        </>
+            </div>
+
     )
 }

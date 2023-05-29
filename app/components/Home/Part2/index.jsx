@@ -41,7 +41,7 @@ export default function Part2() {
         </div>
         </div>
         <p  className={`text ${styles.text2}`}>Very soon after the first actions, you will start receiving the first results and income!</p>
-        <button className="b_button">Start now</button>
+        {/* <button className="b_button">Start now</button> */}
       </div>
     </div>
   );

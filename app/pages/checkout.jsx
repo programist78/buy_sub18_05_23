@@ -7,9 +7,10 @@ import { Col, Row } from "antd";
 
 const CheckoutPage = () => {
   const stripePromise = loadStripe(
-    "your_public_stripe_key_here"
+    "pk_live_51Mh981BD1PAMw3US3xRCrPnRlmpC1pJKAwNPUpcyTvW4EV79xkfMZHkfCPuy6GX2Y1ddKeew35ebYp3sgS0J32s200QGQy2KKa"
   );
   return (
+    <div style={{height: "1000px", paddingTop: "200px"}}>
     <Row>
       <Col offset={6} span={12} className="stripe-form-container">
         <div className="stripe-form">
@@ -26,6 +27,7 @@ const CheckoutPage = () => {
         </div>
       </Col>
     </Row>
+    </div>
   );
 };
 

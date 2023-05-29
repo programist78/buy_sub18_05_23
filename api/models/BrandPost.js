@@ -1,38 +1,38 @@
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 
-const BrandPost = new mongoose.Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-    },
-    requirements: {
-      type: String,
-      required: true
-    },
-    authorId: {
-        type: String,
-        required: true,
-    },
-    requestsId: {
-      type: Array
-    },
-    acceptedId: {
-      type: Array
-    },
-    images: {
-        type: Array
-    },
-    payment: {
-      type: Number
-    },
-    quantity: {
-      type: Number
-    }
-  },
-  {
-    timestamps: true,
-  },
-);
+// const BrandPost = new mongoose.Schema(
+//   {
+//     title: {
+//       type: String,
+//       required: true,
+//     },
+//     requirements: {
+//       type: String,
+//       required: true
+//     },
+//     authorId: {
+//         type: String,
+//         required: true,
+//     },
+//     requestsId: {
+//       type: Array
+//     },
+//     acceptedId: {
+//       type: Array
+//     },
+//     images: {
+//         type: Array
+//     },
+//     payment: {
+//       type: Number
+//     },
+//     quantity: {
+//       type: Number
+//     }
+//   },
+//   {
+//     timestamps: true,
+//   },
+// );
 
-export default mongoose.model('BrandPost', BrandPost);
+// export default mongoose.model('BrandPost', BrandPost);

@@ -13,6 +13,8 @@ import { Provider } from 'react-redux';
 import NProgress from 'nprogress'
 import Router from 'next/router'
 import store from '../redux/store.jsx';
+import { ChakraProvider } from "@chakra-ui/react"
+
 // import Loading from '../components/Loading'
 import { ApolloCache } from '@apollo/client/core';
 Router.events.on('routeChangeStart', () => NProgress.start()); 
@@ -67,9 +69,9 @@ const App = ({
         </Head>
         <main>
         <>
-     
+     <ChakraProvider>
         <Component {...pageProps} />
-     
+        </ChakraProvider>
         </>
         </main>
       </Layout>
