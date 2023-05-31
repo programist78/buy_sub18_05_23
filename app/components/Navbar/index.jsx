@@ -43,10 +43,13 @@ export default function Navbar() {
       <Image src="/logo.svg" width={100} height={100}/>
     </div>
     <div className={styles.links}>
-      <Link href="/businesses" className='nav_text'>Businesses</Link>
-      <Link href="/login" className='nav_text'>Log in</Link>
-      <button className='b_button'>Sign Up Now</button>
+      {/* <Link href="/businesses" className='nav_text'>Businesses</Link>
+      <Link href="/login" className='nav_text'>Log in</Link> */}
+      <button className='a_button'>Sign Up Posters</button>
+      <button className='a_button'>Sign Up Bussineses</button>
+      <Link href="/auth/login"><button className='b_button_nav'>Log in</button></Link>
     </div>
+    
   </div>
     )
 }

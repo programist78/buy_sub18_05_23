@@ -6,11 +6,8 @@ import OrderSummary from "../components/OrderSummary";
 import { Col, Row } from "antd";
 
 const CheckoutPage = () => {
-  const stripePromise = loadStripe(
-    "pk_live_51Mh981BD1PAMw3US3xRCrPnRlmpC1pJKAwNPUpcyTvW4EV79xkfMZHkfCPuy6GX2Y1ddKeew35ebYp3sgS0J32s200QGQy2KKa"
-  );
+  const stripePromise = loadStripe("pk_test_51Mh981BD1PAMw3US3z37Ui1d5nP6P9eFuCy0m2dfNUVnX42ZYRZdYsHSNYe1J38IH3OvodB4DjddvkLTtYuJFkZK00uu6M6TmW");
   return (
-    <div style={{height: "1000px", paddingTop: "200px"}}>
     <Row>
       <Col offset={6} span={12} className="stripe-form-container">
         <div className="stripe-form">
@@ -27,7 +24,6 @@ const CheckoutPage = () => {
         </div>
       </Col>
     </Row>
-    </div>
   );
 };
 

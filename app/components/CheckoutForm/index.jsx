@@ -1,73 +1,165 @@
-// CheckoutForm.jsx
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { Input, Col, Row, Form, Button, Modal } from "antd";
+import { useState } from "react";
 
-import { useState } from 'react';
-import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+const CheckoutForm = props => {
+  const { getFieldDecorator } = props.form;
+  const [isLoading, setLoading] = useState(false);
 
-const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-);
+  const stripe = useStripe();
+  const elements = useElements();
 
+  const handleSubmit = async event => {
+    event.preventDefault();
 
-export default function CheckoutForm(props) {
-    const [error, setError] = useState(undefined);
-    const [disabled, setDisabled] = useState(false);
-    const stripe = useStripe();
-    const elements = useElements();
+    props.form.validateFields(async (err, values) => {
+      if (!err) {
+        setLoading(true);
+        const result = await stripe.createPaymentMethod({
+          type: "card",
+          card: elements.getElement(CardElement),
+          billing_details: {
+            address: {
+              city: values.city,
+              line1: values.address,
+              postal_code: values.zip,
+              state: values.state
+            },
+            email: "janedoe@example.com",
+            name: values.name,
+            phone: "555-555-5555"
+          }
+        });
+        await handleStripePaymentMethod(result);
+        setLoading(false);
+      }
+    });
+  };
 
-    function handleCardInputChange(event) {
-        // Listen for changes in card input
-        // and display errors, if any, to the user
-        // Also control the disabled state of the submit button
-        // if the input field is empty
-        setDisabled(event?.empty);
-        setError(event?.error?.message ?? '');
+  const handleStripePaymentMethod = async result => {
+    if (result.error) {
+      Modal.error({
+        title: "Error",
+        content: result.error.message
+      });
+    } else {
+      const response = await fetch("api/create-customer", {
+        method: "POST",
+        mode: "same-origin",
+        body: JSON.stringify({
+          paymentMethodId: result.paymentMethod.id
+        })
+      });
+
+      const subscription = await response.json();
+      handleSubscription(subscription);
     }
+  };
 
-    async function handleCheckoutFormSubmit(event) {
-        event.preventDefault();
+  const handleSubscription = subscription => {
+    const { latest_invoice } = subscription;
+    const { payment_intent } = latest_invoice;
 
-        if (!stripe || !elements) {
-            // Stripe.js has not loaded yet.
-            return;
-        }
+    if (payment_intent) {
+      const { client_secret, status } = payment_intent;
 
-        // Call the subscribe endpoint and create a Stripe subscription 
-        // object. Returns the subscription ID and client secret
-        const subscriptionResponse = await fetch(
-            '/api/subscribe',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ customerId: props.customerId, priceId: props.priceId })
-            }
-        )
-        const subscription = await subscriptionResponse.json();
-        const stripePayload = await stripe.confirmCardPayment(
-            subscription.clientSecret, // returned by subscribe endpoint
-            {
-                payment_method: {
-                    card: elements.getElement(CardElement)
-                }    
-            }
-        )
-
-        if (stripePayload.error) {
-            setError(stripePayload.error.message);
-        }
+      if (status === "requires_action") {
+        stripe.confirmCardPayment(client_secret).then(function(result) {
+          if (result.error) {
+            // The card was declined (i.e. insufficient funds, card has expired, etc)
+            Modal.error({
+              title: "Error",
+              content: result.error.message
+            });
+          } else {
+            // Success!
+            Modal.success({
+              title: "Success"
+            });
+          }
+        });
+      } else {
+        // No additional information was needed
+        Modal.success({
+          title: "Success"
+        });
+      }
+    } else {
+      console.log(`handleSubscription:: No payment information received!`);
     }
+  };
 
-    return (
-        <Elements stripe={stripePromise}>
-            <form onSubmit={handleCheckoutFormSubmit}>
-                <CardElement onChange={handleCardInputChange} />
-                <button
-                    disabled={!stripe && disabled}
-                    type='submit'
-                >
-                    Pay Now
-                </button>
-            </form>
-        </Elements>
-    );
-}
+  const cardOptions = {
+    iconStyle: "solid",
+    style: {
+      base: {
+        iconColor: "#1890ff",
+        color: "rgba(0, 0, 0, 0.65)",
+        fontWeight: 500,
+        fontFamily: "Segoe UI, Roboto, Open Sans, , sans-serif",
+        fontSize: "15px",
+        fontSmoothing: "antialiased",
+        ":-webkit-autofill": { color: "#fce883" },
+        "::placeholder": { color: "#bfbfbf" }
+      },
+      invalid: {
+        iconColor: "#ffc7ee",
+        color: "#ffc7ee"
+      }
+    }
+  };
+  return (
+    <Form onSubmit={e => handleSubmit(e)}>
+      <Form.Item label="Name on card" colon={false}>
+        {getFieldDecorator("name", {
+          rules: [{ required: true, message: "Name is required" }]
+        })(<Input placeholder="Jane Doe" />)}
+      </Form.Item>
+      <Form.Item label="Address" colon={false}>
+        {getFieldDecorator("address", {
+          rules: [{ required: true, message: "Address is required" }]
+        })(<Input placeholder="1234 Almond Ave" />)}
+      </Form.Item>
+      <Input.Group>
+        <Row gutter={12}>
+          <Col span={12}>
+            <Form.Item label="City" colon={false}>
+              {getFieldDecorator("city", {
+                rules: [{ required: true, message: "City is required" }]
+              })(<Input placeholder="San Bernardino" />)}
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="State" colon={false}>
+              {getFieldDecorator("state", {
+                rules: [{ required: true, message: "State is required" }]
+              })(<Input placeholder="CA" />)}
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="ZIP" colon={false}>
+              {getFieldDecorator("zip", {
+                rules: [{ required: true, message: "Zip code is required" }]
+              })(<Input placeholder="92401" />)}
+            </Form.Item>
+          </Col>
+        </Row>
+      </Input.Group>
+      <Form.Item label="Card" colon={false}>
+        {getFieldDecorator("card", {
+          rules: [{ required: true, message: "Card is required" }]
+        })(<CardElement options={cardOptions} />)}
+      </Form.Item>
+      <Button
+        loading={isLoading}
+        type="primary"
+        htmlType="submit"
+        className="checkout-button"
+        disabled={!stripe}
+      >
+        Submit
+      </Button>
+    </Form>
+  );
+};
+export default CheckoutForm

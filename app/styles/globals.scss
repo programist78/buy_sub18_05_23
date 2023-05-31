@@ -68,6 +68,17 @@ text-align: center;
 color: #000000;
 }
 
+.pretitle{
+  font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 36px;
+line-height: 47px;
+/* identical to box height */
+text-align: center;
+color: #000000;
+}
+
 .text{
   font-family: 'DM Sans';
 font-style: normal;
@@ -80,8 +91,10 @@ color: #000000;
 
 
 .b_button{
-  width: 212px;
-height: 69px;
+  width: auto;
+  padding: 0 30px;
+  min-width: 210px;
+height: 51px;
 background: #0D0D0D;
 border-radius: 15px;
 display: flex;
@@ -95,6 +108,65 @@ line-height: 29px;
 text-align: center;
 color: #FFFFFF;
 border: none;
+}
+
+.b_button_nav{
+  width: 137px;
+  height: 45px;
+  background: #0D0D0D;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 29px;
+  text-align: center;
+  color: #FFFFFF;
+  border: none;
+}
+
+.a_button{
+  width: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+height: 45px;
+background: #FFFFFF;
+border-radius: 15px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 22px;
+line-height: 29px;
+text-align: center;
+color: #0D0D0D;
+border: 1px solid black;
+}
+
+.a_input {
+  width: 470px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  padding-left: 15px;
+  background-color: #FFFFFF;
+  border: 1px solid #A7ABB4;
+  border-radius: 15px;
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+  color: #000000;
+}
+
+.a_input::placeholder {
+  background: #FFFFFF;
 }
 
 .footer_text{
@@ -114,4 +186,36 @@ font-size: 18px;
 line-height: 23px;
 text-align: center;
 color: #000000;
+}
+
+.checkout-button {
+  margin-top: 1.5em;
+  width: 100%;
+}
+
+.StripeElement--webkit-autofill {
+  background: transparent !important;
+}
+
+.StripeElement {
+  width: 100%;
+  padding: 6px 11px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  height: 32px;
+}
+
+.stripe-form {
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
+  margin-top: 10em;
+}
+
+.divider {
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 500px;
 }

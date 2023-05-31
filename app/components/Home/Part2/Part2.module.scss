@@ -76,3 +76,16 @@ border-radius: 50%;
 background: #FFFFFE;
 box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.15);
 }
+
+.borderbox{
+    background: #FEFCF2;
+border: 1px solid rgba(0, 0, 0, 0.5);
+border-radius: 15px;
+padding: 90px;
+    p{
+        width: 945px;
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 47px;
+    }
+}
