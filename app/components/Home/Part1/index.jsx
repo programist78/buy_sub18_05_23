@@ -20,7 +20,7 @@ export default function Part1() {
             <p className="text" style={{fontWeight: "500"}}>Start PR now!</p>
         </div>
       </div>
-      <button className="b_button">Sign Up now</button>
+      <button className="b_button">Log In now</button>
     </div>
   );
 }

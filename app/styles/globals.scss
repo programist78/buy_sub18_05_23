@@ -187,7 +187,70 @@ line-height: 23px;
 text-align: center;
 color: #000000;
 }
+.a_instrusctions{
+  background: #FFFFFF;
+border: 1px solid #767575;
+border-radius: 15px;
+width: 440px;
+min-height: 148px;
+overflow-y: scroll;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 15px;
+}
+.a_instrusctions::-webkit-scrollbar{
+  width: 0.5vw;
+  height: 80%;
 
+}
+.a_instrusctions::-webkit-scrollbar-track {
+  border-radius: 30px;
+
+  background: rgb(0, 0, 0, 0.25);
+}
+
+.a_instrusctions::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 1);
+}
+//checkbox
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkmark {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+.checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox input[type="checkbox"]:checked + .checkmark {
+  background-color: #000;
+}
+
+.checkbox input[type="checkbox"]:checked + .checkmark::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-left: 4px;
+}
+
+//stripe
 .checkout-button {
   margin-top: 1.5em;
   width: 100%;

@@ -13,9 +13,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
+width: 100vw !important;
     gap: 22px;
     button{
         margin-top: 22px;
     }
+}
+
+.text{
+    width: 874px;
+}
+
+.social_input{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.nick_input{
+    width: 200px;
+}
+
+.number_input{
+    width: 180px;
+}
+
+.custom_input{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    color: black;
 }
