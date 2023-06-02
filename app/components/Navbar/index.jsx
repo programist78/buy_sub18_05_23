@@ -40,7 +40,9 @@ export default function Navbar() {
   return (
   <div className={styles.back}>
     <div className={styles.logo}>
+      <Link href="/">
       <Image src="/logo.svg" width={100} height={100}/>
+      </Link>
     </div>
     <div className={styles.links}>
       {/* <Link href="/businesses" className='nav_text'>Businesses</Link>

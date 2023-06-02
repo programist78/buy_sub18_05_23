@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styles from '../PersonalCabinet.module.scss'
+import styles from './PersonalCabinet.module.scss'
 
 export default function PosterCabinetCom() {
   return (
