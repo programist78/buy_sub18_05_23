@@ -98,6 +98,7 @@ const typeDefs = `#graphql
 
   getProfile: User
   getProfiles: [User]
+  getUserbyToken(token: String): User
   }
 
   type Image {

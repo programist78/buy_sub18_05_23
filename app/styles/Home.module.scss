@@ -1,52 +1,164 @@
-.back{
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    gap: 200px;
-    height: auto;
-    overflow: hidden;
-    // min-height: 100vh;
-    div{
+@media screen and (min-width: 1024px) {
+    .back{
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        gap: 200px;
+        height: auto;
+        // overflow: hidden;
+        // min-height: 100vh;
+        div{
+            z-index: 2;
+        }
+    }
+    
+    @mixin vector {
+        position: absolute;
         z-index: 2;
+    }
+    .vector1{
+        right: -116px;
+        top: -154px;
+        @include vector
+    }
+    
+    .vector2{
+        top: 707px;
+        left: -300px;
+        @include vector
+    
+    }
+    
+    .vector3{
+        top: 1686px;
+        right: -434px;
+        @include vector
+    
+    }
+    
+    .vector4{
+        left: -353px;
+        top: 2737px;
+        @include vector
+    
+    }
+    
+    .vector5{
+        right: -448px;
+        top: 5003px;
+        @include vector
+    
     }
 }
 
-@mixin vector {
-    position: absolute;
-    z-index: 1;
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .back{
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        gap: 150px;
+        height: auto;
+        // overflow: hidden;
+        // min-height: 100vh;
+        div{
+            z-index: 2;
+        }
+    }
+    
+    @mixin vector {
+        position: absolute;
+        z-index: 1;
+    }
+    .vector1{
+        right: -116px;
+        top: -154px;
+        @include vector
+    }
+    
+    .vector2{
+        top: 507px;
+        left: -150px;
+        @include vector
+    
+    }
+    
+    .vector3{
+        top: 1000px;
+        right: -434px;
+        @include vector
+    
+    }
+    
+    .vector4{
+        left: -353px;
+        top: 1500px;
+        @include vector
+    
+    }
+    
+    .vector5{
+        right: -448px;
+        top: 2200px;
+        @include vector
+    
+    }
 }
-.vector1{
-    right: -116px;
-    top: -154px;
-    @include vector
-}
 
-.vector2{
-    top: 707px;
-    left: -300px;
-    @include vector
-
-}
-
-.vector3{
-    top: 1686px;
-    right: -434px;
-    @include vector
-
-}
-
-.vector4{
-    left: -353px;
-    top: 2737px;
-    @include vector
-
-}
-
-.vector5{
-    right: -448px;
-    top: 5003px;
-    @include vector
-
+@media screen and (max-width: 768px) {
+    .back{
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        gap: 100px;
+        height: auto;
+        // overflow: hidden;
+        // min-height: 100vh;
+        div{
+            z-index: 2;
+        }
+    }
+    
+    @mixin vector {
+        position: absolute;
+        z-index: 1;
+    }
+    .vector1{
+        right: -116px;
+        top: -154px;
+        @include vector
+    }
+    
+    .vector2{
+        top: 407px;
+        left: -30vw;
+        @include vector
+    
+    }
+    
+    .vector3{
+        top: 800px;
+        right: -30vw;
+        @include vector
+    
+    }
+    
+    .vector4{
+        left: -40vw;
+        top: 1400px;
+        @include vector
+    
+    }
+    
+    .vector5{
+        right: -30vw;
+        top: 1800px;
+        @include vector
+    
+    }
 }

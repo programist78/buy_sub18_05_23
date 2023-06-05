@@ -1,34 +1,113 @@
-.back{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100vw;
-    gap: 50px;
-    padding-top: 150px;
+
+@media screen and (min-width: 1220px) {
+    .back{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
+        gap: 50px;
+        padding-top: 150px;
+    }
+    
+    .parts{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 1137px;
+        justify-content: space-between;
+    }
+    
+    .part1{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .text{
+        width: 554px;
+        text-align: start;
+    }
+    
+    .part2{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
 }
 
-.parts{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 1137px;
-    justify-content: space-between;
+
+@media screen and (min-width: 768px) and (max-width: 1220px) {
+    .back{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
+        gap: 40px;
+        padding-top: 125px;
+    }
+    
+    .parts{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 70vw;
+        
+    }
+    
+    .part1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .text{
+        width: 70vw;
+    }
+    
+    .part2{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
 }
 
-.part1{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+@media screen and (max-width: 768px) {
+    .back{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
+        gap: 30px;
+        padding-top: 80px;
+    }
+    
+    .parts{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 70vw;
+        
+    }
+    
+    .part1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .text{
+        width: 70vw;
+    }
+    
+    .part2{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
 }
 
-.text{
-    width: 554px;
-    text-align: start;
-}
-
-.part2{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}

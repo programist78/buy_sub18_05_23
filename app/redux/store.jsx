@@ -1,5 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { authReducer } from './slices/auth';
+import { adminReducer } from './slices/roles/admin';
+import { peopleReducer } from './slices/roles/people';
 import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
@@ -11,24 +13,33 @@ import {
   PURGE,
   REGISTER
 } from 'redux-persist'
+import { subadminReducer } from './slices/roles/subadmin';
+import { userInfoReducer } from './slices/userInfo';
   
 const rootReducer = combineReducers({
   auth: authReducer,
+  admin: adminReducer,
+  subadmin: subadminReducer,
+  people: peopleReducer,
+  userInfo: userInfoReducer
 })
 
 const persistConfig = 
 {
   key: 'root',
   storage,
+  blacklist: ['userInfo'], // Исключаем срез "userInfo" из сохранения
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
-  // reducer: combineReducers,
-  reducer: {
-    auth: authReducer
-  },
+  reducer: persistedReducer,
+  // reducer: {
+  //   auth: authReducer,
+  //   admin: adminReducer,
+  //   people: peopleReducer,
+  // },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware(
     {
@@ -42,6 +53,3 @@ const store = configureStore({
 
 export const persistor = persistStore(store)
 export default store
-
-
-

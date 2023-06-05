@@ -41,17 +41,56 @@ export default function Navbar() {
   <div className={styles.back}>
     <div className={styles.logo}>
       <Link href="/">
-      <Image src="/logo.svg" width={100} height={100}/>
+      <Image src="/logo.svg" width={100} height={100} alt='logo'/>
       </Link>
     </div>
+     {isOpen ?
+      <div className={styles.backmenu}>
+        <div>
+          {/* <CgMenuMotion onClick={() => toggle(!isOpen)} className={styles.burger2}/> */}
+          <svg
+        onClick={() => toggle(!isOpen)}
+        width="40"
+        height="32"
+        viewBox="0 0 44 44"
+        fill="#000000"
+        className={styles.animate_burger2}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <animated.rect width="40" height="4" rx="2" style={first} />
+        <animated.rect width="40" height="4" rx="2" style={second} />
+        <animated.rect width="40" height="4" rx="2" style={third} />
+      </svg>
+      </div>
+         <div className={styles.info_links}>
+         <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
+     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link>
+      <Link href="/auth/login"><button className='b_button'>Log in</button></Link>
+         </div>
+        </div>
+        :
+        <div className={styles.premenu}>
+        <svg
+        onClick={() => toggle(!isOpen)}
+        width="40"
+        height="32"
+        viewBox="0 0 44 44"
+        fill="#000000"
+        className={styles.animate_burger}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <animated.rect width="40" height="4" rx="2" style={first} />
+        <animated.rect width="40" height="4" rx="2" style={second} />
+        <animated.rect width="40" height="4" rx="2" style={third} />
+      </svg>
+      </div>
+        // <CgMenu className={styles.burger} onClick={() => setIsOpenMenu(!isOpenMenu)}/>  
+      }
     <div className={styles.links}>
-      {/* <Link href="/businesses" className='nav_text'>Businesses</Link>
-      <Link href="/login" className='nav_text'>Log in</Link> */}
-      <button className='a_button'>Sign Up Posters</button>
-      <button className='a_button'>Sign Up Bussineses</button>
-      <Link href="/auth/login"><button className='b_button_nav'>Log in</button></Link>
+     <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
+     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link>
+      <Link href="/auth/login"><button className='b_button'>Log in</button></Link>
     </div>
-    
   </div>
     )
 }

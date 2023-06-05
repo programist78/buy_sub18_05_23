@@ -2,7 +2,7 @@ import User from '../models/User.js'
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import { fileRenamer } from "../helpers/FileRenamer.js";
-import { issueAuthToken, serializeUser } from "../helpers/index.js";
+import { issueAuthToken, serializeUser, verifyAuthToken } from "../helpers/index.js";
 import path from "path";
 import fs from  'fs'
 import GraphQLUpload from "graphql-upload/GraphQLUpload.mjs";
@@ -37,6 +37,15 @@ const resolvers = {
         getProfiles: async(_parent, args, _context, _info) => {
             const user = await User.find();
                 return user
+        },
+        getUserbyToken: async (_parent, {token}, _context, _info) => {
+            const info = await verifyAuthToken(token)
+            const email = info.id.email
+            const user = await User.findOne({ email });
+            if (!user) {
+                throw new GraphQLError("User is undefined")
+            }
+            return user
         },
         //brand
         getAllPendingPosterPostsforBrand:async(_parent, {id}, _context, _info) => {

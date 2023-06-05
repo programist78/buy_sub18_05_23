@@ -23,3 +23,23 @@ line-height: 34px;
 
 color: #000000;
 }
+
+@mixin text_tablet{
+    font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 18px;
+
+color: #000000;
+}
+
+@mixin text_phone{
+    font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 13px;
+
+color: #000000;
+}

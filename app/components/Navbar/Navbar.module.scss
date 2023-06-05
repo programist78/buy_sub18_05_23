@@ -1,21 +1,129 @@
 @use "../../styles/various.module.scss" as var;
-
-.back{
-  display: flex;
-  flex-direction: row;
-  width: 100vw;
-  padding-left: 5%;
-  padding-right: 5%;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 15px;
-  position: absolute;
-  z-index: 20000;
+@media screen and (min-width: 1024px) {
+  .back{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    padding-left: 5%;
+    padding-right: 5%;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    position: absolute;
+    z-index: 20000;
+  }
+  
+  .links{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+  }
+  .backmenu{
+    display: none;
+  }
+  .premenu{
+    display: none;
+  }
 }
 
-.links{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 50px;
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .back{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    padding-left: 5%;
+    padding-right: 5%;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    position: absolute;
+    z-index: 20000;
+  }
+  .logo{
+    img{
+      width: 75px;
+      height: 75px;
+    }
+  }
+  .links{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+  }
+  .backmenu{
+    display: none;
+  }
+  .premenu{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .back{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    padding-left: 5%;
+    padding-right: 5%;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    position: absolute;
+    z-index: 20000;
+  }
+  
+  .links{
+display: none;
+  }
+  .navbutton{
+    margin-left: 10px;
+}
+.logo{
+  img{
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.animate_burger2{
+    // opacity: 0.7;
+    z-index: 101 !important;
+    // right: 30px;
+    margin-top: -18px;
+    // left: auto;
+    position: absolute;
+    right: 2.6%;
+    opacity: 0.5;
+  }
+  .backmenu{
+    display: flex;
+
+    // height: 200px;
+    flex-direction: column;
+  }
+  .info_links{
+    position: absolute;
+    width: 250px;
+    margin-top: -30px;
+    height: 140px;
+    right: 0px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid #FFFFFF;
+    -webkit-backdrop-filter: blur(2vw);
+    backdrop-filter: blur(2vw);
+    border-radius: 15px;
+    z-index: 50 !important;
+    display: flex;
+    gap: 10px;
+    padding-top: 15px;
+    flex-direction: column;
+   align-items: center;
+   div:hover{
+    
+    text-shadow: 1vw 1vw 0  rgba(255, 255, 255, 0.75);
+   }
+    // margin-top: 100px;
+  }
 }

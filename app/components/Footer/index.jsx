@@ -4,8 +4,8 @@ import Image from 'next/image'
 export default function Footer() {
   return (
     <div className={styles.back}>
-            <Image src="/v1.svg" width={1049} height={615} className={styles.vector1}/>
-            <Image src="/v3.svg" width={1236} height={1091} className={styles.vector3}/>
+            {/* <Image src="/v1.svg" width={1049} height={615} className={styles.vector1}/>
+            <Image src="/v3.svg" width={1236} height={1091} className={styles.vector3}/> */}
       <div className={styles.line}/>
       <div className={styles.info}>
         <div className={styles.part1}>
@@ -33,7 +33,7 @@ export default function Footer() {
         <p>800 123 5555</p>
         </div>
       </div>
-      <div className={styles.line}/>
+      <div className={`${styles.line} ${styles.second}`}/>
       <p className={styles.small_info}>
       © 2023 by Postfordollars Media Corporation
       </p>

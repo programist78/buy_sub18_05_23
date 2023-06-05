@@ -252,26 +252,26 @@ Post authors then create a post on one of their approved social media platforms 
       </div>
 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
   <div className={styles.social_input}>
-    <Image src="/facebook.svg" width={40} height={40}/>
+    <Image src="/facebook.svg" width={40} height={40} alt="facebook"/>
     <input className={`a_input ${styles.nick_input}`} type="text" placeholder="Your Facebook Username"/>
     <input type="text" className={`a_input ${styles.number_input}`} placeholder="Number of your friends"/>
-    <Image src="/file_download.svg" width={40} height={40}/>
+    <Image src="/file_download.svg" width={40} height={40} alt="file"/>
     <p className="text">Screenshot of your social</p>
     <input className={`b_button ${styles.custom_input}`} type="file" />
   </div>
   <div className={styles.social_input}>
-    <Image src="/instagram.svg" width={40} height={40} />
+    <Image src="/instagram.svg" width={40} height={40} alt="instagram"/>
     <input type="text" className={`a_input ${styles.nick_input}`} placeholder="Your instagram Username"/>
     <input type="text" className={`a_input ${styles.number_input}`} placeholder="Number of your followers"/>
-    <Image src="/file_download.svg" width={40} height={40}/>
+    <Image src="/file_download.svg" width={40} height={40} alt="file"/>
     <p className="text">Screenshot of your social</p>
     <input className={`b_button ${styles.custom_input}`} type="file" />
   </div>
   <div className={styles.social_input}>
-    <Image src="/tiktok.svg" width={40} height={40} />
+    <Image src="/tiktok.svg" width={40} height={40} alt="tiktok"/>
     <input type="text" className={`a_input ${styles.nick_input}`} placeholder="Your TikTok Username"/>
     <input type="text" className={`a_input ${styles.number_input}`} placeholder="Number of your followers"/>
-    <Image src="/file_download.svg" width={40} height={40}/>
+    <Image src="/file_download.svg" width={40} height={40} alt="file"/>
     <p className="text">Screenshot of your social</p>
     <input className={`b_button ${styles.custom_input}`} type="file" />
   </div>
@@ -281,17 +281,17 @@ Post authors then create a post on one of their approved social media platforms 
         • If you have a Gmail account you can automatically leave a google review. Please enter your google account name.</p>
       </div>
       <div className={styles.social_input}>
-    <Image src="/google.svg" width={40} height={40} />
+    <Image src="/google.svg" width={40} height={40} alt="google"/>
     <input type="text" className="a_input" placeholder="Your Google"/>
     <input className={`b_button ${styles.custom_input}`} type="file" />
   </div>
   <div className={styles.social_input}>
-    <Image src="/yelp.svg" width={40} height={40} />
+    <Image src="/yelp.svg" width={40} height={40} alt="yelp"/>
     <input type="text" className="a_input" placeholder="Your yelp"/>
     <input className={`b_button ${styles.custom_input}`} type="file" />
   </div>
   <div className={styles.social_input}>
-    <Image src="/tripadvisor.svg" width={40} height={40} />
+    <Image src="/tripadvisor.svg" width={40} height={40} alt="tripadvisor"/>
     <input type="text" className="a_input" placeholder="Your Tripadvisor"/>
     <input className={`b_button ${styles.custom_input}`} type="file" />
   </div>

@@ -31,7 +31,7 @@ export default function BrandPageCom() {
         </div>
         <div className={styles.map_part}>
             <p className='pretitle'>Map with locations of Brands</p>
-            <Image src="/fake_map.png" width={895} height={506} />
+            <Image src="/fake_map.png" width={895} height={506} alt="map"/>
         </div>
         <p className={`text ${styles.text}`}>FreshHarvest is a vibrant and trusted brand that specializes in providing high-quality, farm-fresh vegetables and fruits. We take pride in cultivating our produce using sustainable farming practices, ensuring the highest standards of quality, nutrition, and flavor.
 Our brand stands out due to our commitment to locally sourced, seasonal produce. We prioritize supporting local farmers and promoting sustainable agriculture within our community.</p>

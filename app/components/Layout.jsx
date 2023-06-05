@@ -1,22 +1,36 @@
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { AuthContext } from "../hooks/AuthContext";
-import {useContext} from 'react'
-import { useDispatch } from "react-redux";
+import {useContext, useEffect} from 'react'
+import {useQuery} from '@apollo/client'
+import { useDispatch, useSelector } from "react-redux";
 import { addUsertoLocal } from "../redux/slices/auth";
 import styles from '../styles/Home.module.scss'
 import Image from "next/image";
 import { DM_Sans } from "next/font/google";
+import { GETUSER_BYTOKEN } from "../apollo/auth";
 const dm_sans = DM_Sans({
     weight: ["400", "500"],
     subsets: ["latin"],
     display: "swap"
 })
 const Layout = ({ children }) => {
+    const {auth} = useSelector((state) => state.auth)
+    const {userInfo} = useSelector((state) => state.userInfo)
     const dispatch = useDispatch()
     const { user, logout, authredux } = useContext(AuthContext);
+    const {data, error, loading} = useQuery(GETUSER_BYTOKEN, {variables: {token: user}});
+    // if (error) Swal.fire("Please log in ")
 
-    {user ? dispatch(addUsertoLocal(user)) : null}
+
+    useEffect(() => {
+        if(data?.getUserbyToken) {
+            dispatch(setUserInfo(data?.getUserbyToken))
+        }
+    }, [data?.getUserbyToken])
+    
+    if (user) {
+        dispatch(setToken(user));}
     return (
 <div style={{overflow: "hidden"}}>
 <div className={dm_sans.className}>

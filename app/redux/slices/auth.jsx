@@ -1,29 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 const authSlice = createSlice({
-    name: "data", 
-    initialState: {
-        auth: false,
-        // cart: []
+  name: "data",
+  initialState: {
+    auth: null,
+  },
+  reducers: {
+    setToken: (state, action) => {
+      state.auth = action.payload;
     },
-    
-    reducers: {
-      addUsertoLocal: (state) => {
-            if (state.auth == false) {
-              state.auth = true
-              // console.log("ifauth==true")
-            } else {
-              // console.log("elseauth==true")
-            }
-          },
-    }
-    
-})
+    clearToken: (state) => {
+      state.auth = null;
+    },
+  },
+});
 
-export const selectIsAuth = (state) => Boolean(state.data.auth);
+export const { setToken, clearToken } = authSlice.actions;
+
+export const selectToken = (state) => state.auth;
 
 export const authReducer = authSlice.reducer
 
-export const {addUsertoLocal} = authSlice.actions
+// export default authSlice.reducer;

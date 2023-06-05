@@ -44,7 +44,7 @@ function AuthProvider(props) {
                 
                 dispatch({
                     type: 'LOGIN',
-                    payload: decodedToken
+                    payload: localStorage.getItem("token")
                 });
             }
         }

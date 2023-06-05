@@ -7,7 +7,7 @@ export default function PosterCabinetCom() {
         <p className="title">Let's get posting</p>
         <div className={styles.inline_part}>
             <div className={styles.log_part}>
-                <Image src="/fake_logo.svg" width={139} height={139}/>
+                <Image src="/fake_logo.svg" width={139} height={139} alt='logo'/>
                 <div className={styles.child_log_part}>
                     <p className="text">User 1</p>
                     <div className={`text ${styles.addborders}`}>User 1</div>
@@ -38,7 +38,7 @@ export default function PosterCabinetCom() {
             </div>
             <div className={styles.download_part}>
             <Image src="/file_download.svg" width={66} height={66} alt='.'/>
-            <p>Download your Review  Screenshot </p>
+            <p className='nav_text'>Download your Review  Screenshot </p>
             <button className='b_button'>Download</button>
             </div>
             <p className='nav_text'>Select a Review Site</p>
@@ -49,7 +49,7 @@ export default function PosterCabinetCom() {
             </div>
             <div className={styles.download_part}>
             <Image src="/file_download.svg" width={66} height={66} alt='.'/>
-            <p>Download your Review  Screenshot </p>
+            <p className='nav_text'>Download your Review  Screenshot </p>
             <button className='b_button'>Download</button>
             </div>
             <button className='b_button'>Complete</button>

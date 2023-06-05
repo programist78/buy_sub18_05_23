@@ -1,87 +1,282 @@
-.back{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 200px;
-    gap: 120px;
-    width: 100vw;
+@media screen and (min-width: 1024px) {
+    .back{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 200px;
+        gap: 120px;
+        width: 100vw;
+    }
+    
+    .part1{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 83vw;
+        align-items: center;
+    }
+    @media screen and (min-width: 1440px) {
+        .part1{
+            width: 1200px;
+        }
+    }
+    .logo_part{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-width: 200px;
+    }
+    
+    .info_part{
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+    }
+    
+    .row_part{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 40px;
+    }
+    
+    .statistic_div{
+        background-color: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 30px;
+        padding-right: 30px;
+        border: 1px solid black;
+    }
+    
+    .payment_part{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+    
+    .pay_box{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 80px;
+        gap: 15px;
+        background: #FFFFFF;
+    border: 1px solid #A7ABB4;
+    border-radius: 15px;
+    width: 650px;
+    input{
+        width: 535px;
+    }
+    }
+    
+    .inputs{
+        display: flex;
+        flex-direction: row;
+        width: 535px;
+        justify-content: space-between;
+        gap: 15px;
+    }
+    
+    .customone{
+        width: 258px;
+    }
+    
+    .statistic_box{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
-.part1{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 1200px;
-    align-items: center;
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .back{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 200px;
+        gap: 100px;
+        width: 100vw;
+    }
+    
+    .part1{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 92vw;
+        align-items: center;
+    }
+    
+    .logo_part{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-width: 160px;
+        img{
+            width: 100px;
+            height: 100px;
+        }
+    }
+    
+    .info_part{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+    }
+    
+    .row_part{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+    }
+    
+    .statistic_div{
+        background-color: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 25px;
+        padding-right: 25px;
+        border: 1px solid black;
+    }
+    
+    .payment_part{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+    
+    .pay_box{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 60px;
+        gap: 15px;
+        background: #FFFFFF;
+    border: 1px solid #A7ABB4;
+    border-radius: 15px;
+    width: 650px;
+    input{
+        width: 535px;
+    }
+    }
+    
+    .inputs{
+        display: flex;
+        flex-direction: row;
+        width: 535px;
+        justify-content: space-between;
+        gap: 15px;
+    }
+    
+    .customone{
+        width: 258px;
+    }
+    
+    .statistic_box{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
 }
-
-.logo_part{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 200px;
-}
-
-.info_part{
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-}
-
-.row_part{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 40px;
-}
-
-.statistic_div{
-    background-color: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 30px;
-    padding-right: 30px;
-    border: 1px solid black;
-}
-
-.payment_part{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px;
-}
-
-.pay_box{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 80px;
-    gap: 15px;
-    background: #FFFFFF;
-border: 1px solid #A7ABB4;
-border-radius: 15px;
-width: 650px;
-input{
-    width: 535px;
-}
-}
-
-.inputs{
-    display: flex;
-    flex-direction: row;
-    width: 535px;
-    justify-content: space-between;
-    gap: 15px;
-}
-
-.customone{
-    width: 258px;
-}
-
-.statistic_box{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+@media screen and (max-width: 768px) {
+    .back{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 100px;
+        gap: 50px;
+        width: 100vw;
+    }
+    
+    .part1{
+        display: flex;
+        flex-direction: column;
+        width: 92vw;
+        gap: 50px;
+        align-items: center;
+    }
+    
+    .logo_part{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        max-width: 70vw;
+        img{
+            width: 70px;
+            height: 70px;
+        }
+    }
+    
+    .info_part{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .row_part{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .statistic_div{
+        background-color: none;
+        display: flex;
+        width: 60vw;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 15px;
+        padding-right: 15px;
+        border: 1px solid black;
+    }
+    
+    .payment_part{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .pay_box{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 40px;
+        gap: 10px;
+        background: #FFFFFF;
+    border: 1px solid #A7ABB4;
+    border-radius: 15px;
+    width: 80vw;
+    input{
+        width: 70vw;
+    }
+    }
+    
+    .inputs{
+        display: flex;
+        flex-direction: row;
+        width: 70vw;
+        justify-content: space-between;
+        gap: 15px;
+    }
+    
+    .customone{
+        width: 35vw;
+    }
+    
+    .statistic_box{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
 }

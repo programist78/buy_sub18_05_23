@@ -74,6 +74,21 @@ mutation Mutation($about: RegisterInput, $info: SocialMediaInput, $image: [Uploa
 }
 `
 
+export const GETUSER_BYTOKEN = gql`
+query GetUserbyToken($token: String) {
+  getUserbyToken(token: $token) {
+    id
+    fullname
+    email
+    username
+    role
+    createdPersons
+    createdIncidents
+    createdAddFiles
+  }
+}
+`
+
 export const SEND_CONFIRMED_EMAIL = gql`
 mutation SendConfirmedEmail($email: String!) {
   sendConfirmedEmail(email: $email)
