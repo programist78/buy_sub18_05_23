@@ -2,7 +2,7 @@ import styles from './SignUpBrand.module.scss'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import {LOGIN_USER} from '../../../apollo/auth'
+import {LOGIN_USER, REGISTER_USER} from '../../../apollo/auth'
 import { AuthContext } from '../../../hooks/AuthContext';
 import { useMutation } from "@apollo/client";
 import { useRouter } from 'next/router';
@@ -58,11 +58,12 @@ export default function SignUpBrand() {
     .required('Password is required')
     .min(5, 'Password must be at least 5 characters')
     .max(40, 'Password must not exceed 40 characters'),
-    confirmpassword: Yup
+    confirm_password: Yup
     .string()
     .required('Please retype your password.')
     .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
-
+    brandname: Yup.string()
+    .required('Brand name is required!')
   });
 
   const {
@@ -78,11 +79,14 @@ export default function SignUpBrand() {
 
   const onSubmit = data => {
     setData(data)
-    setTimeout(() => loginUser(), 500)
+    setTimeout(() => registerUser(), 500)
+    // console.log(data)
   };
-  const [loginUser, {loading}] = useMutation(LOGIN_USER, {
+  console.log(data)
+
+  const [registerUser, {loading}] = useMutation(REGISTER_USER, {
         
-    update(proxy, { data: {loginUser: userData}}){
+    update(proxy, { data: {registerUser: userData}}){
         context.login(userData)
         router.push('/');
     },
@@ -137,13 +141,13 @@ export default function SignUpBrand() {
         </div>
         <div>
       <input
-        name="confirmpassword"
-        type="text"
-        {...register('confirmpassword')}
+        name="confirm_password"
+        type="password"
+        {...register('confirm_password')}
         placeholder='Confirm password'
-        className={`a_input ${errors.confirmpassword ? 'is-invalid' : ''}`}
+        className={`a_input ${errors.confirm_password ? 'is-invalid' : ''}`}
       />
-      <p className={styles.errors}>{errors.confirmpassword?.message}</p>
+      <p className={styles.errors}>{errors.confirm_password?.message}</p>
     </div>
     <div>
       <input
@@ -174,6 +178,25 @@ export default function SignUpBrand() {
         className={`a_input ${errors.address ? 'is-invalid' : ''}`}
       />
       <p className={styles.errors}>{errors.address?.message}</p>
+    </div>
+    <div>
+      <input
+        name="websiteLink"
+        type="text"
+        {...register('websiteLink')}
+        placeholder='Your website link(
+          if you have one)'
+        className={`a_input ${errors.address ? 'is-invalid' : ''}`}
+      />
+    </div>
+    <div>
+      <input
+        name="brandname"
+        type="text"
+        {...register('brandname')}
+        placeholder='Your brand name'
+        className={`a_input ${errors.brandname ? 'is-invalid' : ''}`}
+      />
     </div>
     <label className="checkbox">
           <input

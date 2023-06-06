@@ -68,6 +68,8 @@ mutation Mutation($about: RegisterInput, $info: SocialMediaInput, $image: [Uploa
       plan
       hasTrial
       endDate
+      websiteLink
+      address
     }
     token
   }
@@ -80,11 +82,30 @@ query GetUserbyToken($token: String) {
     id
     fullname
     email
-    username
     role
-    createdPersons
-    createdIncidents
-    createdAddFiles
+    socialMedia {
+      images
+      number
+      nick
+    }
+    confirmedEmail
+    avatarUrl
+    phone
+    pendingPosts
+    completedPosts
+    balance
+    brandPendingPosts
+    brandCompletedPosts
+    postPrice
+    brandname
+    physicalLocation {
+      latitude
+      longitude
+    }
+    brandDirection
+    plan
+    hasTrial
+    endDate
   }
 }
 `
@@ -103,8 +124,8 @@ mutation ChangeStatus($changeStatusId: ID, $confirmationCode: String) {
 
 
 export const FORGOT_PASSWORD = gql`
-mutation ForgotPassword($forgotPasswordId: ID, $confirmationCode: String, $password: String) {
-  forgotPassword(id: $forgotPasswordId, confirmationCode: $confirmationCode, password: $password)
+mutation ForgotPassword($email: String, $confirmationCode: String, $password: String) {
+  forgotPassword(email: $email, confirmationCode: $confirmationCode, password: $password)
 }
 `
 

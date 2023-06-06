@@ -6,8 +6,11 @@ import { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '../../hooks/AuthContext'
 import { useRouter } from 'next/router'
 import { useSpring, animated } from '@react-spring/web'
+import { clearToken } from '../../redux/slices/auth'
+import { clearUserInfo } from '../../redux/slices/userInfo'
 
 export default function Navbar() {
+  const {userInfo} = useSelector((state) => state.userInfo)
   const { user, logout, authredux } = useContext(AuthContext);
   const [isOpen, toggle] = useState(false)
   const [open, setOpen] = useState("")
@@ -35,6 +38,8 @@ export default function Navbar() {
   const onLogout = () => {
     logout();
     router.push('/')
+    clearToken(),
+    clearUserInfo()
     document.location.reload();
 }
   return (
@@ -62,11 +67,23 @@ export default function Navbar() {
         <animated.rect width="40" height="4" rx="2" style={third} />
       </svg>
       </div>
-         <div className={styles.info_links}>
-         <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
-     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link>
-      <Link href="/auth/login"><button className='b_button'>Log in</button></Link>
-         </div>
+      {userInfo
+      ?
+          <div className={styles.info_links}>
+     {/* <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
+     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link> */}
+     {(userInfo.role == "BRAND") && <Link href="/personal/brand"> <button className='a_button'>Brand Cabinet</button></Link>  }
+     {(userInfo.role == "USER") && <Link href="/personal/poster"> <button className='a_button'>Poster Cabinet</button></Link>  }
+     {(userInfo.role == "ADMIN") && <Link href="/personal/poster"> <button className='a_button'>Admin panel</button></Link>  }
+    <button className='b_button' onClick={onLogout} >Log out</button> 
+    </div>
+    :
+    <div className={styles.info_links}>
+    <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
+    <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link>
+     <Link href="/auth/login"><button className='b_button'>Log in</button></Link>
+   </div>
+      }
         </div>
         :
         <div className={styles.premenu}>
@@ -86,11 +103,24 @@ export default function Navbar() {
       </div>
         // <CgMenu className={styles.burger} onClick={() => setIsOpenMenu(!isOpenMenu)}/>  
       }
-    <div className={styles.links}>
-     <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
-     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link>
-      <Link href="/auth/login"><button className='b_button'>Log in</button></Link>
+      {userInfo
+      ?
+          <div className={styles.links}>
+     {/* <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
+     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link> */}
+     {(userInfo.role == "BRAND") && <Link href="/personal/brand"> <button className='a_button'>Brand Cabinet</button></Link>  }
+     {(userInfo.role == "USER") && <Link href="/personal/poster"> <button className='a_button'>Poster Cabinet</button></Link>  }
+     {(userInfo.role == "ADMIN") && <Link href="/personal/poster"> <button className='a_button'>Admin panel</button></Link>  }
+    <button className='b_button' onClick={onLogout} >Log out</button> 
     </div>
+    :
+    <div className={styles.links}>
+    <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
+    <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link>
+     <Link href="/auth/login"><button className='b_button'>Log in</button></Link>
+   </div>
+      }
+
   </div>
     )
 }

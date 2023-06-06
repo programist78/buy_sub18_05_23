@@ -55,6 +55,8 @@ const User = new mongoose.Schema(
     brandDirection: {
       type: String
     },
+    address: {type: String},
+    websiteLink:{type: String},
     plan: { type: String, enum: ['none', 'month'], default: 'none' },
     hasTrial: { type: Boolean, default: false },
     endDate: { type: Date, default: null }

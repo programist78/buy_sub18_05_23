@@ -41,8 +41,8 @@ export default function SignUpPosterCom() {
   }
   const context = useContext(AuthContext) || "";
   const router = useRouter();
-  const { auth } = useSelector((state) => state.auth);
-  {auth ? router.push('/') : ""}
+  const { userInfo } = useSelector((state) => state.userInfo);
+  {userInfo ? router.push('/') : ""}
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Email is required')
@@ -73,9 +73,16 @@ const {
 });
 
 const [data, setData] = useState()
+console.log(data)
 
-const onSubmit = data => {
+const onSubmit1 = data => {
   setData(data)
+  setIsStart(!isStart)
+  // setTimeout(() => loginUser(), 500)
+};
+
+const onSubmit2 = data => {
+  setInformation((prevData) => [...prevData, data]);
   setIsStart(!isStart)
   // setTimeout(() => loginUser(), 500)
 };
@@ -156,7 +163,7 @@ onCompleted: (data) => {
 Payments are made via Paypal/Stripe to your email address see  policy for more information details.
 Post authors then create a post on one of their approved social media platforms and follow the instructions on the post page to submit it for review.
  Once approved, then the Poster gets paid into their account. These funds (minus our percentage) are available for payment to the poster upon request.</p>
-  <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+  <form onSubmit={handleSubmit(onSubmit1)} className={styles.form}>
     <div>
       <input
         name="fullname"
@@ -199,11 +206,11 @@ Post authors then create a post on one of their approved social media platforms 
     </div>
     <div>
       <input
-        name="confirmpassword"
-        type="text"
-        {...register('confirmpassword')}
+        name="confirm_password"
+        type="password"
+        {...register('confirm_password')}
         placeholder='Confirm password'
-        className={`a_input ${errors.confirmpassword ? 'is-invalid' : ''}`}
+        className={`a_input ${errors.confirm_password ? 'is-invalid' : ''}`}
       />
       <p className={styles.errors}>{errors.confirmpassword?.message}</p>
       <p >We've sent you confirmation to your email.</p>
@@ -250,7 +257,7 @@ Post authors then create a post on one of their approved social media platforms 
 <br />
 • For your convenience, a check box has been provided for each platform, enabling you to select the social sites you wish to post on. </p>
       </div>
-<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+<form onSubmit={handleSubmit(onSubmit2)} className={styles.form}>
   <div className={styles.social_input}>
     <Image src="/facebook.svg" width={40} height={40} alt="facebook"/>
     <input className={`a_input ${styles.nick_input}`} type="text" placeholder="Your Facebook Username"/>
@@ -283,17 +290,17 @@ Post authors then create a post on one of their approved social media platforms 
       <div className={styles.social_input}>
     <Image src="/google.svg" width={40} height={40} alt="google"/>
     <input type="text" className="a_input" placeholder="Your Google"/>
-    <input className={`b_button ${styles.custom_input}`} type="file" />
-  </div>
+    <button className={`b_button`}>Sign up</button>
+      </div>
   <div className={styles.social_input}>
     <Image src="/yelp.svg" width={40} height={40} alt="yelp"/>
     <input type="text" className="a_input" placeholder="Your yelp"/>
-    <input className={`b_button ${styles.custom_input}`} type="file" />
-  </div>
+    <button className={`b_button`}>Sign up</button> 
+     </div>
   <div className={styles.social_input}>
     <Image src="/tripadvisor.svg" width={40} height={40} alt="tripadvisor"/>
     <input type="text" className="a_input" placeholder="Your Tripadvisor"/>
-    <input className={`b_button ${styles.custom_input}`} type="file" />
+    <button className={`b_button`}>Sign up</button>
   </div>
   <button type="submit" disabled={messageError == "" ? false : true}
  className={`b_button ${styles.b_button}`}>

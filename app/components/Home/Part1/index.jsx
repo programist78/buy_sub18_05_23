@@ -5,7 +5,6 @@ export default function Part1() {
   const [containerSize, setContainerSize] = useState();
 
   // const debouncedHandleResize = debounce(handleResize, 100);
-console.log(containerSize)
   useEffect(() => {
     setContainerSize({
       width: window.innerWidth,

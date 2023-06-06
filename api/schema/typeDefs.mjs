@@ -78,6 +78,8 @@ const typeDefs = `#graphql
     plan: String
     hasTrial: Boolean
     endDate: String
+    websiteLink: String
+    address: String
   }
 
   type AuthPayload {
@@ -124,11 +126,30 @@ const typeDefs = `#graphql
     postPrice: String
     latitude: Float
     longitude: Float
+    websiteLink: String
+    address: String
+
+    
   }
 
   input SocialMediaInput{
-    number: String!
-    link: String!
+    instagramUserName: String!
+    instagramFollowers: String!
+    
+
+    facebookUserName: String!
+    facebookFollowers: String!
+
+
+    tiktokUserName: String!
+    tiktokFollowers: String!
+ 
+  }
+
+  input ReviewMediaInput{
+    googleReview: String
+    yelpReview: String
+    tripadvisorReview: String
   }
 
 
@@ -147,10 +168,10 @@ const typeDefs = `#graphql
 
   type Mutation {
     loginUser(about: LoginInput): AuthPayload
-    registerUser(about: RegisterInput, info: SocialMediaInput,  image: [Upload]): AuthPayload
+    registerUser(about: RegisterInput, social: SocialMediaInput,review:ReviewMediaInput   image: [Upload], instagramInput: Upload, facebookInput: Upload,  tiktokInput: Upload): AuthPayload
     sendConfirmedEmail(email: String!): String
     changeStatus(id: ID, confirmationCode: String): String
-    forgotPassword(id: ID, confirmationCode: String, password: String): String
+    forgotPassword(email: String, confirmationCode: String, password: String): String
     forgotPasswordSend(email: String): String
     addAdmin(email: String): String
 

@@ -4,11 +4,12 @@ import { AuthContext } from "../hooks/AuthContext";
 import {useContext, useEffect} from 'react'
 import {useQuery} from '@apollo/client'
 import { useDispatch, useSelector } from "react-redux";
-import { addUsertoLocal } from "../redux/slices/auth";
+import { addUsertoLocal, setToken } from "../redux/slices/auth";
 import styles from '../styles/Home.module.scss'
 import Image from "next/image";
 import { DM_Sans } from "next/font/google";
 import { GETUSER_BYTOKEN } from "../apollo/auth";
+import { setUserInfo } from "../redux/slices/userInfo";
 const dm_sans = DM_Sans({
     weight: ["400", "500"],
     subsets: ["latin"],
@@ -22,15 +23,21 @@ const Layout = ({ children }) => {
     const {data, error, loading} = useQuery(GETUSER_BYTOKEN, {variables: {token: user}});
     // if (error) Swal.fire("Please log in ")
 
-
+// console.log(data)
     useEffect(() => {
         if(data?.getUserbyToken) {
             dispatch(setUserInfo(data?.getUserbyToken))
         }
     }, [data?.getUserbyToken])
+    useEffect(() => {
+        if (user) {
+            dispatch(setToken(user));}
+    }, [user])
+
+    console.log(userInfo)
+    console.log(auth)
     
-    if (user) {
-        dispatch(setToken(user));}
+
     return (
 <div style={{overflow: "hidden"}}>
 <div className={dm_sans.className}>

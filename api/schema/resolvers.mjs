@@ -105,7 +105,7 @@ const resolvers = {
     Mutation: {
         //authorisation
         registerUser: async(parent, args, context, _info) => {
-                const { fullname, brandname, email, password, confirm_password, phone, brandDirection,latitude, longitude, postPrice  } = args.about
+                const { fullname,websiteLink,address, brandname, email, password, confirm_password, phone, brandDirection,latitude, longitude, postPrice  } = args.about
         
             const already_exsist = await User.findOne({ email });
             if (already_exsist) {
@@ -137,7 +137,7 @@ const resolvers = {
            if (brand_exist) {
             throw new GraphQLError("Email already exists");
         }
-        user = new User({ fullname,email, passwordHash, role: "BRAND", confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice})
+        user = new User({ fullname,email, passwordHash,address, role: "BRAND",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice})
         } else{
             const {number, link} = args.info
             let images = [];
@@ -261,9 +261,9 @@ const resolvers = {
             }
             return "Done"
         },
-        forgotPassword: async (parent,{id, confirmationCode, password}, args) => {
+        forgotPassword: async (parent,{email, confirmationCode, password}, args) => {
             const user = await User.findOne(
-                {_id:id}
+                {email}
                 );
                 if (!user) {
                     throw new GraphQLError("Invalid email given- changestatus");
@@ -275,7 +275,7 @@ const resolvers = {
             const salt = await bcrypt.genSalt(10);
             const passwordHash = await bcrypt.hash(password, salt);
             const newuser = await User.findByIdAndUpdate(
-                id,
+                user.id,
                 {passwordHash},
                 { new: true }
             );
@@ -291,14 +291,20 @@ const resolvers = {
                 if (!user) {
                     throw new GraphQLError("Invalid email given- forgot password");
                 }
-        const transporter = nodemailer.createTransport(
+                let math = Math.random() * (43564389374833)
+                let newconfirmationCode = Math.round(math)
+                const newuser = await User.findByIdAndUpdate(user.id, { confirmationCode: newconfirmationCode }, { new: true });
+                if (!newuser) {
+                    throw new GraphQLError("Something went wrong");
+                }
+                const transporter = nodemailer.createTransport(
             sendgridTransport({
                 auth:{
                     api_key:process.env.SENDGRID_APIKEY,
                 }
             })
         )
-        let mailOptions = { from: process.env.FROM_EMAIL, to: user.email, subject: 'password recovery', text: 'Hello '+ user.fullname +',\n\n' + 'Please verify your account by clicking the link: \nhttp://localhost:3000/' + 'forgot-password/' + user.confirmationCode + "&" + user.id + '\n\nThank You!\n' };
+        let mailOptions = { from: process.env.FROM_EMAIL, to: user.email, subject: 'password recovery', text: 'Hello '+ user.fullname +',\n\n' + 'Type this code on website:' + newuser.confirmationCode };
         transporter.sendMail(mailOptions, function (err) {
             if (err) { 
             return console.log(err)

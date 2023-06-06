@@ -2,7 +2,7 @@ import styles from '../Login/Login.module.scss'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import {LOGIN_USER} from '../../../apollo/auth'
+import {FORGOT_PASSWORD, FORGOT_PASSWORD_SEND, LOGIN_USER, SEND_CONFIRMED_EMAIL} from '../../../apollo/auth'
 import { AuthContext } from '../../../hooks/AuthContext';
 import { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
@@ -11,12 +11,14 @@ import { useSelector } from 'react-redux';
 import {CiLogin} from 'react-icons/ci'
 import Swal from "sweetalert2"
 import Link from 'next/link';
+import ReCAPTCHA from 'react-google-recaptcha';
 function ForgotPasswordCom() {
+  const [email, setEmail] = useState("")
     const [sendEmail, setSendEmail] = useState(false)
     const context = useContext(AuthContext) || "";
     const router = useRouter();
-    const { auth } = useSelector((state) => state.auth);
-    {auth ? router.push('/') : ""}
+    const { userInfo } = useSelector((state) => state.userInfo);
+    {userInfo ? router.push('/') : ""}
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required('Email is required')
@@ -26,6 +28,7 @@ function ForgotPasswordCom() {
       .min(5, 'Password must be at least 5 characters')
       .max(40, 'Password must not exceed 40 characters'),
     // acceptTerms: Yup.bool().oneOf([true], 'Accept Terms is required')
+    confirmationCode: Yup.string().required("Type your code")
   });
 
   const {
@@ -38,21 +41,12 @@ function ForgotPasswordCom() {
   });
 
   const [data, setData] = useState()
+  console.log(data)
 
-  const onSubmit = data => {
-    setData(data)
-    setTimeout(() => loginUser(), 500)
-  };
-  const sendEmailForget = data => {
-    setData(data)
-    setTimeout(() => loginUser(), 500)
-  };
-  const [loginUser, {loading}] = useMutation(LOGIN_USER, {
+
+
+  const [forgotPassword, {loading}] = useMutation(FORGOT_PASSWORD, {
         
-    update(proxy, { data: {loginUser: userData}}){
-        context.login(userData)
-        router.push('/');
-    },
     onError(error) {
       Swal.fire({
         icon: 'error',
@@ -65,34 +59,64 @@ function ForgotPasswordCom() {
         title: `Loading`
       })
   } ,
-    variables: { about: data  },
+    variables: data,
 });
 
+const [sendConfirmedEmail] = useMutation(FORGOT_PASSWORD_SEND, {
+        
+  onError(error) {
+    Swal.fire({
+      icon: 'error',
+      title: `${error}`
+    })
+},
+onCompleted: (data) => {
+  setSendEmail(!sendEmail)
+} ,
+  variables: { email  },
+});
 
-  
+const sendEmailForget = data => {
+  sendConfirmedEmail()
+};
+
+const onSubmit = data => {
+  setData(data)
+  setTimeout(() => forgotPassword(), 500)
+};
+
+function onChange(value) {
+  console.log("Captcha value:", value);
+}
 
   return (
     <div className={styles.back}>
         <p className={`pretitle ${styles.pretitle}`}>Forgot Password</p>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         {!sendEmail ?
-              <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+              <div className={styles.form}>
                 <div>
           <input
             name="email"
-            type="text"
+            type="email"
+            required
             {...register('email')}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder='Your email'
             className={`a_input ${errors.email ? 'is-invalid' : ''}`}
           />
           <p className={styles.errors}>{errors.email?.message}</p>
           
         </div>
+        <ReCAPTCHA
+            sitekey="6LcBFlwmAAAAAJWblnjYhb4ftrng3BghULF6hy8I"
+            onChange={onChange}
+            />
         <button
             className={`b_button ${styles.b_button}`}
-            type="submit" 
+            onClick={() => sendEmailForget()}
           >Send</button>
-        </form>
+        </div>
         :
         <>
                         <div>
@@ -109,13 +133,13 @@ function ForgotPasswordCom() {
         <div>
     
     <input
-      name="code"
-      type="code"
-      {...register('code')}
+      name="confirmationCode"
+      type="text"
+      {...register('confirmationCode')}
       placeholder='Your code'
-      className={`a_input ${errors.code ? 'is-invalid' : ''}`}
+      className={`a_input ${errors.confirmationCode ? 'is-invalid' : ''}`}
     />
-    <p className={styles.errors}>{errors.code?.message}</p>
+    <p className={styles.errors}>{errors.confirmationCode?.message}</p>
   </div>
 <div>
     
@@ -129,7 +153,7 @@ function ForgotPasswordCom() {
           <p className={styles.errors}>{errors.password?.message}</p>
         </div>
 
-        <button type="submit" className={`b_button ${styles.b_button}`}>
+        <button onClick={() => onSubmit()} className={`b_button ${styles.b_button}`}>
             Log In
         </button>
         </>
@@ -137,7 +161,7 @@ function ForgotPasswordCom() {
 
         
       </form>
-      <Link href="/auth/forgot-password" style={{textDecoration: "underline"}}><p className={`text ${styles.small_text}`}>Forgot Password?</p></Link>
+      {/* <Link href="/auth/forgot-password" style={{textDecoration: "underline"}}><p className={`text ${styles.small_text}`}>Forgot Password?</p></Link> */}
       <p className={`text ${styles.text}`}>Dont have an account? <Link href="/auth/sign-up" style={{textDecoration: "underline"}}>Sign up</Link></p>
     </div>
   );
