@@ -19,7 +19,10 @@ const User = new mongoose.Schema(
       required: true
     },
     socialMedia: {
-      type: Array
+      type: Object
+    },
+    reviewMedia: {
+      type: Object
     },
     confirmedEmail: {type: Boolean},
     confirmationCode: { type: String }, 
@@ -47,7 +50,8 @@ const User = new mongoose.Schema(
       type: Number
     },
     brandname: {
-      type: String
+      type: String,
+      unique: true
     },
     physicalLocation: {
       type: Object
@@ -55,6 +59,7 @@ const User = new mongoose.Schema(
     brandDirection: {
       type: String
     },
+    image: {type: String},
     address: {type: String},
     websiteLink:{type: String},
     plan: { type: String, enum: ['none', 'month'], default: 'none' },

@@ -46,7 +46,7 @@ function LoginCom() {
         
     update(proxy, { data: {loginUser: userData}}){
         context.login(userData)
-        router.push('/');
+
     },
     onError(error) {
       Swal.fire({
@@ -59,6 +59,7 @@ function LoginCom() {
         icon: 'success',
         title: `Loading`
       })
+      router.push('/');
   } ,
     variables: { about: data  },
 });

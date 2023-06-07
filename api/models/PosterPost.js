@@ -4,7 +4,6 @@ const PosterPost = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
     },
     text: {
       type: String,
@@ -17,6 +16,14 @@ const PosterPost = new mongoose.Schema(
     brandId: {
         type: String,
         required: true
+    },
+    selectedSocial:{
+      type: String, 
+      required: true
+    },
+    selectedReview:{
+      type: String, 
+      required: true
     },
     images: {
         type: Array

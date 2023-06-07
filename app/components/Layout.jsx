@@ -10,12 +10,14 @@ import Image from "next/image";
 import { DM_Sans } from "next/font/google";
 import { GETUSER_BYTOKEN } from "../apollo/auth";
 import { setUserInfo } from "../redux/slices/userInfo";
+import { useRouter } from "next/router";
 const dm_sans = DM_Sans({
     weight: ["400", "500"],
     subsets: ["latin"],
     display: "swap"
 })
 const Layout = ({ children }) => {
+    const router = useRouter()
     const {auth} = useSelector((state) => state.auth)
     const {userInfo} = useSelector((state) => state.userInfo)
     const dispatch = useDispatch()
@@ -27,11 +29,14 @@ const Layout = ({ children }) => {
     useEffect(() => {
         if(data?.getUserbyToken) {
             dispatch(setUserInfo(data?.getUserbyToken))
+        
         }
     }, [data?.getUserbyToken])
     useEffect(() => {
         if (user) {
-            dispatch(setToken(user));}
+            dispatch(setToken(user));
+            
+        }
     }, [user])
 
     console.log(userInfo)

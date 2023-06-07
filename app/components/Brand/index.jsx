@@ -1,12 +1,32 @@
 import Image from 'next/image'
 import styles from './Brand.module.scss'
+import {useQuery} from '@apollo/client'
+import { GET_BRAND_QUERY } from '../../apollo/posters'
+import Swal from 'sweetalert2'
+import { useEffect, useState } from 'react'
+export default function BrandPageCom({queryId}) {
+    const [data, setData] = useState()
+    // console.log(queryId)
+    const {getBrand} = useQuery(GET_BRAND_QUERY, {
+        onError(error) {
+            Swal.fire({
+              icon: 'error',
+              title: `${error}`
+            })
+        },
+        variables: {brandname:queryId}
+    })
 
-export default function BrandPageCom() {
+        useEffect(() => {
+          setData(getBrand?.getBrandQuery)
+        }, [getBrand?.getBrandQuery])
+        // console.log(data)
+        console.log(getBrand?.getBrandQuery)
   return (
     <div className={styles.back}>
         <div className={styles.header}>
             <Image src="/fake_logo.svg" alt="logo" width={76} height={76}/>
-            <p className='title'>About Brand</p>
+            <p className='title'>{data?.brandname}</p>
             <Image src="/button_map.svg" alt="logo" width={76} height={76}/>
         </div>
         <div className={styles.description}>

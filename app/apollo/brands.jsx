@@ -13,29 +13,33 @@ mutation DeclinePosterPost($posterPostId: ID) {
 `
 
 export const PENDING_POSTS_FOR_BRAND = gql`
-query GetAllPendingPosterPostsforBrand($getAllPendingPosterPostsforBrandId: ID) {
-    getAllPendingPosterPostsforBrand(id: $getAllPendingPosterPostsforBrandId) {
-      title
-      id
-      text
-      authorId
-      postId
-      images
-      confirmed
-    }
+query Query($getAllPendingPosterPostsforBrandId: ID) {
+  getAllPendingPosterPostsforBrand(id: $getAllPendingPosterPostsforBrandId) {
+    id
+    title
+    text
+    authorId
+    postId
+    images
+    confirmed
+    selectedReview
+    selectedSocial
   }
+}
 `
 
 export const COMPLETED_POSTS_FOR_BRAND = gql`
-query GetAllCompletedPosterPostsforBrand($getAllCompletedPosterPostsforBrandId: ID) {
-    getAllCompletedPosterPostsforBrand(id: $getAllCompletedPosterPostsforBrandId) {
-      title
-      id
-      text
-      authorId
-      postId
-      images
-      confirmed
-    }
+query Query($getAllCompletedPosterPostsforBrandId: ID) {
+  getAllCompletedPosterPostsforBrand(id: $getAllCompletedPosterPostsforBrandId) {
+    id
+    title
+    text
+    authorId
+    postId
+    images
+    confirmed
+    selectedReview
+    selectedSocial
   }
+}
 `

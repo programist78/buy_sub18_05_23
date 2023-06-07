@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client/core";
 
-export const GET_POSTS = gql`
+export const CREATE_POSTER_POST = gql`
 mutation CreatePosterPost($post: PosterPostInput!, $image: [Upload]!) {
   createPosterPost(post: $post, image: $image) {
     title
@@ -10,6 +10,86 @@ mutation CreatePosterPost($post: PosterPostInput!, $image: [Upload]!) {
     postId
     images
     confirmed
+    selectedReview
+    selectedSocial
+  }
+}
+`
+
+export const GET_BRAND = gql`
+mutation Mutation($brandname: String) {
+  getBrand(brandname: $brandname)
+}
+`
+
+export const GET_BRAND_QUERY = gql`
+query GetBrandQuery($brandname: String!) {
+  getBrandQuery(brandname: $brandname) {
+    id
+    fullname
+    email
+    role
+    socialMedia {
+      instagram {
+        name
+        followers
+      }
+      facebook {
+        name
+        followers
+      }
+      tiktok {
+        name
+        followers
+      }
+    }
+    reviewMedia {
+      google
+      yelp
+      tripadvisor
+    }
+    confirmedEmail
+    avatarUrl
+    phone
+    pendingPosts
+    completedPosts
+    balance
+    brandPendingPosts
+    brandCompletedPosts
+    postPrice
+    brandname
+    physicalLocation {
+      latitude
+      longitude
+    }
+    brandDirection
+    plan
+    hasTrial
+    endDate
+    websiteLink
+    address
+  }
+}
+`
+
+export const GET_NEW_BRANDS = gql`
+query GetNewBrands {
+  getNewBrands {
+    avatarUrl
+    postPrice
+    brandname
+    address
+  }
+}
+`
+
+export const GET_POPULAR_BRANDS = gql`
+query GetPopularBrands {
+  getPopularBrands {
+    avatarUrl
+    postPrice
+    brandname
+    address
   }
 }
 `

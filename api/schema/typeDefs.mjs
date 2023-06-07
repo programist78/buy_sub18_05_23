@@ -19,15 +19,23 @@ const typeDefs = `#graphql
   Bucket: String
   }
 
-  type SocialMedia {
-    images: [String]
-    number: String
-    nick: String
+  type SocialMediaOne {
+    name: String
+    followers: String
   }
 
-  type PosterPost {
-    title: String
+  type SocialMedia {
+    instagram: SocialMediaOne
+    facebook: SocialMediaOne
+    tiktok: SocialMediaOne
   }
+
+  type ReviewMedia {
+    google: String
+    yelp: String
+    tripadvisor: String
+  }
+
 
   type BrandPost {
     title: String
@@ -48,6 +56,8 @@ const typeDefs = `#graphql
     postId: String
     images: [String]
     confirmed: Boolean
+    selectedReview: String
+    selectedSocial: String
   } 
 
   type Coordinates {
@@ -62,7 +72,8 @@ const typeDefs = `#graphql
     fullname: String
     email: String
     role: String
-    socialMedia: [SocialMedia]
+    socialMedia: SocialMedia
+    reviewMedia: ReviewMedia
     confirmedEmail: Boolean
     avatarUrl: String
     phone: String
@@ -101,6 +112,11 @@ const typeDefs = `#graphql
   getProfile: User
   getProfiles: [User]
   getUserbyToken(token: String): User
+
+  getNewBrands: [User]
+  getPopularBrands: [User]
+
+  getBrandQuery(brandname: String!): User
   }
 
   type Image {
@@ -154,10 +170,11 @@ const typeDefs = `#graphql
 
 
   input PosterPostInput {
-    title: String
     text: String
     authorId: String
     brandId: String
+    selectedSocial: String
+    selectedReview: String
     }
 
   input BrandPostUpdateInput {
@@ -166,9 +183,14 @@ const typeDefs = `#graphql
     id: ID
   }
 
+  input ImageInput {
+  image: Upload
+  identifier: String
+}
+
   type Mutation {
     loginUser(about: LoginInput): AuthPayload
-    registerUser(about: RegisterInput, social: SocialMediaInput,review:ReviewMediaInput   image: [Upload], instagramInput: Upload, facebookInput: Upload,  tiktokInput: Upload): AuthPayload
+    registerUser(about: RegisterInput, social: SocialMediaInput,review:ReviewMediaInput,   images: [ImageInput]): AuthPayload
     sendConfirmedEmail(email: String!): String
     changeStatus(id: ID, confirmationCode: String): String
     forgotPassword(email: String, confirmationCode: String, password: String): String
@@ -192,6 +214,8 @@ const typeDefs = `#graphql
     withdrawBalance(email: String, money: String): User
 
     updatetoSchema(newfield: String, value: String): [User]
+
+    getBrand(brandname: String): String
   }
 `;
 

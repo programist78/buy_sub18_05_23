@@ -100,13 +100,38 @@ const resolvers = {
                 }),
                 )
             return list
-        }
+        },
+        //brand
+        getNewBrands: async(_parent, args, _context, _info) => {
+
+            const filter = {
+                role: "BRAND",
+              };
+              const users = await User.find(filter).sort({ createdAt: -1 });;
+              return users
+        },
+        getPopularBrands: async(_parent, args, _context, _info) => {
+            const filter = {
+                role: "BRAND",
+              };
+              const users = await User.find(filter).sort({ brandCompletedPosts: -1 });;
+              return users
+        },
+        getBrandQuery: async(_parent, {brandname}, _context, _info) => {
+            const user = await User.findOne(
+                {brandname}
+                );
+                if (!user) {
+                    throw new GraphQLError(`A brand called "${brandname}" does not exist`);
+                }
+                return user
+        },
     },
     Mutation: {
         //authorisation
-        registerUser: async(parent, args, context, _info) => {
+        registerUser: async(parent, args,social, context, _info) => {
                 const { fullname,websiteLink,address, brandname, email, password, confirm_password, phone, brandDirection,latitude, longitude, postPrice  } = args.about
-        
+        console.log(context)
             const already_exsist = await User.findOne({ email });
             if (already_exsist) {
             throw new GraphQLError("Email already exists");
@@ -139,9 +164,45 @@ const resolvers = {
         }
         user = new User({ fullname,email, passwordHash,address, role: "BRAND",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice})
         } else{
-            const {number, link} = args.info
             let images = [];
-            for (let i = 0; i < args.image.length; i++) {
+            let instagramImage
+            let facebookImage
+            let tiktokImage
+            console.log(args.image)
+            if (args.instagramInput) {
+                console.log("instagram here")
+                const { createReadStream, filename, mimetype } = await args.instagramInput;
+                const stream = createReadStream();
+                const assetUniqName = fileRenamer(filename);
+                let extension = mimetype.split("/")[1];
+                const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+                await stream.pipe(fs.createWriteStream(pathName));
+                const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+                console.log(urlForArray)
+                instagramImage = urlForArray
+            }
+            if (args.facebookInput) {
+                const { createReadStream, filename, mimetype } = await args.facebookInput;
+                const stream = createReadStream();
+                const assetUniqName = fileRenamer(filename);
+                let extension = mimetype.split("/")[1];
+                const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+                await stream.pipe(fs.createWriteStream(pathName));
+                const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+                facebookImage = urlForArray
+            }
+            if (args.tiktokInput) {
+                const { createReadStream, filename, mimetype } = await args.tiktokInput;
+                const stream = createReadStream();
+                const assetUniqName = fileRenamer(filename);
+                let extension = mimetype.split("/")[1];
+                const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+                await stream.pipe(fs.createWriteStream(pathName));
+                const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+                tiktokImage = urlForArray
+            }
+            if (args.image){
+            for (let i = 0; i < args.image?.length; i++) {
             const { createReadStream, filename, mimetype } = await args.image[i];
             const stream = createReadStream();
             const assetUniqName = fileRenamer(filename);
@@ -150,8 +211,21 @@ const resolvers = {
             await stream.pipe(fs.createWriteStream(pathName));
             const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
             images.push(urlForArray);
-            }
-            user = new User({ fullname,email, passwordHash, role: "USER", confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, phone, socialMedia: {images, number, link} })
+            }}
+            const {instagramUserName, instagramFollowers,
+                facebookUserName, facebookFollowers,
+                tiktokUserName, tiktokFollowers
+            } = args.social
+            const {googleReview, yelpReview, tripadvisorReview} = args.review
+            user = new User({ fullname,email, passwordHash, role: "USER",
+            confirmedEmail: false, confirmationCode, avatarUrl, balance: 0,
+            phone,
+            reviewMedia: {google: googleReview, yelp: yelpReview, tripadvisor: tripadvisorReview}, 
+            socialMedia: 
+            {instagram: {name: instagramUserName,followers: instagramFollowers,image: instagramImage}, 
+            facebook: {name: facebookUserName,followers: facebookFollowers,image: facebookImage}, 
+            tiktok: {name: tiktokUserName,followers: tiktokFollowers,image: tiktokImage}} 
+        })
         }
             
             let result = await user.save()
@@ -464,7 +538,7 @@ const resolvers = {
             if (!posterpost) {
                 throw new GraphQLError("Post from poster is undefined")
             }
-            if (!posterpost.brandPendingPosts == true) {
+            if (posterpost.brandPendingPosts == true) {
                 throw new GraphQLError("This post already accepted");
               }
             console.log(posterpost.brandId)
@@ -506,6 +580,7 @@ const resolvers = {
             if (!posterpost) {
                 throw new GraphQLError("Post from poster is undefined")
             }
+            console.log(posterPostId)
             const brand = await User.findOne({_id: posterpost.brandId})
             if (!brand) {
                 throw new GraphQLError("Brand is undefined")
@@ -555,12 +630,12 @@ const resolvers = {
             const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
             images.push(urlForArray);
             }
-            const {title, text, authorId, brandId} = post
+            const {text, authorId, brandId, selectedReview,selectedSocial} = post
             const brand = await User.findById(brandId)
             if (!brand) {
                 throw new GraphQLError("There is no such brand");
             }
-            const postcreate = new PosterPost({ title, text, authorId, brandId, images, confirmed: false })
+            const postcreate = new PosterPost({ selectedReview,selectedSocial, text, authorId, brandId, images, confirmed: false })
             await postcreate.save()
             const newuser = await User.findByIdAndUpdate(
                 authorId,
@@ -573,6 +648,15 @@ const resolvers = {
                 { new: true }
             );
             return postcreate;
+        },
+        getBrand: async(_parent, {brandname}, _context, _info) => {
+            const user = await User.findOne(
+                {brandname}
+                );
+                if (!user) {
+                    throw new GraphQLError(`A brand called "${brandname}" does not exist`);
+                }
+                return user.id
         },
         //admin
         addAdmin: async (parent, {email}, args) => {
