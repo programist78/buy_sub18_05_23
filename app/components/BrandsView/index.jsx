@@ -52,6 +52,7 @@ const BrandView = ({
     <div>
       {!inView ?
     ( 
+      <Link href={`/brand/${brandname}`}>
       <div className={styles.back}>
         <div className={styles.price}>{postPrice/100}$</div>
         <img src={image} alt={brandname} className={styles.image}/>
@@ -60,6 +61,7 @@ const BrandView = ({
           <p className='text'>{brandname}</p>
         </div>
       </div>
+      </Link>
       )
       : 
       (<PostSkeleton />)

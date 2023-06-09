@@ -67,7 +67,10 @@ html::-webkit-scrollbar-thumb {
   text-align: center;
   color: #000000;
   }
-  
+  .map-container{
+    width: 895px;
+    height: 506px;
+  }
   .pretitle{
     font-family: 'DM Sans';
   font-style: normal;
@@ -261,7 +264,11 @@ html::-webkit-scrollbar-thumb {
   text-align: center;
   color: #000000;
   }
-  
+
+  .map-container{
+      width: 70vw;
+      height: 45vw;
+  }
   .pretitle{
     font-family: 'DM Sans';
   font-style: normal;
@@ -457,7 +464,10 @@ line-height: 18px;
   text-align: center;
   color: #000000;
   }
-  
+  .map-container{
+    width: 70vw;
+    height: 45vw;
+}
   .pretitle{
     font-family: 'DM Sans';
   font-style: normal;

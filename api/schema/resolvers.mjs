@@ -126,6 +126,15 @@ const resolvers = {
                 }
                 return user
         },
+        getBrandRegister: async(_parent, {argument}, _context, _info) => {
+            console.log(argument)
+            const filter = {
+                role: "BRAND",
+              };
+              const users = await User.find(filter).sort({ [argument]: -1 });;
+              console.log(users)
+              return users
+        }
     },
     Mutation: {
         //authorisation
@@ -164,87 +173,58 @@ const resolvers = {
         }
         user = new User({ fullname,email, passwordHash,address, role: "BRAND",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice})
         } else{
-            let images = [];
-            let instagramImage
-            let facebookImage
-            let tiktokImage
-            console.log(args.image)
-            if (args.instagramInput) {
-                console.log("instagram here")
-                const { createReadStream, filename, mimetype } = await args.instagramInput;
-                const stream = createReadStream();
-                const assetUniqName = fileRenamer(filename);
-                let extension = mimetype.split("/")[1];
-                const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
-                await stream.pipe(fs.createWriteStream(pathName));
-                const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-                console.log(urlForArray)
-                instagramImage = urlForArray
-            }
-            if (args.facebookInput) {
-                const { createReadStream, filename, mimetype } = await args.facebookInput;
-                const stream = createReadStream();
-                const assetUniqName = fileRenamer(filename);
-                let extension = mimetype.split("/")[1];
-                const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
-                await stream.pipe(fs.createWriteStream(pathName));
-                const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-                facebookImage = urlForArray
-            }
-            if (args.tiktokInput) {
-                const { createReadStream, filename, mimetype } = await args.tiktokInput;
-                const stream = createReadStream();
-                const assetUniqName = fileRenamer(filename);
-                let extension = mimetype.split("/")[1];
-                const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
-                await stream.pipe(fs.createWriteStream(pathName));
-                const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-                tiktokImage = urlForArray
-            }
-            if (args.image){
-            for (let i = 0; i < args.image?.length; i++) {
-            const { createReadStream, filename, mimetype } = await args.image[i];
-            const stream = createReadStream();
-            const assetUniqName = fileRenamer(filename);
-            let extension = mimetype.split("/")[1];
-            const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
-            await stream.pipe(fs.createWriteStream(pathName));
-            const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-            images.push(urlForArray);
-            }}
-            const {instagramUserName, instagramFollowers,
-                facebookUserName, facebookFollowers,
-                tiktokUserName, tiktokFollowers
-            } = args.social
-            const {googleReview, yelpReview, tripadvisorReview} = args.review
             user = new User({ fullname,email, passwordHash, role: "USER",
             confirmedEmail: false, confirmationCode, avatarUrl, balance: 0,
             phone,
-            reviewMedia: {google: googleReview, yelp: yelpReview, tripadvisor: tripadvisorReview}, 
+            reviewMedia: {}, 
             socialMedia: 
-            {instagram: {name: instagramUserName,followers: instagramFollowers,image: instagramImage}, 
-            facebook: {name: facebookUserName,followers: facebookFollowers,image: facebookImage}, 
-            tiktok: {name: tiktokUserName,followers: tiktokFollowers,image: tiktokImage}} 
+            {} 
         })
         }
             
             let result = await user.save()
             result = await serializeUser(result);
 
-            const transporter = nodemailer.createTransport(
-                sendgridTransport({
-                    auth:{
-                        api_key:process.env.SENDGRID_APIKEY,
-                    }
-                })
-            )
-            let mailOptions = { from: process.env.FROM_EMAIL, to: user.email, subject: 'Account Verification Link', text: 'Hello '+ user.fullname +',\n\n' + 'Please verify your account by clicking the link: \nhttp://localhost:3000/' + 'auth/confirmation/' + confirmationCode + "&" + user.id + '\n\nThank You!\n' };
-            transporter.sendMail(mailOptions, function (err) {
-                if (err) { 
-                    throw new GraphQLError(err);
-            }})
             const token = await issueAuthToken({email, role: user.role});
             return {token, user}
+        },
+        registerUserComplete: async (_, args, context, info) => {
+            const {instagramUserName, instagramFollowers,
+                facebookUserName, facebookFollowers,
+                tiktokUserName, tiktokFollowers
+            } = args.social
+            const {googleReview, yelpReview, tripadvisorReview} = args.review
+            const user = await User.findById(
+                args.id
+                );
+                if (!user) {
+                    throw new GraphQLError("Invalid email given- changestatus");
+                }
+                let images = [];
+                    const {number,link, email} = info
+                    for (let i = 0; i < args.images.length; i++) {
+                    const { createReadStream, filename, mimetype } = await args.images[i];
+                    const stream = createReadStream();
+                    const assetUniqName = fileRenamer(filename);
+                    let extension = mimetype.split("/")[1];
+                    const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+                    await stream.pipe(fs.createWriteStream(pathName));
+                    const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+                    images.push(urlForArray);
+                    }
+            const newuser = await User.findByIdAndUpdate(
+                args.id,
+                {            reviewMedia: {google: googleReview, yelp: yelpReview, tripadvisor: tripadvisorReview}, 
+                socialMedia: 
+                {instagram: {name: instagramUserName,followers: instagramFollowers}, 
+                facebook: {name: facebookUserName,followers: facebookFollowers}, 
+                tiktok: {name: tiktokUserName,followers: tiktokFollowers}, aproveScreenshots: images},  },
+                { new: true }
+            );
+            if (!newuser) {
+                throw new GraphQLError("Something went wrong!")
+            }
+            return newuser
         },
         loginUser: async (_, args, context, info) => {
             // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

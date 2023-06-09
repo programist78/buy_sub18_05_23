@@ -64,7 +64,8 @@ const User = new mongoose.Schema(
     websiteLink:{type: String},
     plan: { type: String, enum: ['none', 'month'], default: 'none' },
     hasTrial: { type: Boolean, default: false },
-    endDate: { type: Date, default: null }
+    endDate: { type: Date, default: null },
+    brandDescription: {type: String}
   },
   {
     timestamps: true,

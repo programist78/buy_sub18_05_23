@@ -4,6 +4,8 @@
 module.exports = {
   env: {
     API_URI: /** @type {string} */ (process.env.API_URI),
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: /** @type {string} */ (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY),
+    STRIPE_SECRET_KEY: /** @type {string} */ (process.env.STRIPE_SECRET_KEY),
   },
   // i18n: {
   //   locales: ["en", "ru", "uk"],

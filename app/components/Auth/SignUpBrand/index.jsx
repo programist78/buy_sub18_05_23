@@ -35,8 +35,8 @@ export default function SignUpBrand() {
       }
     const context = useContext(AuthContext) || "";
     const router = useRouter();
-    const { auth } = useSelector((state) => state.auth);
-    {auth ? router.push('/') : ""}
+    const { userInfo } = useSelector((state) => state.userInfo);
+    {userInfo ? router.push('/') : ""}
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required('Email is required')

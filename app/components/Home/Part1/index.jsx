@@ -1,7 +1,10 @@
 import Image from "next/image";
 import styles from "./Part1.module.scss";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import Link from "next/link";
 export default function Part1() {
+  const {userInfo} = useSelector((auth) => auth.userInfo)
   const [containerSize, setContainerSize] = useState();
 
   // const debouncedHandleResize = debounce(handleResize, 100);
@@ -50,7 +53,12 @@ export default function Part1() {
       }
 
       </div>
-      <button className="b_button">Log In now</button>
+      {userInfo 
+      ?
+      <Link  href={(userInfo?.role == "USER") ? "/personal/poster" : "/personal/brand"}><button className="b_button">Personal Cabinet</button></Link>
+        :
+        <Link href="/auth/login"><button className="b_button">Log In now</button></Link>
+    }
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const LOGIN_USER = gql`
-mutation LoginUser($about: LoginInput) {
+mutation Mutation($about: LoginInput) {
   loginUser(about: $about) {
     user {
       id
@@ -9,9 +9,23 @@ mutation LoginUser($about: LoginInput) {
       email
       role
       socialMedia {
-        images
-        number
-        nick
+        instagram {
+          name
+          followers
+        }
+        facebook {
+          name
+          followers
+        }
+        tiktok {
+          name
+          followers
+        }
+      }
+      reviewMedia {
+        google
+        yelp
+        tripadvisor
       }
       confirmedEmail
       avatarUrl
@@ -31,6 +45,9 @@ mutation LoginUser($about: LoginInput) {
       plan
       hasTrial
       endDate
+      websiteLink
+      address
+      brandDescription
     }
     token
   }
@@ -79,33 +96,50 @@ mutation Mutation($about: RegisterInput, $info: SocialMediaInput, $image: [Uploa
 export const GETUSER_BYTOKEN = gql`
 query GetUserbyToken($token: String) {
   getUserbyToken(token: $token) {
-    id
-    fullname
-    email
-    role
-    socialMedia {
-      images
-      number
-      nick
-    }
-    confirmedEmail
-    avatarUrl
-    phone
-    pendingPosts
-    completedPosts
-    balance
-    brandPendingPosts
-    brandCompletedPosts
-    postPrice
-    brandname
-    physicalLocation {
-      latitude
-      longitude
-    }
-    brandDirection
-    plan
-    hasTrial
-    endDate
+      id
+      fullname
+      email
+      role
+      socialMedia {
+        instagram {
+          name
+          followers
+        }
+        facebook {
+          name
+          followers
+        }
+        tiktok {
+          name
+          followers
+        }
+      }
+      reviewMedia {
+        google
+        yelp
+        tripadvisor
+      }
+      confirmedEmail
+      avatarUrl
+      phone
+      pendingPosts
+      completedPosts
+      balance
+      brandPendingPosts
+      brandCompletedPosts
+      postPrice
+      brandname
+      physicalLocation {
+        latitude
+        longitude
+      }
+      brandDirection
+      plan
+      hasTrial
+      endDate
+      websiteLink
+      address
+      brandDescription
   }
 }
 `

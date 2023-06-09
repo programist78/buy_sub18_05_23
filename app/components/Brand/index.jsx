@@ -4,33 +4,31 @@ import {useQuery} from '@apollo/client'
 import { GET_BRAND_QUERY } from '../../apollo/posters'
 import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react'
+import MapComponent from '../MapComponent'
 export default function BrandPageCom({queryId}) {
     const [data, setData] = useState()
-    // console.log(queryId)
-    const {getBrand} = useQuery(GET_BRAND_QUERY, {
+    const {data: brandData} = useQuery(GET_BRAND_QUERY, {
         onError(error) {
             Swal.fire({
               icon: 'error',
               title: `${error}`
             })
         },
-        variables: {brandname:queryId}
+        variables: {brandname: queryId}
     })
 
         useEffect(() => {
-          setData(getBrand?.getBrandQuery)
-        }, [getBrand?.getBrandQuery])
-        // console.log(data)
-        console.log(getBrand?.getBrandQuery)
+          setData(brandData?.getBrandQuery)
+        }, [brandData?.getBrandQuery])
   return (
     <div className={styles.back}>
         <div className={styles.header}>
-            <Image src="/fake_logo.svg" alt="logo" width={76} height={76}/>
+            <img src={data?.avatarUrl} alt="logo" width={76} height={76}/>
             <p className='title'>{data?.brandname}</p>
-            <Image src="/button_map.svg" alt="logo" width={76} height={76}/>
+            <Image src="/button_map.svg" alt="button_map" width={76} height={76}/>
         </div>
         <div className={styles.description}>
-            <p className='pretitle'>Fresh Harvest</p>
+            {/* <p className='pretitle'>Fresh Harvest</p> */}
             <div className={styles.pricebox}>
                 <div className={styles.left_child_box}>
                     <p className='navtext'>Create a post on Instagram with our brand</p>
@@ -40,21 +38,25 @@ export default function BrandPageCom({queryId}) {
                     Start
                 </div>
             </div>
+            
             <div className={styles.social}>
                 <p className='pretitle'>Our Socials</p>
                 <div className={styles.row_social}>
-                <Image src="/instagram.svg" alt='.' width={48} height={48}/>
-                <Image src="/facebook.svg" alt='.' width={48} height={48}/>
-                <Image src="/twitter.svg" alt='.' width={48} height={48}/>
+                    {data?.socialMedia?.instagram &&
+                <a href={`https://www.instagram.com/${data?.socialMedia?.instagram?.name}/`}><Image src="/instagram.svg" alt='.' width={48} height={48}/></a>}
+                    {data?.socialMedia?.facebook &&
+                      <a href={`https://www.facebook.com/${data?.socialMedia?.facebook?.name}/`}> <Image src="/facebook.svg" alt='.' width={48} height={48}/> </a> }
+                {data?.socialMedia?.tiktok &&
+                      <a href={`https://www.tiktok.com/@${data?.socialMedia?.tiktok?.name}/`}> <Image src="/tiktok.svg" alt='.' width={48} height={48}/> </a> }
                 </div>
             </div>
         </div>
         <div className={styles.map_part}>
             <p className='pretitle'>Map with locations of Brands</p>
-            <Image src="/fake_map.png" width={895} height={506} alt="map"/>
+            {/* <Image src="/fake_map.png" width={895} height={506} alt="map"/> */}
+            <MapComponent />
         </div>
-        <p className={`text ${styles.text}`}>FreshHarvest is a vibrant and trusted brand that specializes in providing high-quality, farm-fresh vegetables and fruits. We take pride in cultivating our produce using sustainable farming practices, ensuring the highest standards of quality, nutrition, and flavor.
-Our brand stands out due to our commitment to locally sourced, seasonal produce. We prioritize supporting local farmers and promoting sustainable agriculture within our community.</p>
+        <p className={`text ${styles.text}`}>{data?.brandDescription}</p>
     </div>
   )
 }

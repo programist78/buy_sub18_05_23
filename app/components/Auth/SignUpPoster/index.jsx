@@ -16,7 +16,7 @@ export default function SignUpPosterCom() {
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [messageError, setMessageError] = useState("")
-  const [isStart, setIsStart] = useState(true)
+  const [isStart, setIsStart] = useState(false)
 
   useEffect(() => {
     if (!isChecked1 || !isChecked2) {
@@ -215,7 +215,7 @@ Post authors then create a post on one of their approved social media platforms 
         className={`a_input ${errors.confirm_password ? 'is-invalid' : ''}`}
       />
       <p className={styles.errors}>{errors.confirmpassword?.message}</p>
-      <p >We've sent you confirmation to your email.</p>
+
     </div>
     <div className="a_instrusctions">
         <p>Privacy and Policy</p>

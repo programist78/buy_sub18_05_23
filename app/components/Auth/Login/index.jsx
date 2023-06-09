@@ -7,11 +7,13 @@ import { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { useRouter } from 'next/router';
 import styles from './Login.module.scss'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {CiLogin} from 'react-icons/ci'
 import Swal from "sweetalert2"
 import Link from 'next/link';
+import { setUserInfo } from '../../../redux/slices/userInfo';
 function LoginCom() {
+  const dispatch = useDispatch()
     const context = useContext(AuthContext) || "";
     const router = useRouter();
     const { userInfo } = useSelector((state) => state.userInfo);
@@ -46,7 +48,7 @@ function LoginCom() {
         
     update(proxy, { data: {loginUser: userData}}){
         context.login(userData)
-
+        dispatch(setUserInfo(userData))
     },
     onError(error) {
       Swal.fire({

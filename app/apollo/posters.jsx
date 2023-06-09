@@ -3,8 +3,8 @@ import { gql } from "@apollo/client/core";
 export const CREATE_POSTER_POST = gql`
 mutation CreatePosterPost($post: PosterPostInput!, $image: [Upload]!) {
   createPosterPost(post: $post, image: $image) {
-    title
     id
+    title
     text
     authorId
     postId
@@ -79,6 +79,7 @@ query GetNewBrands {
     postPrice
     brandname
     address
+    image
   }
 }
 `
@@ -90,6 +91,7 @@ query GetPopularBrands {
     postPrice
     brandname
     address
+    image
   }
 }
 `

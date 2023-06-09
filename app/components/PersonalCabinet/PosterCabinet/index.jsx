@@ -10,6 +10,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { useRouter } from "next/router";
 import BrandView from "../../BrandsView";
+import WithdrawCom from "../../Stripe/WithdrawCom";
+import { clearToken } from "../../../redux/slices/auth";
 export default function PosterCabinetCom() {
     const router = useRouter()
     const [filter, setFilter] = useState("1")
@@ -101,11 +103,10 @@ const [dataBrands, setDataBrands] = useState([]);
     //   authorization: 'authorization-text',
     // },
     onChange({ file, fileList }) {
-        if (file.status !== 'uploading') {
-            const newImages = [...image, fileList[0]];
-            setImage(newImages);
-        }
-      },
+      if (file.status !== 'uploading') {
+        setImage(prevImage => [...prevImage, file.originFileObj]); // Добавляем новые файлы к существующему состоянию image
+      }
+    },
     
   };
   return (
@@ -136,12 +137,13 @@ const [dataBrands, setDataBrands] = useState([]);
             {brandname ? (
               <button className="b_button" onClick={() => getBrand()}>Check</button>
             ) : (
-              <a><button className="b_button" >Сhoose a business</button></a>
+              <a><button className="b_button" >Choose a business</button></a>
             )}
           </div>
           <div className={styles.row_part}>
             <p className="nav_text">Payment for the completed tasks</p>
             <button className="a_button">10$</button>
+            {/* <WithdrawCom /> */}
           </div>
         </div>
       </div>

@@ -28,6 +28,7 @@ const typeDefs = `#graphql
     instagram: SocialMediaOne
     facebook: SocialMediaOne
     tiktok: SocialMediaOne
+    aproveScreenshots: [String]
   }
 
   type ReviewMedia {
@@ -91,11 +92,20 @@ const typeDefs = `#graphql
     endDate: String
     websiteLink: String
     address: String
+    brandDescription: String
+    image: String
   }
 
   type AuthPayload {
     user: User
     token: String
+  }
+
+  type BrandRegister {
+    createdAt: String
+    brandname: String
+    address: String
+    email: String
   }
 
 
@@ -117,6 +127,8 @@ const typeDefs = `#graphql
   getPopularBrands: [User]
 
   getBrandQuery(brandname: String!): User
+
+  getBrandRegister(argument: String): [BrandRegister]
   }
 
   type Image {
@@ -190,7 +202,8 @@ const typeDefs = `#graphql
 
   type Mutation {
     loginUser(about: LoginInput): AuthPayload
-    registerUser(about: RegisterInput, social: SocialMediaInput,review:ReviewMediaInput,   images: [ImageInput]): AuthPayload
+    registerUser(about: RegisterInput): AuthPayload
+    registerUserComplete(id: ID,social: SocialMediaInput,review:ReviewMediaInput,   images: [Upload]): AuthPayload
     sendConfirmedEmail(email: String!): String
     changeStatus(id: ID, confirmationCode: String): String
     forgotPassword(email: String, confirmationCode: String, password: String): String
