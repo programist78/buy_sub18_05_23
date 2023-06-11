@@ -99,8 +99,8 @@ This is an example of how to list things you need to use the software and how to
    ```
 ### Client part
 
-6. Open `app` folder
-7. Install NPM packages
+2. Open `app` folder
+3. Install NPM packages
    ```sh
    npm install
    ```
