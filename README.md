@@ -63,27 +63,37 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install
-  ```
-
 ## Installation
 
-1. Clone the repo
+To run this code project without any programming knowledge, please follow these steps:
+
+### Server part
+1. Open PowerShell (or any command line interface).
+2. Navigate to the directory where you want to clone the repository.  For example:
+   ```sh
+   cd path/to/directory
+   ```
+3. Clone the repository by running the following commandЖ
    ```sh
    git clone https://github.com/programist78/buy_sub18_05_23
    ```
-### Server part
-
-2. Open `api` folder
-3. Install NPM packages
+4. Open the  `api` folder.  You can use the cd command again to navigate into the folder:
+   ```sh
+   cd buy_sub18_05_23/api
+   ```
+5. Install the required NPM packages by running the following command:
    ```sh
    npm install
    ```
-4. Create `.env` in `api` folder
-5. Add all keys in `.env` 
+6. Create a new file named `.env` in the `api` folder. You can use the following command to create the file:
+   ```sh
+   echo "" > .env
+   ```
+7. Open the `.env` file with a text editor. You can use the following command to open the file in Notepad:
+   ```sh
+   notepad .env
+   ```
+8. Add the following keys:
    ```js
    NODE_ENV='development/production'
    SECRET_KEY='******'
@@ -98,19 +108,31 @@ This is an example of how to list things you need to use the software and how to
    CLIENT='* - (acess for all frontend) / Your client link'
    ```
 ### Client part
-
-2. Open `app` folder
-3. Install NPM packages
+1. Open another PowerShell (or command line interface) window.
+2. Navigate to the directory where you cloned the repository. For example:
+   ```sh
+   cd path/to/directory/buy_sub18_05_23/app
+   ```
+3. Install the required NPM packages by running the following command:
    ```sh
    npm install
    ```
-4. Create `.env` in `app` folder
-5. Add all keys in `.env` 
+4. Create a new file named`.env` in the`app` folder. You can use the following command to create the file:
+   ```sh
+   echo "" > .env
+   ```
+5. Open the `.env` file with a text editor 
+   ```sh
+   notepad .env
+   ```
+6. Add the following keys:
    ```js
    API_URI='http://localhost:4000/graphql'
    GOOGLE_MAP_API_KEY=""
    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=""
    ```
+
+Once you have completed all these steps, you will be able to run the code project without any programming knowledge.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
