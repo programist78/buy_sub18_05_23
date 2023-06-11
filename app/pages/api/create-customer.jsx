@@ -10,8 +10,8 @@ export default async (req, res) => {
         phone: "555-555-5555",
         email: "janedoe@example.com",
         invoice_settings: {
-          default_payment_method: paymentMethodId
-        }
+          default_payment_method: paymentMethodId,
+        },
       });
       console.log(
         `create-customer:: Successfully created customer: ${JSON.stringify(
@@ -21,7 +21,7 @@ export default async (req, res) => {
       const subscription = await stripe.subscriptions.create({
         customer: customer.id,
         items: [{ plan: "your_plan_id" }],
-        expand: ["latest_invoice.payment_intent"]
+        expand: ["latest_invoice.payment_intent"],
       });
 
       console.log(

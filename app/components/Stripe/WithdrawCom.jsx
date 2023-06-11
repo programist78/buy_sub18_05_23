@@ -1,6 +1,6 @@
 // pages/withdraw.js
-import { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
+import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 
 const WithdrawCom = () => {
   const [loading, setLoading] = useState(false);
@@ -11,17 +11,19 @@ const WithdrawCom = () => {
     setError(null);
 
     try {
-      const response = await fetch('/api/withdraw', {
-        method: 'POST',
+      const response = await fetch("/api/withdraw", {
+        method: "POST",
       });
-      console.log(response)
+      console.log(response);
 
       if (!response.ok) {
-        throw new Error('Не удалось обработать запрос на вывод.');
+        throw new Error("Не удалось обработать запрос на вывод.");
       }
 
       const { sessionId } = await response.json();
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+      const stripe = await loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+      );
       const { error: stripeError } = await stripe.redirectToCheckout({
         sessionId,
       });
@@ -41,7 +43,7 @@ const WithdrawCom = () => {
       <h1>Вывод баланса</h1>
       {error && <p>{error}</p>}
       <button onClick={handleWithdraw} disabled={loading}>
-        {loading ? 'Обработка...' : 'Вывести'}
+        {loading ? "Обработка..." : "Вывести"}
       </button>
     </div>
   );

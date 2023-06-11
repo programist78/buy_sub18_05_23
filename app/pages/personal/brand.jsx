@@ -1,4 +1,4 @@
-import BusinessCabinetCom from "../../components/PersonalCabinet/BusinessCabinet"
+import BusinessCabinetCom from "../../components/PersonalCabinet/BusinessCabinet";
 export default function PersonalCabinetBusiness() {
-  return <BusinessCabinetCom />
+  return <BusinessCabinetCom />;
 }

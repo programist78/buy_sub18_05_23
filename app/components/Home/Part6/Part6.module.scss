@@ -1,109 +1,107 @@
 @use "../../../styles/various.module.scss" as var;
 
 @media screen and (min-width: 1024px) {
-    .back{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100vw;
-        padding-bottom: 100px;
-        gap: 30px;
+  .back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    padding-bottom: 100px;
+    gap: 30px;
+  }
+
+  .text {
+    width: 895px;
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    input {
+      width: 698px;
+      height: 64px;
+      background: #ffffff;
+      border: 1px solid #a7abb4;
+      @include var.text;
+      border-radius: 15px;
+      padding-left: 15px;
     }
-    
-    .text{
-        width: 895px;
+    input:nth-child(2) {
+      height: 118px;
+      align-self: flex-start;
     }
-    
-    .inputs{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        input{
-            width: 698px;
-    height: 64px;
-    background: #FFFFFF;
-    border: 1px solid #A7ABB4;
-    @include var.text;
-    border-radius: 15px;
-    padding-left: 15px;
-        }
-        input:nth-child(2){
-            height: 118px;
-            align-self: flex-start;
-        }
-    }
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-    .back{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100vw;
-        padding-bottom: 80px;
-        gap: 25px;
-        img{
-            width: 100px;
-            height: 100px;
-        }
+  .back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    padding-bottom: 80px;
+    gap: 25px;
+    img {
+      width: 100px;
+      height: 100px;
     }
-    
-    
-    .inputs{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        input{
-            width: 64vw;
-    height: 64px;
-    background: #FFFFFF;
-    border: 1px solid #A7ABB4;
-    @include var.text_tablet;
-    border-radius: 15px;
-    padding-left: 10px;
-        }
-        input:nth-child(2){
-            height: 118px;
-            align-self: flex-start;
-        }
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    input {
+      width: 64vw;
+      height: 64px;
+      background: #ffffff;
+      border: 1px solid #a7abb4;
+      @include var.text_tablet;
+      border-radius: 15px;
+      padding-left: 10px;
     }
+    input:nth-child(2) {
+      height: 118px;
+      align-self: flex-start;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .back{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100vw;
-        padding-bottom: 60px;
-        gap: 20px;
-        img{
-            width: 66px;
-            height: 66px;
-        }
+  .back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    padding-bottom: 60px;
+    gap: 20px;
+    img {
+      width: 66px;
+      height: 66px;
     }
-    
-    
-    .inputs{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-        input{
-            width: 81vw;
-            height: 41px;
+  }
 
-    background: #FFFFFF;
-    border: 1px solid #A7ABB4;
-    @include var.text_tablet;
-    border-radius: 7.5px;
-    padding-left: 5px;
-        }
-        input:nth-child(2){
-            height: 80px;
-            align-self: flex-start;
-        }
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    input {
+      width: 81vw;
+      height: 41px;
+
+      background: #ffffff;
+      border: 1px solid #a7abb4;
+      @include var.text_tablet;
+      border-radius: 7.5px;
+      padding-left: 5px;
     }
+    input:nth-child(2) {
+      height: 80px;
+      align-self: flex-start;
+    }
+  }
 }

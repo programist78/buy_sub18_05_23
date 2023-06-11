@@ -5,16 +5,25 @@ export default function Part2() {
   return (
     <div className={styles.back}>
       <div className={styles.part1}>
-          <p className={`title ${styles.title}`}>Meet the Postfordollars Platform
-For Businesses!</p>
-          <p className={`text ${styles.text}`}>
-          Your customers will constantly want to post information about your brand on social media!Lorem ipsum dolor sit amet, consectetur adipiscing elit!
-          </p>
-          <div className={styles.media}>
-            <Image src="/facebook.svg" alt="." width={88} height={88}/>
-            <Image src="/instagram.svg" alt="." width={88} height={88}/>
-            <Image src="/tiktok.svg" alt="." width={88} height={88}style={{borderRadius: "50%"}}/>
-          </div>
+        <p className={`title ${styles.title}`}>
+          Meet the Postfordollars Platform For Businesses!
+        </p>
+        <p className={`text ${styles.text}`}>
+          Your customers will constantly want to post information about your
+          brand on social media!Lorem ipsum dolor sit amet, consectetur
+          adipiscing elit!
+        </p>
+        <div className={styles.media}>
+          <Image src="/facebook.svg" alt="." width={88} height={88} />
+          <Image src="/instagram.svg" alt="." width={88} height={88} />
+          <Image
+            src="/tiktok.svg"
+            alt="."
+            width={88}
+            height={88}
+            style={{ borderRadius: "50%" }}
+          />
+        </div>
       </div>
       <div className={styles.line} />
       <div className={styles.part2}>
@@ -42,10 +51,18 @@ For Businesses!</p>
         </div>
         </div> */}
         <div className={styles.borderbox}>
-          <p className={`text`}>Your customers will constantly want to post about you on social media to their friends and fans. With the POSTFORDOLLARS platform you set a fixed price you pay creators.
-We show you the creators post and review prior to your approval to pay. Stop using any time with no cancellation fee, simple and easy.</p>
+          <p className={`text`}>
+            Your customers will constantly want to post about you on social
+            media to their friends and fans. With the POSTFORDOLLARS platform
+            you set a fixed price you pay creators. We show you the creators
+            post and review prior to your approval to pay. Stop using any time
+            with no cancellation fee, simple and easy.
+          </p>
         </div>
-        <p  className={`text ${styles.text2}`}>Very soon after the first actions, you will start receiving the first results and income!</p>
+        <p className={`text ${styles.text2}`}>
+          Very soon after the first actions, you will start receiving the first
+          results and income!
+        </p>
         {/* <button className="b_button">Start now</button> */}
       </div>
     </div>

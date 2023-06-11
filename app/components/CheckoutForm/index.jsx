@@ -2,14 +2,14 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Input, Col, Row, Form, Button, Modal } from "antd";
 import { useState } from "react";
 
-const CheckoutForm = props => {
+const CheckoutForm = (props) => {
   const { getFieldDecorator } = props.form;
   const [isLoading, setLoading] = useState(false);
 
   const stripe = useStripe();
   const elements = useElements();
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     props.form.validateFields(async (err, values) => {
@@ -23,12 +23,12 @@ const CheckoutForm = props => {
               city: values.city,
               line1: values.address,
               postal_code: values.zip,
-              state: values.state
+              state: values.state,
             },
             email: "janedoe@example.com",
             name: values.name,
-            phone: "555-555-5555"
-          }
+            phone: "555-555-5555",
+          },
         });
         await handleStripePaymentMethod(result);
         setLoading(false);
@@ -36,19 +36,19 @@ const CheckoutForm = props => {
     });
   };
 
-  const handleStripePaymentMethod = async result => {
+  const handleStripePaymentMethod = async (result) => {
     if (result.error) {
       Modal.error({
         title: "Error",
-        content: result.error.message
+        content: result.error.message,
       });
     } else {
       const response = await fetch("api/create-customer", {
         method: "POST",
         mode: "same-origin",
         body: JSON.stringify({
-          paymentMethodId: result.paymentMethod.id
-        })
+          paymentMethodId: result.paymentMethod.id,
+        }),
       });
 
       const subscription = await response.json();
@@ -56,7 +56,7 @@ const CheckoutForm = props => {
     }
   };
 
-  const handleSubscription = subscription => {
+  const handleSubscription = (subscription) => {
     const { latest_invoice } = subscription;
     const { payment_intent } = latest_invoice;
 
@@ -64,24 +64,24 @@ const CheckoutForm = props => {
       const { client_secret, status } = payment_intent;
 
       if (status === "requires_action") {
-        stripe.confirmCardPayment(client_secret).then(function(result) {
+        stripe.confirmCardPayment(client_secret).then(function (result) {
           if (result.error) {
             // The card was declined (i.e. insufficient funds, card has expired, etc)
             Modal.error({
               title: "Error",
-              content: result.error.message
+              content: result.error.message,
             });
           } else {
             // Success!
             Modal.success({
-              title: "Success"
+              title: "Success",
             });
           }
         });
       } else {
         // No additional information was needed
         Modal.success({
-          title: "Success"
+          title: "Success",
         });
       }
     } else {
@@ -100,24 +100,24 @@ const CheckoutForm = props => {
         fontSize: "15px",
         fontSmoothing: "antialiased",
         ":-webkit-autofill": { color: "#fce883" },
-        "::placeholder": { color: "#bfbfbf" }
+        "::placeholder": { color: "#bfbfbf" },
       },
       invalid: {
         iconColor: "#ffc7ee",
-        color: "#ffc7ee"
-      }
-    }
+        color: "#ffc7ee",
+      },
+    },
   };
   return (
-    <Form onSubmit={e => handleSubmit(e)}>
+    <Form onSubmit={(e) => handleSubmit(e)}>
       <Form.Item label="Name on card" colon={false}>
         {getFieldDecorator("name", {
-          rules: [{ required: true, message: "Name is required" }]
+          rules: [{ required: true, message: "Name is required" }],
         })(<Input placeholder="Jane Doe" />)}
       </Form.Item>
       <Form.Item label="Address" colon={false}>
         {getFieldDecorator("address", {
-          rules: [{ required: true, message: "Address is required" }]
+          rules: [{ required: true, message: "Address is required" }],
         })(<Input placeholder="1234 Almond Ave" />)}
       </Form.Item>
       <Input.Group>
@@ -125,21 +125,21 @@ const CheckoutForm = props => {
           <Col span={12}>
             <Form.Item label="City" colon={false}>
               {getFieldDecorator("city", {
-                rules: [{ required: true, message: "City is required" }]
+                rules: [{ required: true, message: "City is required" }],
               })(<Input placeholder="San Bernardino" />)}
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item label="State" colon={false}>
               {getFieldDecorator("state", {
-                rules: [{ required: true, message: "State is required" }]
+                rules: [{ required: true, message: "State is required" }],
               })(<Input placeholder="CA" />)}
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item label="ZIP" colon={false}>
               {getFieldDecorator("zip", {
-                rules: [{ required: true, message: "Zip code is required" }]
+                rules: [{ required: true, message: "Zip code is required" }],
               })(<Input placeholder="92401" />)}
             </Form.Item>
           </Col>
@@ -147,7 +147,7 @@ const CheckoutForm = props => {
       </Input.Group>
       <Form.Item label="Card" colon={false}>
         {getFieldDecorator("card", {
-          rules: [{ required: true, message: "Card is required" }]
+          rules: [{ required: true, message: "Card is required" }],
         })(<CardElement options={cardOptions} />)}
       </Form.Item>
       <Button
@@ -162,4 +162,4 @@ const CheckoutForm = props => {
     </Form>
   );
 };
-export default CheckoutForm
+export default CheckoutForm;

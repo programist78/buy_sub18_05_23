@@ -6,7 +6,7 @@
 export default async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ["card"],
       line_items: [
         {
           price: 1000, // Укажите сумму вывода в центах
@@ -16,22 +16,24 @@ export default async (req, res) => {
           price: "price_1NGiVoBD1PAMw3USqVMWCWQo",
         },
       ],
-      mode: 'payment',
-      success_url: 'http://localhost:3000/success', // Укажите URL страницы успеха
-      cancel_url: 'http://localhost:3000/cancel', // Укажите URL страницы отмены
+      mode: "payment",
+      success_url: "http://localhost:3000/success", // Укажите URL страницы успеха
+      cancel_url: "http://localhost:3000/cancel", // Укажите URL страницы отмены
     });
 
     res.status(200).json({ sessionId: session.id });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Произошла ошибка при создании сессии Stripe.' });
+    res
+      .status(500)
+      .json({ error: "Произошла ошибка при создании сессии Stripe." });
   }
 };
 
 // pages/api/withdraw.js
 
 // pages/api/withdraw.js
-import stripePackage from 'stripe';
+import stripePackage from "stripe";
 
 const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
 //payment
@@ -74,7 +76,6 @@ const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
 //         destination: 'acct_1NGj3sB0h13I84qB',
 //       },
 //     });
-    
 
 //     res.status(200).json({ sessionId: paymentIntent.id });
 //   } catch (error) {

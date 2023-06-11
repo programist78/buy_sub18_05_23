@@ -1,170 +1,169 @@
 @media screen and (min-width: 1024px) {
-    .back{
-        display: flex;
-        // justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        width: 100vw;
-        gap: 62px;
-        padding-top: 210px;
-        padding-bottom: 210px;
-    }
-    
-    .form{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+  .back {
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    gap: 62px;
+    padding-top: 210px;
+    padding-bottom: 210px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100vw !important;
-        gap: 22px;
-        button{
-            margin-top: 22px;
-        }
+    gap: 22px;
+    button {
+      margin-top: 22px;
     }
-    
-    .text{
-        width: 874px;
-    }
-    
-    .social_input{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .nick_input{
-        width: 200px;
-    }
-    
-    .number_input{
-        width: 180px;
-    }
-    
-    .custom_input{
-        width: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0;
-        color: black;
-    }
+  }
+
+  .text {
+    width: 874px;
+  }
+
+  .social_input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nick_input {
+    width: 200px;
+  }
+
+  .number_input {
+    width: 180px;
+  }
+
+  .custom_input {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    color: black;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-    .back{
-        display: flex;
-        // justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        width: 100vw;
-        gap: 30px;
-        min-height: 100vh;
-        padding-top: 150px;
-        padding-bottom: 150px;
-    }
-    
-    .form{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    width: 100vw !important;
-        gap: 20px;
-        button{
-            margin-top: 20px;
-        }
-    }
-    
-    .text{
-        width: 70vw;
-    }
-    
-    .social_input{
-        display: flex;
-        width: 90vw;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        justify-content: space-between;
+  .back {
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    gap: 30px;
+    min-height: 100vh;
+    padding-top: 150px;
+    padding-bottom: 150px;
+  }
 
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw !important;
+    gap: 20px;
+    button {
+      margin-top: 20px;
     }
-    
-    .nick_input{
-        width: 200px;
-    }
-    
-    .number_input{
-        width: 180px;
-    }
-    
-    .custom_input{
-        width: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0;
-        color: black;
-    }
+  }
+
+  .text {
+    width: 70vw;
+  }
+
+  .social_input {
+    display: flex;
+    width: 90vw;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+  }
+
+  .nick_input {
+    width: 200px;
+  }
+
+  .number_input {
+    width: 180px;
+  }
+
+  .custom_input {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    color: black;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .back{
-        display: flex;
-        // justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        width: 100vw;
-        gap: 20px;
-        min-height: 100vh;
-        padding-top: 110px;
-        padding-bottom: 110px;
-    }
-    
-    .form{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+  .back {
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    gap: 20px;
+    min-height: 100vh;
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100vw !important;
-        gap: 10px;
-        button{
-            margin-top: 10px;
-        }
+    gap: 10px;
+    button {
+      margin-top: 10px;
     }
-    
-    .text{
-        width: 70vw;
+  }
+
+  .text {
+    width: 70vw;
+  }
+
+  .social_input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    width: 98vw;
+    img {
+      width: 20px;
+      height: 20px;
     }
-    
-    .social_input{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2px;
-        width: 98vw;
-        img{
-            width: 20px;
-            height: 20px;
-        }
-    }
-    
-    .nick_input{
-        max-width: 30%;
-        padding-left: 5px;
-    }
-    
-    .number_input{
-        max-width: 20%;
-        padding-left: 5px;
-    }
-    
-    .custom_input{
-        width: 10%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0;
-        color: black;
-    }
+  }
+
+  .nick_input {
+    max-width: 30%;
+    padding-left: 5px;
+  }
+
+  .number_input {
+    max-width: 20%;
+    padding-left: 5px;
+  }
+
+  .custom_input {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    color: black;
+  }
 }

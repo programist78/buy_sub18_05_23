@@ -19,6 +19,6 @@ export const { setUserInfo, clearUserInfo } = userInfoSlice.actions;
 
 export const selectUserInfo = (state) => state.userInfo;
 
-export const userInfoReducer = userInfoSlice.reducer
+export const userInfoReducer = userInfoSlice.reducer;
 
 // export default authSlice.reducer;

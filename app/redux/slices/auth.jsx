@@ -19,6 +19,6 @@ export const { setToken, clearToken } = authSlice.actions;
 
 export const selectToken = (state) => state.auth;
 
-export const authReducer = authSlice.reducer
+export const authReducer = authSlice.reducer;
 
 // export default authSlice.reducer;

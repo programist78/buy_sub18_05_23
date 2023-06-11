@@ -1,37 +1,36 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { authReducer } from './slices/auth';
-import { adminReducer } from './slices/roles/admin';
-import { peopleReducer } from './slices/roles/people';
-import storage from 'redux-persist/lib/storage';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { authReducer } from "./slices/auth";
+import { adminReducer } from "./slices/roles/admin";
+import { peopleReducer } from "./slices/roles/people";
+import storage from "redux-persist/lib/storage";
 import {
   persistStore,
   persistReducer,
-  FLUSH, 
+  FLUSH,
   REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER
-} from 'redux-persist'
-import { subadminReducer } from './slices/roles/subadmin';
-import { userInfoReducer } from './slices/userInfo';
-  
+  REGISTER,
+} from "redux-persist";
+import { subadminReducer } from "./slices/roles/subadmin";
+import { userInfoReducer } from "./slices/userInfo";
+
 const rootReducer = combineReducers({
   auth: authReducer,
   admin: adminReducer,
   subadmin: subadminReducer,
   people: peopleReducer,
-  userInfo: userInfoReducer
-})
+  userInfo: userInfoReducer,
+});
 
-const persistConfig = 
-{
-  key: 'root',
+const persistConfig = {
+  key: "root",
   storage,
-  blacklist: ['userInfo'], // Исключаем срез "userInfo" из сохранения
-}
+  blacklist: ["userInfo"], // Исключаем срез "userInfo" из сохранения
+};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
@@ -41,15 +40,12 @@ const store = configureStore({
   //   people: peopleReducer,
   // },
   middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware(
-    {
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }
-  )
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-
-export const persistor = persistStore(store)
-export default store
+export const persistor = persistStore(store);
+export default store;

@@ -1,6 +1,6 @@
 @use "../../styles/various.module.scss" as var;
 @media screen and (min-width: 1024px) {
-  .back{
+  .back {
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -12,23 +12,23 @@
     position: absolute;
     z-index: 20000;
   }
-  
-  .links{
+
+  .links {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 50px;
   }
-  .backmenu{
+  .backmenu {
     display: none;
   }
-  .premenu{
+  .premenu {
     display: none;
   }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .back{
+  .back {
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -40,28 +40,28 @@
     position: absolute;
     z-index: 20000;
   }
-  .logo{
-    img{
+  .logo {
+    img {
       width: 75px;
       height: 75px;
     }
   }
-  .links{
+  .links {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 40px;
   }
-  .backmenu{
+  .backmenu {
     display: none;
   }
-  .premenu{
+  .premenu {
     display: none;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .back{
+  .back {
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -73,21 +73,21 @@
     position: absolute;
     z-index: 20000;
   }
-  
-  .links{
-display: none;
-  }
-  .navbutton{
-    margin-left: 10px;
-}
-.logo{
-  img{
-    width: 50px;
-    height: 50px;
-  }
-}
 
-.animate_burger2{
+  .links {
+    display: none;
+  }
+  .navbutton {
+    margin-left: 10px;
+  }
+  .logo {
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .animate_burger2 {
     // opacity: 0.7;
     z-index: 101 !important;
     // right: 30px;
@@ -97,20 +97,20 @@ display: none;
     right: 2.6%;
     opacity: 0.5;
   }
-  .backmenu{
+  .backmenu {
     display: flex;
 
     // height: 200px;
     flex-direction: column;
   }
-  .info_links{
+  .info_links {
     position: absolute;
     width: 250px;
     margin-top: -30px;
     height: 140px;
     right: 0px;
     background: rgba(255, 255, 255, 0.25);
-    border: 1px solid #FFFFFF;
+    border: 1px solid #ffffff;
     -webkit-backdrop-filter: blur(2vw);
     backdrop-filter: blur(2vw);
     border-radius: 15px;
@@ -119,11 +119,10 @@ display: none;
     gap: 10px;
     padding-top: 15px;
     flex-direction: column;
-   align-items: center;
-   div:hover{
-    
-    text-shadow: 1vw 1vw 0  rgba(255, 255, 255, 0.75);
-   }
+    align-items: center;
+    div:hover {
+      text-shadow: 1vw 1vw 0 rgba(255, 255, 255, 0.75);
+    }
     // margin-top: 100px;
   }
 }

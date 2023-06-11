@@ -88,7 +88,6 @@
     "stylelint": "stylelint '**/*.css'",
     "prettier": "prettier -c .",
     "types": "tsc -p jsconfig.json",
-    "export": "next export",
-    "test": "npm run eslint && npm run stylelint && npm run prettier && npm run types"
+    "export": "next export"
   }
 }

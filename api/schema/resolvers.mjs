@@ -39,7 +39,10 @@ const resolvers = {
                 return user
         },
         getUserbyToken: async (_parent, {token}, _context, _info) => {
-            const info = await verifyAuthToken(token)
+            let info = ""
+            if (token) {
+                info = await verifyAuthToken(token)
+            }
             const email = info.id.email
             const user = await User.findOne({ email });
             if (!user) {

@@ -1,6 +1,6 @@
-import React from 'react'
-import LoginCom from '../../components/Auth/Login'
+import React from "react";
+import LoginCom from "../../components/Auth/Login";
 
 export default function Login() {
-  return <LoginCom />
+  return <LoginCom />;
 }

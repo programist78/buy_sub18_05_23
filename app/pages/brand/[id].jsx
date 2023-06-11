@@ -1,11 +1,11 @@
-import React from 'react'
-import BusinessPageCom from '../../components/Business/index.jsx'
+import React from "react";
+import BusinessPageCom from "../../components/Business/index.jsx";
 export const getServerSideProps = async ({ query }) => {
-  const queryId = query.id
+  const queryId = query.id;
   return {
-    props: {queryId}
-  }
-}
+    props: { queryId },
+  };
+};
 
 const OnePerson = ({ queryId }) => {
   return <BusinessPageCom queryId={queryId} />;

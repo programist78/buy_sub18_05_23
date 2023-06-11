@@ -10,14 +10,10 @@ export default function MapComponent() {
 }
 
 function Map() {
-    const center = useMemo(() => ({lat: 44, lng: -88 }), [])
+  const center = useMemo(() => ({ lat: 44, lng: -88 }), []);
   return (
-    <GoogleMap
-      zoom={10}
-      center={center}
-      mapContainerClassName="map-container"
-    >
-        <Marker position={center}/>
+    <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
+      <Marker position={center} />
     </GoogleMap>
   );
 }
