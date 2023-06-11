@@ -65,10 +65,10 @@ To get a local copy up and running follow these simple example steps.
 
 ## Installation
 
-To run this code project without any programming knowledge, please follow these steps:
+To run this code project on both Windows and macOS, please follow these steps:
 
 ### Server part
-1. Open PowerShell (or any command line interface).
+1. Open a terminal (PowerShell for Windows or Terminal for macOS).
 2. Navigate to the directory where you want to clone the repository.  For example:
    ```sh
    cd path/to/directory
@@ -87,11 +87,11 @@ To run this code project without any programming knowledge, please follow these 
    ```
 6. Create a new file named `.env` in the `api` folder. You can use the following command to create the file:
    ```sh
-   echo "" > .env
+   touch .env
    ```
 7. Open the `.env` file with a text editor. You can use the following command to open the file in Notepad:
    ```sh
-   notepad .env
+   open -e .env
    ```
 8. Add the following keys:
    ```js
@@ -108,7 +108,7 @@ To run this code project without any programming knowledge, please follow these 
    CLIENT='* - (acess for all frontend) / Your client link'
    ```
 ### Client part
-1. Open another PowerShell (or command line interface) window.
+1. Open another terminal window (PowerShell for Windows or Terminal for macOS).
 2. Navigate to the directory where you cloned the repository. For example:
    ```sh
    cd path/to/directory/buy_sub18_05_23/app
@@ -119,11 +119,11 @@ To run this code project without any programming knowledge, please follow these 
    ```
 4. Create a new file named`.env` in the`app` folder. You can use the following command to create the file:
    ```sh
-   echo "" > .env
+   touch .env
    ```
 5. Open the `.env` file with a text editor 
    ```sh
-   notepad .env
+   open -e .env
    ```
 6. Add the following keys:
    ```js
@@ -132,7 +132,7 @@ To run this code project without any programming knowledge, please follow these 
    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=""
    ```
 
-Once you have completed all these steps, you will be able to run the code project without any programming knowledge.
+Once you have completed all these steps, you will be able to run the code project on both Windows and macOS without any programming knowledge.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
