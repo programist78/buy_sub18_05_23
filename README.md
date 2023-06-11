@@ -139,9 +139,31 @@ Once you have completed all these steps, you will be able to run the code projec
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Usage/Launc
 
-Use this space to configure or interact with this application
+### Server part
+1. Open another terminal window (PowerShell for Windows or Terminal for macOS).
+2. Navigate to the directory where you have the `api` folder. For example:
+   ```sh
+   cd path/to/directory/buy_sub18_05_23/api
+   ```
+3. Type this in your terminal:
+   ```sh
+   npm run dev
+   ```
+
+### Client part
+1. Open another terminal window (PowerShell for Windows or Terminal for macOS).
+2. Navigate to the directory where you have the `app` folder. For example:
+   ```sh
+   cd path/to/directory/buy_sub18_05_23/app
+   ```
+3. Type this in your terminal:
+   ```sh
+   npm run dev
+   ```
+
+Open a web site in your browser: <a href="http://localhost:3000">localhost:3000</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
