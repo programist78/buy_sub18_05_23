@@ -105,7 +105,12 @@ This is an example of how to list things you need to use the software and how to
    npm install
    ```
 4. Create `.env` in `app` folder
-5. Loading...
+5. Add all keys in `.env` 
+   ```js
+   API_URI='http://localhost:4000/graphql'
+   GOOGLE_MAP_API_KEY=""
+   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=""
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
