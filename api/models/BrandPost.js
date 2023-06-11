@@ -1,6 +1,6 @@
 // import mongoose from 'mongoose';
 
-// const BrandPost = new mongoose.Schema(
+// const BusinessPost = new mongoose.Schema(
 //   {
 //     title: {
 //       type: String,
@@ -35,4 +35,4 @@
 //   },
 // );
 
-// export default mongoose.model('BrandPost', BrandPost);
+// export default mongoose.model('BusinessPost', BusinessPost);

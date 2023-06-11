@@ -71,16 +71,16 @@ export default function Navbar() {
       ?
           <div className={styles.info_links}>
      {/* <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
-     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link> */}
-     {(userInfo.role == "BRAND") && <Link href="/personal/brand"> <button className='a_button'>Brand Cabinet</button></Link>  }
-     {(userInfo.role == "USER") && <Link href="/personal/poster"> <button className='a_button'>Poster Cabinet</button></Link>  }
+     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Businesses</button></Link> */}
+     {(userInfo.role == "BUSINESS") && <Link href="/personal/brand"> <button className='a_button'>Business panel</button></Link>  }
+     {(userInfo.role == "USER") && <Link href="/personal/poster"> <button className='a_button'>Poster panel</button></Link>  }
      {(userInfo.role == "ADMIN") && <Link href="/personal/poster"> <button className='a_button'>Admin panel</button></Link>  }
     <button className='b_button' onClick={onLogout} >Log out</button> 
     </div>
     :
     <div className={styles.info_links}>
     <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
-    <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link>
+    <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Businesses</button></Link>
      <Link href="/auth/login"><button className='b_button'>Log in</button></Link>
    </div>
       }
@@ -107,16 +107,17 @@ export default function Navbar() {
       ?
           <div className={styles.links}>
      {/* <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
-     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link> */}
-     {(userInfo.role == "BRAND") && <Link href="/personal/brand"> <button className='a_button'>Brand Cabinet</button></Link>  }
-     {(userInfo.role == "USER") && <Link href="/personal/poster"> <button className='a_button'>Poster Cabinet</button></Link>  }
-     {(userInfo.role == "ADMIN") && <Link href="/personal/poster"> <button className='a_button'>Admin panel</button></Link>  }
+     <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Businesses</button></Link> */}
+     {/* {(userInfo.role == "BUSINESS") && <Link href="/personal/brand"> <button className='a_button'>Business panel</button></Link>  }
+     {(userInfo.role == "USER") && <Link href="/personal/poster"> <button className='a_button'>Poster panel</button></Link>  }
+     {(userInfo.role == "ADMIN") && <Link href="/personal/poster"> <button className='a_button'>Admin panel</button></Link>  } */}
+      <Link  href={(userInfo?.role == "USER") ? "/personal/poster" : "/personal/brand"}><button className="a_button">Personal Panel</button></Link>
     <button className='b_button' onClick={onLogout} >Log out</button> 
     </div>
     :
     <div className={styles.links}>
     <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
-    <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Bussineses</button></Link>
+    <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Businesses</button></Link>
      <Link href="/auth/login"><button className='b_button'>Log in</button></Link>
    </div>
       }

@@ -3,13 +3,14 @@ import styles from "./PersonalCabinet.module.scss";
 import { useSelector } from "react-redux";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../hooks/AuthContext";
-import { CREATE_POSTER_POST, GET_BRAND, GET_NEW_BRANDS, GET_POPULAR_BRANDS } from "../../../apollo/posters";
+import { CREATE_POSTER_POST, GET_BUSINESS, GET_NEW_BUSINESSS, GET_POPULAR_BUSINESSS } from "../../../apollo/posters";
 import { useQuery, useMutation } from "@apollo/client";
 import Swal from "sweetalert2";
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { useRouter } from "next/router";
-import BrandView from "../../BrandsView";
+// import BusinessView from "../../BusinesssView";
+import BusinessView from "../../BusinessView";
 import WithdrawCom from "../../Stripe/WithdrawCom";
 import { clearToken } from "../../../redux/slices/auth";
 export default function PosterCabinetCom() {
@@ -18,15 +19,15 @@ export default function PosterCabinetCom() {
     const { userInfo } = useSelector((state) => state.userInfo);
     {!userInfo ? router.push('/') : ""}
   const { user, logout, authredux } = useContext(AuthContext);
-  const [brandname, setBrandname] = useState("");
-  const [brandId, setBrandId] = useState("");
+  const [brandname, setBusinessname] = useState("");
+  const [brandId, setBusinessId] = useState("");
   const [image, setImage] = useState([]);
   const [selectedSocial, setselectedSocial] = useState("")
   const [selectedReview, setselectedReview] = useState("")
   const [text, setText] = useState(`Selected social network - ${selectedSocial}. Selected review site - ${selectedReview}`)
   console.log(image)
   const [searchText, setSearchText] = useState("");
-  const [getBrand] = useMutation(GET_BRAND, {
+  const [getBusiness] = useMutation(GET_BUSINESS, {
     onError(error) {
         Swal.fire({
           icon: 'error',
@@ -34,7 +35,7 @@ export default function PosterCabinetCom() {
         })
     },
     onCompleted: (data) => {
-        setBrandId(data.getBrand)
+        setBusinessId(data.getBusiness)
         Swal.fire({
             icon: 'success',
             title: `Keep creating the post `
@@ -50,7 +51,7 @@ export default function PosterCabinetCom() {
         })
     },
     onCompleted: (data) => {
-        setBrandId(data)
+        setBusinessId(data)
         Swal.fire({
             icon: 'success',
             title: `Success! `
@@ -72,7 +73,7 @@ export default function PosterCabinetCom() {
 //   function onChangeCP({ target: { validity, files } }) {
 //     if (validity.valid && files && files[0]) setImage(files);
 //   }
-const [dataBrands, setDataBrands] = useState([]);
+const [dataBusinesss, setDataBusinesss] = useState([]);
   function onChangeCP({ target: { validity, files } }) {
     if (validity.valid && files && files[0]) {
       // Создаем новый массив, объединяющий существующие изображения и новый файл
@@ -81,16 +82,16 @@ const [dataBrands, setDataBrands] = useState([]);
     }
   }
 
-  const {data: getNewBrands, loading: getNewLoading, error: getNewError} = useQuery(GET_NEW_BRANDS)
-  const {data: getPopularBrands, loading: getPopularLoading, error:getPopularError} = useQuery(GET_POPULAR_BRANDS)
+  const {data: getNewBusinesss, loading: getNewLoading, error: getNewError} = useQuery(GET_NEW_BUSINESSS)
+  const {data: getPopularBusinesss, loading: getPopularLoading, error:getPopularError} = useQuery(GET_POPULAR_BUSINESSS)
   
-  const filteredPopular = getNewBrands?.getNewBrands?.filter(obj => {
+  const filteredPopular = getNewBusinesss?.getNewBusinesss?.filter(obj => {
     return (
         obj.brandname.toLowerCase().includes(searchText?.toLowerCase()) 
     );
   });
 
-  const filteredNew = getPopularBrands?.getPopularBrands?.filter(obj => {
+  const filteredNew = getPopularBusinesss?.getPopularBusinesss?.filter(obj => {
     return (
         obj.brandname.toLowerCase().includes(searchText?.toLowerCase()) 
     );
@@ -114,7 +115,7 @@ const [dataBrands, setDataBrands] = useState([]);
       <p className="title">Let's get posting</p>
       <div className={styles.inline_part}>
         <div className={styles.log_part}>
-          <Image src="/fake_logo.svg" width={139} height={139} alt="logo" />
+          <img src={userInfo?.avatarUrl} width={139} height={139} alt="logo" />
           <div className={styles.child_log_part}>
             <p className="text">{userInfo?.fullname}</p>
             <div className={`text ${styles.addborders}`}>My account</div>
@@ -131,11 +132,11 @@ const [dataBrands, setDataBrands] = useState([]);
                 type="text"
                 className="a_input"
                 value={brandname}
-                onChange={(e) => setBrandname(e.target.value)}
+                onChange={(e) => setBusinessname(e.target.value)}
               />
             </div>
             {brandname ? (
-              <button className="b_button" onClick={() => getBrand()}>Check</button>
+              <button className="b_button" onClick={() => getBusiness()}>Check</button>
             ) : (
               <a><button className="b_button" >Choose a business</button></a>
             )}
@@ -190,7 +191,7 @@ const [dataBrands, setDataBrands] = useState([]);
             <div onClick={() => setFilter("2")} className={`pretitle ${(filter == "2" ? styles.active : "")}`}>New</div>
         </div>
         <div className={styles.input_box}>
-        <input type="search" value={searchText} onChange={(e) => setSearchText(e.target.value)} className="a_input" placeholder="Brand name" />
+        <input type="search" value={searchText} onChange={(e) => setSearchText(e.target.value)} className="a_input" placeholder="Business name" />
         </div>
 
       </div>
@@ -199,10 +200,10 @@ const [dataBrands, setDataBrands] = useState([]);
             <div className={styles.back2}>
             {(getPopularLoading ? [...Array(3)] :filteredPopular)?.map((obj, key) => 
              getPopularLoading ? 
-             (<BrandView     key={key} 
+             (<BusinessView     key={key} 
                  myKey={key} isLoading={true} />) :
             (
-            <BrandView
+            <BusinessView
                 _id={obj.id}
                 brandname={obj.brandname}
                 image={obj.image}
@@ -217,10 +218,10 @@ const [dataBrands, setDataBrands] = useState([]);
             <div className={styles.back2}>
             {(getNewLoading ? [...Array(3)] :filteredNew)?.map((obj, key) => 
              getNewLoading ? 
-             (<BrandView     key={key} 
+             (<BusinessView     key={key} 
                  myKey={key} isLoading={true} />) :
             (
-            <BrandView
+            <BusinessView
                 _id={obj.id}
                 brandname={obj.brandname}
                 image={obj.image}

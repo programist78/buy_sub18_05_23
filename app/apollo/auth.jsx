@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const LOGIN_USER = gql`
 mutation Mutation($about: LoginInput) {
   loginUser(about: $about) {
+    token
     user {
       id
       fullname
@@ -21,6 +22,7 @@ mutation Mutation($about: LoginInput) {
           name
           followers
         }
+        aproveScreenshots
       }
       reviewMedia {
         google
@@ -48,8 +50,8 @@ mutation Mutation($about: LoginInput) {
       websiteLink
       address
       brandDescription
+      image
     }
-    token
   }
 }
 `
@@ -96,50 +98,52 @@ mutation Mutation($about: RegisterInput, $info: SocialMediaInput, $image: [Uploa
 export const GETUSER_BYTOKEN = gql`
 query GetUserbyToken($token: String) {
   getUserbyToken(token: $token) {
-      id
-      fullname
-      email
-      role
-      socialMedia {
-        instagram {
-          name
-          followers
-        }
-        facebook {
-          name
-          followers
-        }
-        tiktok {
-          name
-          followers
-        }
+    id
+    fullname
+    email
+    role
+    socialMedia {
+      instagram {
+        name
+        followers
       }
-      reviewMedia {
-        google
-        yelp
-        tripadvisor
+      facebook {
+        name
+        followers
       }
-      confirmedEmail
-      avatarUrl
-      phone
-      pendingPosts
-      completedPosts
-      balance
-      brandPendingPosts
-      brandCompletedPosts
-      postPrice
-      brandname
-      physicalLocation {
-        latitude
-        longitude
+      tiktok {
+        name
+        followers
       }
-      brandDirection
-      plan
-      hasTrial
-      endDate
-      websiteLink
-      address
-      brandDescription
+      aproveScreenshots
+    }
+    reviewMedia {
+      google
+      yelp
+      tripadvisor
+    }
+    confirmedEmail
+    avatarUrl
+    phone
+    pendingPosts
+    completedPosts
+    balance
+    brandPendingPosts
+    brandCompletedPosts
+    postPrice
+    brandname
+    physicalLocation {
+      latitude
+      longitude
+    }
+    brandDirection
+    plan
+    hasTrial
+    endDate
+    websiteLink
+    address
+    brandDescription
+    image
   }
 }
 `

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './BrandsView.module.scss'
+import styles from './BusinesssView.module.scss'
 // import { PostSkeleton } from './Skeleton';
 import { useInView } from 'react-intersection-observer'
 import { useState, useEffect } from 'react';
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
 import Swal from 'sweetalert2';
 import Image from 'next/image';
-const BrandView = ({
+const BusinessView = ({
   _id,
   brandname,
   image,
@@ -70,4 +70,4 @@ const BrandView = ({
   );
 };
 
-export default BrandView
+export default BusinessView

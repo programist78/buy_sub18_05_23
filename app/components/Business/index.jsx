@@ -1,13 +1,13 @@
 import Image from 'next/image'
-import styles from './Brand.module.scss'
+import styles from './Business.module.scss'
 import {useQuery} from '@apollo/client'
-import { GET_BRAND_QUERY } from '../../apollo/posters'
+import { GET_BUSINESS_QUERY } from '../../apollo/posters'
 import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react'
 import MapComponent from '../MapComponent'
-export default function BrandPageCom({queryId}) {
+export default function BusinessPageCom({queryId}) {
     const [data, setData] = useState()
-    const {data: brandData} = useQuery(GET_BRAND_QUERY, {
+    const {data: brandData} = useQuery(GET_BUSINESS_QUERY, {
         onError(error) {
             Swal.fire({
               icon: 'error',
@@ -18,8 +18,8 @@ export default function BrandPageCom({queryId}) {
     })
 
         useEffect(() => {
-          setData(brandData?.getBrandQuery)
-        }, [brandData?.getBrandQuery])
+          setData(brandData?.getBusinessQuery)
+        }, [brandData?.getBusinessQuery])
   return (
     <div className={styles.back}>
         <div className={styles.header}>
@@ -52,7 +52,7 @@ export default function BrandPageCom({queryId}) {
             </div>
         </div>
         <div className={styles.map_part}>
-            <p className='pretitle'>Map with locations of Brands</p>
+            <p className='pretitle'>Map with locations of Businesss</p>
             {/* <Image src="/fake_map.png" width={895} height={506} alt="map"/> */}
             <MapComponent />
         </div>

@@ -4,8 +4,27 @@ export default function Document() {
   return (
     <Html lang="en">
         <Head>
-        <meta name="keywords" content="travel, tourism, visa, passport, expat path, destination, adventure, culture, holiday, trip, excursion, international passport, border, tourist attractions, visiting a country, overseas relocation, foreign experience, international travel, hospitality, exploring new places, resort vacation, vacation abroad, international visa, country borders, cultural exchange, foreign lands, wanderlust, tourist sites, living abroad, foreign travel, guided tours, travel experience, passport formalities, life in another country."/>
-        <meta name="author" content="Ethan Sheldon" />
+        <meta name="keywords" content="money, subscribers, achieve, post, instagram, tiktok, facebook, business, poster, postfordollars, postfor, dollarspost, dollars, subscribe, subscribers" />
+        <meta name="author" content="Pavel Vasilec" />
+
+        {/* <title>Postfordollars - Achieve more with us!</title> */}
+<meta name="title" content="Postfordollars - Achieve more with us!"/>
+<meta name="description" content="Welcome to PostForDollars - the ultimate platform that connects posters and brands for mutually beneficial collaborations! Whether you're a brand looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."/>
+
+{/* <!-- Open Graph / Facebook --> */}
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://webxwiz.site/" />
+<meta property="og:title" content="Postfordollars - Achieve more with us!" />
+<meta property="og:description" content="Welcome to PostForDollars - the ultimate platform that connects posters and brands for mutually beneficial collaborations! Whether you're a brand looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."/>
+<meta property="og:image" content="https://webxwiz.site/preview.png" />
+
+{/* <!-- Twitter --> */}
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://webxwiz.site/" />
+<meta property="twitter:title" content="Postfordollars - Achieve more with us!" />
+<meta property="twitter:description" content="Welcome to PostForDollars - the ultimate platform that connects posters and brands for mutually beneficial collaborations! Whether you're a brand looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."/>
+<meta property="twitter:image" content="https://webxwiz.site/preview.png" />
+
 
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
 <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />

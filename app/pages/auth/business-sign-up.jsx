@@ -1,6 +1,6 @@
 import React from 'react'
-import SignUpBrand from '../../components/Auth/SignUpBrand'
+import SignUpBusiness from '../../components/Auth/SignUpBusiness'
 
 export default function BusinessSignUp() {
-  return <SignUpBrand />
+  return <SignUpBusiness />
 }

@@ -96,7 +96,7 @@ function LoginCom() {
         </button>
       </form>
       <Link href="/auth/forgot-password" style={{textDecoration: "underline"}}><p className={`text ${styles.small_text}`}>Forgot Password?</p></Link>
-      <p className={`text ${styles.text}`}>Dont have an account? <Link href="/auth/sign-up" style={{textDecoration: "underline"}}>Sign up Poster</Link><br /> <Link href="/auth/sign-up" style={{textDecoration: "underline"}}>Sign up Brand</Link></p>
+      <p className={`text ${styles.text}`}>Dont have an account? <Link href="/auth/sign-up" style={{textDecoration: "underline"}}>Sign up Poster</Link><br /> <Link href="/auth/sign-up" style={{textDecoration: "underline"}}>Sign up Business</Link></p>
     </div>
   );
 };

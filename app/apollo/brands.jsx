@@ -12,9 +12,9 @@ mutation DeclinePosterPost($posterPostId: ID) {
   }
 `
 
-export const PENDING_POSTS_FOR_BRAND = gql`
-query Query($getAllPendingPosterPostsforBrandId: ID) {
-  getAllPendingPosterPostsforBrand(id: $getAllPendingPosterPostsforBrandId) {
+export const PENDING_POSTS_FOR_BUSINESS = gql`
+query Query($getAllPendingPosterPostsforBusinessId: ID) {
+  getAllPendingPosterPostsforBusiness(id: $getAllPendingPosterPostsforBusinessId) {
     id
     title
     text
@@ -28,9 +28,9 @@ query Query($getAllPendingPosterPostsforBrandId: ID) {
 }
 `
 
-export const COMPLETED_POSTS_FOR_BRAND = gql`
-query Query($getAllCompletedPosterPostsforBrandId: ID) {
-  getAllCompletedPosterPostsforBrand(id: $getAllCompletedPosterPostsforBrandId) {
+export const COMPLETED_POSTS_FOR_BUSINESS = gql`
+query Query($getAllCompletedPosterPostsforBusinessId: ID) {
+  getAllCompletedPosterPostsforBusiness(id: $getAllCompletedPosterPostsforBusinessId) {
     id
     title
     text

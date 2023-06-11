@@ -4,18 +4,51 @@ import { useSelector } from "react-redux";
 import { useQuery, useMutation } from "@apollo/client";
 import {
     ACCEPT_POSTER_POST,
-  COMPLETED_POSTS_FOR_BRAND,
+  COMPLETED_POSTS_FOR_BUSINESS,
   DECLINE_POSTER_POST,
-  PENDING_POSTS_FOR_BRAND,
+  PENDING_POSTS_FOR_BUSINESS,
 } from "../../../apollo/brands";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import SmallLoader from "../../Loaders/SmallLoader";
+import {BiPencil} from "react-icons/bi"
 export default function BusinessCabinetCom() {
+  //edit Information
+  const [edit, setEdit] = useState(false)
+  const [editPhone, setEditPhone] = useState("")
+  const [editAddress, setEditAddress] = useState("")
+  const [editPostPrice, setEditPostPrice] = useState("")
+  const [editWebsiteLink, setEditWebsiteLink] = useState("")
+  const [editBrandDescription, setEditBrandDescription] = useState("")
+  //user Info
   const { userInfo } = useSelector((state) => state.userInfo);
+  //open modules
+  const [isAccountingOpen, setIsAccountingOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+
+  useEffect(() => {
+    setEditPhone(userInfo?.phone)
+  }, [userInfo?.phone])
+
+  useEffect(() => {
+    setEditPostPrice(userInfo?.postPrice)
+  }, [userInfo?.postPrice])
+
+  useEffect(() => {
+    setEditAddress(userInfo?.address)
+  }, [userInfo?.address])
+
+  useEffect(() => {
+    setEditWebsiteLink(userInfo?.websiteLink)
+  }, [userInfo?.websiteLink])
+
+  useEffect(() => {
+    setEditBrandDescription(userInfo?.editBrandDescription)
+  }, [userInfo?.editBrandDescription])
+  
 
   const openModal = () => {
     setIsOpen(true);
@@ -33,13 +66,13 @@ export default function BusinessCabinetCom() {
     setIsOpen2(false);
   };
   const { data: pendingdata, loading: pendingloading } = useQuery(
-    PENDING_POSTS_FOR_BRAND,
-    { variables: { getAllPendingPosterPostsforBrandId: userInfo?.id } }
+    PENDING_POSTS_FOR_BUSINESS,
+    { variables: { getAllPendingPosterPostsforBusinessId: userInfo?.id } }
   );
-  const { data: completeddata, loading: completedLoading } = useQuery(COMPLETED_POSTS_FOR_BRAND, {
-    variables: { getAllCompletedPosterPostsforBrandId: userInfo?.id },
+  const { data: completeddata, loading: completedLoading } = useQuery(COMPLETED_POSTS_FOR_BUSINESS, {
+    variables: { getAllCompletedPosterPostsforBusinessId: userInfo?.id },
   });
-  console.log(completeddata?.getAllCompletedPosterPostsforBrand)
+  console.log(completeddata?.getAllCompletedPosterPostsforBusiness)
   const [declinePost] = useMutation(DECLINE_POSTER_POST,
     {
         onError(error) {
@@ -71,15 +104,23 @@ export default function BusinessCabinetCom() {
   });
   function onClickDecline(posterPostId) {
     console.log(posterPostId)
-    declinePost({variables: posterPostId})
+    declinePost({variables: {posterPostId}})
   }
 
   function onClickAccept(posterPostId) {
     acceptPost({variables: {posterPostId}})
   }
+
+
+  function Save() {
+    setEdit(!edit)
+    saveBlog()
+  }
   return (
     <div className={styles.back}>
       <p className="title">My account Page</p>
+      {userInfo ?
+      <>
       <div className={styles.part1}>
         <div className={styles.logo_part}>
           <p className={`text ${styles.text}`}>{userInfo?.brandname}</p>
@@ -92,7 +133,8 @@ export default function BusinessCabinetCom() {
             <div className={`a_input ${styles.statistic_div}`}>
               <p className="text">Posts awaiting approval</p>
               <p className="text">
-                {pendingdata?.getAllPendingPosterPostsforBrand?.length}
+              {pendingdata ? pendingdata?.getAllPendingPosterPostsforBusiness?.length : <SmallLoader />}
+                
               </p>
             </div>
             <button onClick={openModal} className="b_button">
@@ -107,7 +149,7 @@ export default function BusinessCabinetCom() {
             <div className={styles.modal}>
               <AiOutlineCloseCircle onClick={closeModal} />
 
-              {pendingdata?.getAllPendingPosterPostsforBrand?.map((obj, key) =>
+              {pendingdata?.getAllPendingPosterPostsforBusiness?.map((obj, key) =>
                 pendingloading ? (
                   <div
                     className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
@@ -150,7 +192,7 @@ export default function BusinessCabinetCom() {
             <div className={styles.modal}>
               <AiOutlineCloseCircle onClick={closeModal2} />
 
-              {completeddata?.getAllCompletedPosterPostsforBrand.map((obj, key) =>
+              {completeddata?.getAllCompletedPosterPostsforBusiness.map((obj, key) =>
                 completedLoading ? (
                   <div
                     className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
@@ -182,7 +224,7 @@ export default function BusinessCabinetCom() {
               {/* <p className='text'>Posts approved this past month</p> */}
               <p className="text">Posts approved</p>
               <p className="text">
-                {completeddata?.getAllCompletedPosterPostsforBrand?.length}
+              {pendingdata ? completeddata?.getAllCompletedPosterPostsforBusiness?.length : <SmallLoader />}
               </p>
             </div>
             <button onClick={openModal2} className="b_button">View</button>
@@ -210,7 +252,43 @@ export default function BusinessCabinetCom() {
           Your brand activity is 76% higher than last month!
         </p>
       </div>
-      <button className="b_button">Accounting information</button>
+      {isAccountingOpen ?
+      <div className={styles.info_part}>
+                   {edit 
+          ?
+          <button onClick={() => setEdit(!edit)}className="b_button">Save information</button>
+          :
+          <button onClick={() => setEdit(!edit)}className="b_button">Edit -<span><BiPencil /></span></button>
+        }
+                  {edit ?
+                  <>
+                  <input type="text" value={editPhone} onChange={(e) => setEditPhone(e.target.value)} className={`${styles.changeinfo_input} text`}/>
+                  <input type="text" value={editPostPrice} onChange={(e) => setEditPostPrice(e.target.value)} className={`${styles.changeinfo_input} text`}/>
+                  <input type="text" value={editAddress} onChange={(e) => setEditAddress(e.target.value)} className={`${styles.changeinfo_input} text`}/>
+                  <h1>Here image</h1>
+                  <input type="text" value={editWebsiteLink} onChange={(e) => setEditWebsiteLink(e.target.value)} className={`${styles.changeinfo_input} text`}/>
+                  <input type="text" value={editBrandDescription} onChange={(e) => setEditBrandDescription(e.target.value)} className={`${styles.changeinfo_input} text`}/>
+                  </>
+                  :
+                  <>
+      <p className="text">Your contact phone : {userInfo?.phone}</p>
+      <p className="text">Business post price : {userInfo?.postPrice/100}$</p>
+      <p className="text">Business physical location : {userInfo?.address}</p>
+      <img src={userInfo?.image} className={styles.brandimage}/>
+      <p className="text">Business website link : {userInfo?.websiteLink}</p>
+      <p className="text">Business brand description : {userInfo?.brandDescription}</p>
+      <p className="text">Your social media : </p>
+                  </>
+        }
+
+      <button onClick={() => setIsAccountingOpen(!isAccountingOpen)} className="b_button">Close</button>
+
+      </div>  
+      :
+      <button onClick={() => setIsAccountingOpen(!isAccountingOpen)} className="b_button">Accounting information</button>
+    }
+      </>
+      : <SmallLoader />}
     </div>
   );
 }

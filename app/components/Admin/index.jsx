@@ -3,7 +3,7 @@ import styles from './Admin.module.scss'
 export default function AdminCom() {
   return (
    <div className={styles.back}>
-    <p className='title'>Brands Registration</p>
+    <p className='title'>Businesss Registration</p>
     <table>
       <thead>
         <tr>

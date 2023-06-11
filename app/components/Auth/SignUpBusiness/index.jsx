@@ -1,4 +1,4 @@
-import styles from './SignUpBrand.module.scss'
+import styles from './SignUpBusiness.module.scss'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -11,7 +11,7 @@ import {CiLogin} from 'react-icons/ci'
 import Swal from "sweetalert2"
 import { useState, useContext, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";import Link from 'next/link';
-export default function SignUpBrand() {
+export default function SignUpBusiness() {
     const [isChecked1, setIsChecked1] = useState(false);
     const [isChecked2, setIsChecked2] = useState(false);
     const [messageError, setMessageError] = useState("")
@@ -63,7 +63,7 @@ export default function SignUpBrand() {
     .required('Please retype your password.')
     .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
     brandname: Yup.string()
-    .required('Brand name is required!')
+    .required('Business name is required!')
   });
 
   const {
@@ -154,10 +154,19 @@ export default function SignUpBrand() {
         name="fullname"
         type="text"
         {...register('fullname')}
-        placeholder='Fullname'
+        placeholder='Contact full name'
         className={`a_input ${errors.fullname ? 'is-invalid' : ''}`}
       />
       <p className={styles.errors}>{errors.fullname?.message}</p>
+    </div>
+    <div>
+      <input
+        name="brandname"
+        type="text"
+        {...register('brandname')}
+        placeholder='Business ame'
+        className={`a_input ${errors.brandname ? 'is-invalid' : ''}`}
+      />
     </div>
     <div>
       <input
@@ -184,20 +193,11 @@ export default function SignUpBrand() {
         name="websiteLink"
         type="text"
         {...register('websiteLink')}
-        placeholder='Your website link(
-          if you have one)'
+        placeholder='Your website link(if you have one)'
         className={`a_input ${errors.address ? 'is-invalid' : ''}`}
       />
     </div>
-    <div>
-      <input
-        name="brandname"
-        type="text"
-        {...register('brandname')}
-        placeholder='Your brand name'
-        className={`a_input ${errors.brandname ? 'is-invalid' : ''}`}
-      />
-    </div>
+
     <label className="checkbox">
           <input
             type="checkbox"

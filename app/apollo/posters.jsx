@@ -16,15 +16,15 @@ mutation CreatePosterPost($post: PosterPostInput!, $image: [Upload]!) {
 }
 `
 
-export const GET_BRAND = gql`
+export const GET_BUSINESS = gql`
 mutation Mutation($brandname: String) {
-  getBrand(brandname: $brandname)
+  getBusiness(brandname: $brandname)
 }
 `
 
-export const GET_BRAND_QUERY = gql`
-query GetBrandQuery($brandname: String!) {
-  getBrandQuery(brandname: $brandname) {
+export const GET_BUSINESS_QUERY = gql`
+query GetBusinessQuery($brandname: String!) {
+  getBusinessQuery(brandname: $brandname) {
     id
     fullname
     email
@@ -72,9 +72,9 @@ query GetBrandQuery($brandname: String!) {
 }
 `
 
-export const GET_NEW_BRANDS = gql`
-query GetNewBrands {
-  getNewBrands {
+export const GET_NEW_BUSINESSS = gql`
+query GetNewBusinesss {
+  getNewBusinesss {
     avatarUrl
     postPrice
     brandname
@@ -84,9 +84,9 @@ query GetNewBrands {
 }
 `
 
-export const GET_POPULAR_BRANDS = gql`
-query GetPopularBrands {
-  getPopularBrands {
+export const GET_POPULAR_BUSINESSS = gql`
+query GetPopularBusinesss {
+  getPopularBusinesss {
     avatarUrl
     postPrice
     brandname

@@ -39,7 +39,7 @@ const User = new mongoose.Schema(
     balance: {
       type: Number
     },
-    //for Brand
+    //for Business
     brandPendingPosts: {
       type: Array
     },

@@ -1,6 +1,6 @@
-import BrandPageCom from "../../components/Brand";
+import BusinessPageCom from "../../components/Business";
 
 
-export default function BrandPage() {
-  return <BrandPageCom />
+export default function BusinessPage() {
+  return <BusinessPageCom />
 }

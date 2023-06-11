@@ -13,7 +13,7 @@ export default function Part5() {
 Click the button below to learn more and Sign Up!</p>
 {userInfo 
       ?
-      <Link  href={(userInfo?.role == "USER") ? "/personal/poster" : ""}><button className="b_button">Personal Cabinet</button></Link>
+      <Link  href={(userInfo?.role == "USER") ? "/personal/poster" : ""}><button className="b_button">Personal Panel</button></Link>
         :
         <Link href="/auth/login"><button className="b_button">Log In now</button></Link>
     }

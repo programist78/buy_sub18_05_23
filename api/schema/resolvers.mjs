@@ -12,7 +12,7 @@ import AWS from 'aws-sdk'
 import nodemailer from 'nodemailer'
 import sendgridTransport from 'nodemailer-sendgrid-transport';
 import validatePassword from '../helpers/validatePassword.js';
-// import BrandPost from '../models/BrandPost.js';
+// import BusinessPost from '../models/BusinessPost.js';
 import PosterPost from '../models/PosterPost.js';
 const __dirname = path.resolve();
 dotenv.config()
@@ -48,27 +48,27 @@ const resolvers = {
             return user
         },
         //brand
-        getAllPendingPosterPostsforBrand:async(_parent, {id}, _context, _info) => {
+        getAllPendingPosterPostsforBusiness:async(_parent, {id}, _context, _info) => {
             const brand = await User.findById(id)
             if (!brand) {
                 throw new GraphQLError("Invalid id given");
             }
             const list = await Promise.all(
                 brand.brandPendingPosts.map((post) => {
-                    // return BrandPost.findById(post)
+                    // return BusinessPost.findById(post)
                     return PosterPost.findById(post)
                 }),
                 )
             return list
         }, 
-        getAllCompletedPosterPostsforBrand:async(_parent, {id}, _context, _info) => {
+        getAllCompletedPosterPostsforBusiness:async(_parent, {id}, _context, _info) => {
             const brand = await User.findById(id)
             if (!brand) {
                 throw new GraphQLError("Invalid id given");
             }
             const list = await Promise.all(
                 brand.brandCompletedPosts.map((post) => {
-                    // return BrandPost.findById(post)
+                    // return BusinessPost.findById(post)
                     return PosterPost.findById(post)
                 }),
                 )
@@ -82,42 +82,42 @@ const resolvers = {
             }
             const list = await Promise.all(
                 user.pendingPosts.map((post) => {
-                    // return BrandPost.findById(post)
+                    // return BusinessPost.findById(post)
                     return PosterPost.findById(post)
                 }),
                 )
             return list
         },
-        getAllCompletedBrandPosts: async(_parent, {id}, _context, _info) => {
+        getAllCompletedBusinessPosts: async(_parent, {id}, _context, _info) => {
             const user = await User.findById(id)
             if (!user) {
                 throw new GraphQLError("Invalid id given");
             }
             const list = await Promise.all(
                 user.completedPosts.map((post) => {
-                    // return BrandPost.findById(post)
+                    // return BusinessPost.findById(post)
                     return PosterPost.findById(post)
                 }),
                 )
             return list
         },
         //brand
-        getNewBrands: async(_parent, args, _context, _info) => {
+        getNewBusinesss: async(_parent, args, _context, _info) => {
 
             const filter = {
-                role: "BRAND",
+                role: "BUSINESS",
               };
               const users = await User.find(filter).sort({ createdAt: -1 });;
               return users
         },
-        getPopularBrands: async(_parent, args, _context, _info) => {
+        getPopularBusinesss: async(_parent, args, _context, _info) => {
             const filter = {
-                role: "BRAND",
+                role: "BUSINESS",
               };
               const users = await User.find(filter).sort({ brandCompletedPosts: -1 });;
               return users
         },
-        getBrandQuery: async(_parent, {brandname}, _context, _info) => {
+        getBusinessQuery: async(_parent, {brandname}, _context, _info) => {
             const user = await User.findOne(
                 {brandname}
                 );
@@ -126,10 +126,10 @@ const resolvers = {
                 }
                 return user
         },
-        getBrandRegister: async(_parent, {argument}, _context, _info) => {
+        getBusinessRegister: async(_parent, {argument}, _context, _info) => {
             console.log(argument)
             const filter = {
-                role: "BRAND",
+                role: "BUSINESS",
               };
               const users = await User.find(filter).sort({ [argument]: -1 });;
               console.log(users)
@@ -155,7 +155,7 @@ const resolvers = {
             throw new GraphQLError("Weak password, the password should consist of 8 characters and have at least one number");
         }
 
-        const avatarUrl = `${process.env.HOST}/defaultperson.png`
+        const avatarUrl = `${process.env.HOST}/defaultperson.svg`
 
 
         const salt = await bcrypt.genSalt(10);
@@ -171,7 +171,7 @@ const resolvers = {
            if (brand_exist) {
             throw new GraphQLError("Email already exists");
         }
-        user = new User({ fullname,email, passwordHash,address, role: "BRAND",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice})
+        user = new User({ fullname,email, passwordHash,address, role: "BUSINESS",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice})
         } else{
             user = new User({ fullname,email, passwordHash, role: "USER",
             confirmedEmail: false, confirmationCode, avatarUrl, balance: 0,
@@ -415,8 +415,8 @@ const resolvers = {
         //     }
         // },          
 
-        //Brand
-        // addSocialMediaBrand: async (parent, {info}, args) => {
+        //Business
+        // addSocialMediaBusiness: async (parent, {info}, args) => {
         //     const {number,link, email} = info
         //     let math = Math.random() * (43564389374833)
         //     let socialMediaId = Math.round(math);
@@ -434,7 +434,7 @@ const resolvers = {
         //     );
         //     return newuser
         // },
-        // deleteSocialMediaBrand: async (parent, { id, email }, args) => {
+        // deleteSocialMediaBusiness: async (parent, { id, email }, args) => {
         //     console.log(id)
         //     try {
         //       const user = await User.findOneAndUpdate(
@@ -453,7 +453,7 @@ const resolvers = {
         //       throw new GraphQLError("Failed to delete social media", error);
         //     }
         // },       
-        // createBrandPost: async (parent,{ image, post }) => {
+        // createBusinessPost: async (parent,{ image, post }) => {
         //     let images = [];
             
         //     for (let i = 0; i < image.length; i++) {
@@ -467,16 +467,16 @@ const resolvers = {
         //     images.push(urlForArray);
         //     }
         //     const {title, requirements, authorId, payment, quantity} = post
-        //     const postcreate = new BrandPost({ title, requirements,payment, authorId, images, quantity })
+        //     const postcreate = new BusinessPost({ title, requirements,payment, authorId, images, quantity })
         //     await postcreate.save()
         //     const newuser = await User.findByIdAndUpdate(
         //         authorId,
-        //         { $push: { BrandPosts: postcreate.id} },
+        //         { $push: { BusinessPosts: postcreate.id} },
         //         { new: true }
         //     );
         //     return postcreate;
         // },
-        // updateBrandPost: async (parent,{ image, post }) => {
+        // updateBusinessPost: async (parent,{ image, post }) => {
         //     let images = [];
             
         //     for (let i = 0; i < image.length; i++) {
@@ -491,24 +491,24 @@ const resolvers = {
         //     }
         //     const {title, requirements, id} = post
         //     console.log(post)
-        //     const postcreate = await BrandPost.findByIdAndUpdate(
+        //     const postcreate = await BusinessPost.findByIdAndUpdate(
         //         id,
         //         {title, requirements, images},
         //         { new: true }
         //     );
         //     return postcreate
         // },
-        // deleteBrandPost: async (parent, args, context, info) => {
+        // deleteBusinessPost: async (parent, args, context, info) => {
         //     const { id } = args
         //     console.log(id)
-        //     const brandpost = await BrandPost.findById(id)
+        //     const brandpost = await BusinessPost.findById(id)
         //     if (!brandpost) {
         //         throw new GraphQLError("Post is undefined");
         //     }
-        //     brandpostdelete = await BrandPost.findByIdAndDelete(id)
+        //     brandpostdelete = await BusinessPost.findByIdAndDelete(id)
         //     const user = await User.findByIdAndUpdate(
         //         brandpost.authorId,
-        //         {$pull: { BrandPosts: id}},
+        //         {$pull: { BusinessPosts: id}},
         //         { new: true }
         //     );
         //     return "Post deleted"
@@ -563,7 +563,7 @@ const resolvers = {
             console.log(posterPostId)
             const brand = await User.findOne({_id: posterpost.brandId})
             if (!brand) {
-                throw new GraphQLError("Brand is undefined")
+                throw new GraphQLError("Business is undefined")
             }
             if (!brand.brandPendingPosts.includes(posterPostId)) {
                 throw new GraphQLError("Requested post not found");
@@ -629,7 +629,7 @@ const resolvers = {
             );
             return postcreate;
         },
-        getBrand: async(_parent, {brandname}, _context, _info) => {
+        getBusiness: async(_parent, {brandname}, _context, _info) => {
             const user = await User.findOne(
                 {brandname}
                 );

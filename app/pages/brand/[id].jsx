@@ -1,5 +1,5 @@
 import React from 'react'
-import BrandPageCom from '../../components/Brand/index.jsx'
+import BusinessPageCom from '../../components/Business/index.jsx'
 export const getServerSideProps = async ({ query }) => {
   const queryId = query.id
   return {
@@ -8,7 +8,7 @@ export const getServerSideProps = async ({ query }) => {
 }
 
 const OnePerson = ({ queryId }) => {
-  return <BrandPageCom queryId={queryId} />;
+  return <BusinessPageCom queryId={queryId} />;
 };
 
 export default OnePerson;

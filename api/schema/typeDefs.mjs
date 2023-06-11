@@ -7,7 +7,7 @@ const typeDefs = `#graphql
   }
   enum Role {
   USER
-  BRAND
+  BUSINESS
   ADMIN
   }
 
@@ -38,7 +38,7 @@ const typeDefs = `#graphql
   }
 
 
-  type BrandPost {
+  type BusinessPost {
     title: String
     requirements: String
     authorId: String
@@ -101,7 +101,7 @@ const typeDefs = `#graphql
     token: String
   }
 
-  type BrandRegister {
+  type BusinessRegister {
     createdAt: String
     brandname: String
     address: String
@@ -111,10 +111,10 @@ const typeDefs = `#graphql
 
 
   type Query {
-  getAllBrandPosts(id: ID): [BrandPost]
-  getAllCompletedBrandPosts(id: ID): [BrandPost]
-  getAllPendingPosterPostsforBrand(id: ID): [PosterPost]
-  getAllCompletedPosterPostsforBrand(id: ID): [PosterPost]
+  getAllBusinessPosts(id: ID): [BusinessPost]
+  getAllCompletedBusinessPosts(id: ID): [BusinessPost]
+  getAllPendingPosterPostsforBusiness(id: ID): [PosterPost]
+  getAllCompletedPosterPostsforBusiness(id: ID): [PosterPost]
 
   getAllPendingPosterPosts(id: ID): [PosterPost]
   getAllCompletedPosterPosts(id: ID): [PosterPost]
@@ -123,12 +123,12 @@ const typeDefs = `#graphql
   getProfiles: [User]
   getUserbyToken(token: String): User
 
-  getNewBrands: [User]
-  getPopularBrands: [User]
+  getNewBusinesss: [User]
+  getPopularBusinesss: [User]
 
-  getBrandQuery(brandname: String!): User
+  getBusinessQuery(brandname: String!): User
 
-  getBrandRegister(argument: String): [BrandRegister]
+  getBusinessRegister(argument: String): [BusinessRegister]
   }
 
   type Image {
@@ -189,7 +189,7 @@ const typeDefs = `#graphql
     selectedReview: String
     }
 
-  input BrandPostUpdateInput {
+  input BusinessPostUpdateInput {
     title: String
     requirements: String
     id: ID
@@ -213,8 +213,8 @@ const typeDefs = `#graphql
     addSocialMediaPoster(info: SocialMediaInput,  image: [Upload]!): User
     deleteSocialMediaPoster(email: String, id: String): User
 
-    addSocialMediaBrand(info: SocialMediaInput): User
-    deleteSocialMediaBrand(email: String, id: String): User
+    addSocialMediaBusiness(info: SocialMediaInput): User
+    deleteSocialMediaBusiness(email: String, id: String): User
 
     addLocation(latitude: Float, longitude: Float, id: ID): User
 
@@ -228,7 +228,7 @@ const typeDefs = `#graphql
 
     updatetoSchema(newfield: String, value: String): [User]
 
-    getBrand(brandname: String): String
+    getBusiness(brandname: String): String
   }
 `;
 
