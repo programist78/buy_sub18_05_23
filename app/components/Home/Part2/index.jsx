@@ -10,8 +10,7 @@ export default function Part2() {
         </p>
         <p className={`text ${styles.text}`}>
           Your customers will constantly want to post information about your
-          business on social media!Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit!
+          business on social media! 
         </p>
         <div className={styles.media}>
           <Image src="/facebook.svg" alt="." width={88} height={88} />
@@ -59,10 +58,10 @@ export default function Part2() {
             with no cancellation fee, simple and easy.
           </p>
         </div>
-        <p className={`text ${styles.text2}`}>
+        {/* <p className={`text ${styles.text2}`}>
           Very soon after the first actions, you will start receiving the first
           results and income!
-        </p>
+        </p> */}
         {/* <button className="b_button">Start now</button> */}
       </div>
     </div>
