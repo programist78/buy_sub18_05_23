@@ -167,8 +167,12 @@ function ForgotPasswordCom() {
       {/* <Link href="/auth/forgot-password" style={{textDecoration: "underline"}}><p className={`text ${styles.small_text}`}>Forgot Password?</p></Link> */}
       <p className={`text ${styles.text}`}>
         Dont have an account?{" "}
-        <Link href="/auth/sign-up" style={{ textDecoration: "underline" }}>
-          Sign up
+        <Link href="/auth/poster-sign-up" style={{ textDecoration: "underline" }}>
+          Sign up Poster
+        </Link>
+        <br />{" "}
+        <Link href="/auth/business-sign-up" style={{ textDecoration: "underline" }}>
+          Sign up Business
         </Link>
       </p>
     </div>

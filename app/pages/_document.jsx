@@ -14,7 +14,7 @@ export default function Document() {
         <meta name="title" content="Postfordollars - Achieve more with us!" />
         <meta
           name="description"
-          content="Welcome to PostForDollars - the ultimate platform that connects posters and brands for mutually beneficial collaborations! Whether you're a brand looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
+          content="Welcome to PostForDollars - the ultimate platform that connects posters and businesses for mutually beneficial collaborations! Whether you're a business looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
         />
 
         {/* <!-- Open Graph / Facebook --> */}
@@ -26,7 +26,7 @@ export default function Document() {
         />
         <meta
           property="og:description"
-          content="Welcome to PostForDollars - the ultimate platform that connects posters and brands for mutually beneficial collaborations! Whether you're a brand looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
+          content="Welcome to PostForDollars - the ultimate platform that connects posters and businesses for mutually beneficial collaborations! Whether you're a business looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
         />
         <meta property="og:image" content="https://webxwiz.site/preview.png" />
 
@@ -39,7 +39,7 @@ export default function Document() {
         />
         <meta
           property="twitter:description"
-          content="Welcome to PostForDollars - the ultimate platform that connects posters and brands for mutually beneficial collaborations! Whether you're a brand looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
+          content="Welcome to PostForDollars - the ultimate platform that connects posters and businesses for mutually beneficial collaborations! Whether you're a business looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
         />
         <meta
           property="twitter:image"

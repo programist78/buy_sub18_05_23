@@ -11,7 +11,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../../apollo/auth";
 import Image from "next/image";
-
+import { Button, message, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 export default function SignUpPosterCom() {
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
@@ -100,7 +101,18 @@ export default function SignUpPosterCom() {
     },
     variables: { about: data },
   });
-
+  const props = {
+    name: "file",
+    // action: {set},
+    // headers: {
+    //   authorization: 'authorization-text',
+    // },
+    onChange({ file, fileList }) {
+      if (file.status !== "uploading") {
+        setImage((prevImage) => [...prevImage, file.originFileObj]); // Добавляем новые файлы к существующему состоянию image
+      }
+    },
+  };
   return (
     // <div className={styles.back}>
     //     {isStart ?
@@ -294,10 +306,13 @@ export default function SignUpPosterCom() {
                 alt="file"
               />
               <p className="text">Screenshot of your social</p>
-              <input
+              {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
-              />
+              /> */}
+                          <Upload {...props}>
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
             </div>
             <div className={styles.social_input}>
               <Image
@@ -309,7 +324,7 @@ export default function SignUpPosterCom() {
               <input
                 type="text"
                 className={`a_input ${styles.nick_input}`}
-                placeholder="Your instagram Username"
+                placeholder="Your Instagram Username"
               />
               <input
                 type="text"
@@ -323,10 +338,13 @@ export default function SignUpPosterCom() {
                 alt="file"
               />
               <p className="text">Screenshot of your social</p>
-              <input
+              {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
-              />
+              /> */}
+                          <Upload {...props}>
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
             </div>
             <div className={styles.social_input}>
               <Image src="/tiktok.svg" width={40} height={40} alt="tiktok" />
@@ -347,10 +365,13 @@ export default function SignUpPosterCom() {
                 alt="file"
               />
               <p className="text">Screenshot of your social</p>
-              <input
+              {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
-              />
+              /> */}
+               <Upload {...props}>
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
             </div>
             <div className="a_instrusctions">
               <p>
@@ -371,7 +392,7 @@ export default function SignUpPosterCom() {
             </div>
             <div className={styles.social_input}>
               <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
-              <input type="text" className="a_input" placeholder="Your yelp" />
+              <input type="text" className="a_input" placeholder="Your Yelp" />
               <button className={`b_button`}>Sign up</button>
             </div>
             <div className={styles.social_input}>

@@ -8,6 +8,8 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { CiLogin } from "react-icons/ci";
+
+
 import Swal from "sweetalert2";
 import { useState, useContext, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -101,7 +103,7 @@ export default function SignUpBusiness() {
   return (
     <div className={styles.back}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.back}>
-        <p className="title">Information about your brand</p>
+        <p className="title">Information about your Business</p>
         <div className={styles.parts}>
           <div className={styles.part1}>
             <p className={`text ${styles.text}`}>
@@ -172,11 +174,11 @@ export default function SignUpBusiness() {
                 name="brandname"
                 type="text"
                 {...register("brandname")}
-                placeholder="Business ame"
+                placeholder="Business name"
                 className={`a_input ${errors.brandname ? "is-invalid" : ""}`}
               />
             </div>
-            <div>
+            {/* <div>
               <input
                 name="phone"
                 type="text"
@@ -185,8 +187,9 @@ export default function SignUpBusiness() {
                 className={`a_input ${errors.phone ? "is-invalid" : ""}`}
               />
               <p className={styles.errors}>{errors.phone?.message}</p>
-            </div>
-            <div>
+            </div> */}
+            {/* address */}
+            {/* <div>
               <input
                 name="address"
                 type="text"
@@ -195,7 +198,7 @@ export default function SignUpBusiness() {
                 className={`a_input ${errors.address ? "is-invalid" : ""}`}
               />
               <p className={styles.errors}>{errors.address?.message}</p>
-            </div>
+            </div> */}
             <div>
               <input
                 name="websiteLink"

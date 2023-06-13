@@ -17,7 +17,7 @@ export default function Hello() {
         <title>Postfordollars - Achieve more with us!</title>
         <meta
           name="description"
-          content="Welcome to PostForDollars - the ultimate platform that connects posters and brands for mutually beneficial collaborations! Whether you're a brand looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
+          content="Welcome to PostForDollars - the ultimate platform that connects posters and businesses for mutually beneficial collaborations! Whether you're a business looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
         />
       </Head>
       <HomeCom />

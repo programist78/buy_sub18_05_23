@@ -101,11 +101,11 @@ function LoginCom() {
       </Link>
       <p className={`text ${styles.text}`}>
         Dont have an account?{" "}
-        <Link href="/auth/sign-up" style={{ textDecoration: "underline" }}>
+        <Link href="/auth/poster-sign-up" style={{ textDecoration: "underline" }}>
           Sign up Poster
         </Link>
         <br />{" "}
-        <Link href="/auth/sign-up" style={{ textDecoration: "underline" }}>
+        <Link href="/auth/business-sign-up" style={{ textDecoration: "underline" }}>
           Sign up Business
         </Link>
       </p>

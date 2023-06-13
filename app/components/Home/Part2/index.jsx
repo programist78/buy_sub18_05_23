@@ -10,7 +10,7 @@ export default function Part2() {
         </p>
         <p className={`text ${styles.text}`}>
           Your customers will constantly want to post information about your
-          brand on social media!Lorem ipsum dolor sit amet, consectetur
+          business on social media!Lorem ipsum dolor sit amet, consectetur
           adipiscing elit!
         </p>
         <div className={styles.media}>
