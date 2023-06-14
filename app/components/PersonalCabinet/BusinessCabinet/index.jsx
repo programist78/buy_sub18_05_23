@@ -323,8 +323,8 @@ export default function BusinessCabinetCom() {
                     Business post price : {userInfo?.postPrice / 100}$
                   </p>
                   <input
-                    type="text"
-                    value={editPostPrice/100}
+                    type="number"
+                    value={editPostPrice}
                     onChange={(e) => setEditPostPrice(e.target.value)}
                     className="a_input"
                   />

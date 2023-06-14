@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import BusinessView from "../../BusinessView";
 import WithdrawCom from "../../Stripe/WithdrawCom";
 import { clearToken } from "../../../redux/slices/auth";
+import { clearUserInfo } from "../../../redux/slices/userInfo";
 export default function PosterCabinetCom() {
   const router = useRouter();
   const [filter, setFilter] = useState("1");

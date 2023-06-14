@@ -142,8 +142,10 @@ const resolvers = {
     Mutation: {
         //authorisation
         registerUser: async(parent, args,social, context, _info) => {
-                const { fullname,websiteLink,address, brandname, email, password, confirm_password, phone, brandDirection,latitude, longitude, postPrice  } = args.about
+            
+                const { fullname,websiteLink,address, brandname, email, password, confirm_password, phone, brandDirection,latitude, longitude  } = args.about
         console.log(context)
+        let postPrice = 500
             const already_exsist = await User.findOne({ email });
             if (already_exsist) {
             throw new GraphQLError("Email already exists");
