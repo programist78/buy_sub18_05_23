@@ -258,11 +258,11 @@ export default function SignUpPosterCom() {
               </Link>
             </label>
             <p className={styles.errors}>{messageError}</p>
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey="6LcBFlwmAAAAAJWblnjYhb4ftrng3BghULF6hy8I"
               onChange={handleCaptchaChange}
               // aria-required
-            />
+            /> */}
                         <p className={styles.errors}>{messageCaptcha}</p>
             <button type="submit" className={`b_button ${styles.b_button}`}>
               Next

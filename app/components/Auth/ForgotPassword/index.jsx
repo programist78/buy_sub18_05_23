@@ -107,10 +107,10 @@ function ForgotPasswordCom() {
               />
               <p className={styles.errors}>{errors.email?.message}</p>
             </div>
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey="6LcBFlwmAAAAAJWblnjYhb4ftrng3BghULF6hy8I"
               onChange={onChange}
-            />
+            /> */}
             <button
               className={`b_button ${styles.b_button}`}
               onClick={() => sendEmailForget()}

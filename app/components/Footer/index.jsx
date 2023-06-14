@@ -41,11 +41,11 @@ export default function Footer() {
         </div>
         <div className={styles.part3}>
           <p className="footer_text">Postfordollars Media Corporation</p>
-          <p className="footer_text">12345 W.Ocean Street</p>
-          <p className="footer_text">Ste 1234W #20</p>
-          <p className="footer_text">California, CA OOO123</p>
+          {/* <p className="footer_text">12345 W.Ocean Street</p> */}
+          {/* <p className="footer_text">Ste 1234W #20</p> */}
+          {/* <p className="footer_text">California, CA OOO123</p> */}
           <p className="footer_text">postfordollars@gmail.com</p>
-          <p>800 123 5555</p>
+          {/* <p>800 123 5555</p> */}
         </div>
       </div>
       <div className={`${styles.line} ${styles.second}`} />
