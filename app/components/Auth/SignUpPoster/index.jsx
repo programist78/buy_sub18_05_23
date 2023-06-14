@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { AuthContext } from "../../../hooks/AuthContext";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,7 +24,7 @@ export default function SignUpPosterCom() {
   const [messageCaptcha, setMessageCaptcha] = useState("");
   const [isStart, setIsStart] = useState(true);
   const [posterId, setPosterId] = useState("")
-
+  const dispatch = useDispatch()
   const [tiktokUserName, setTiktokUserName] = useState("")
   const [tiktokFollowers, setTiktokFollowers] = useState("")
   const [instagramUserName, setInstagramUserName] = useState("")
@@ -401,14 +401,14 @@ export default function SignUpPosterCom() {
                 onChange={(e) => setGoogleReview(e.target.value)}
                 placeholder="Your Google"
               />
-              <button className={`b_button`}>Sign up</button>
+              <a href="https://accounts.google.com/signup."><button className={`b_button`}>Sign up</button></a>
             </div>
             <div className={styles.social_input}>
               <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
               <input type="text" className="a_input"                 
               onChange={(e) => setYelpReview(e.target.value)}
                 placeholder="Your Yelp" />
-              <button className={`b_button`}>Sign up</button>
+             <a href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">  <button className={`b_button`}>Sign up</button></a>
             </div>
             <div className={styles.social_input}>
               <Image
@@ -423,7 +423,7 @@ export default function SignUpPosterCom() {
                 onChange={(e) => setTripadvisorReview(e.target.value)}
                 placeholder="Your Tripadvisor"
               />
-              <button className={`b_button`}>Sign up</button>
+            <a href="https://www.tripadvisor.com"> <button className={`b_button`}>Sign up</button></a>
             </div>
             <button
               type="submit"
