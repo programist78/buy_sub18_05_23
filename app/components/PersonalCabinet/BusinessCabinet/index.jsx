@@ -14,6 +14,7 @@ import Modal from "react-modal";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import SmallLoader from "../../Loaders/SmallLoader";
 import { BiPencil } from "react-icons/bi";
+import { CHANGE_USER } from "../../../apollo/auth";
 export default function BusinessCabinetCom() {
   //edit Information
   const [edit, setEdit] = useState(false);
@@ -110,10 +111,29 @@ export default function BusinessCabinetCom() {
     acceptPost({ variables: { posterPostId } });
   }
 
+
   function Save() {
-    setEdit(!edit);
-    saveBlog();
+    changeInfo();
   }
+
+  const [changeInfo] = useMutation(CHANGE_USER, {
+    onError(error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error}`,
+      });
+    },
+    onCompleted: (data) => {
+      Swal.fire({
+        icon: "success",
+        title: `Loading`,
+      });
+      setEdit(!edit);
+    },
+    variables: {
+      // about: {websiteLink: editWebsiteLink, postPrice: editPostPrice, phone: editPhone, brandDescription: editBrandDescription, address: editAddress},
+     changeUserId: userInfo?.id},
+  })
   return (
     <div className={styles.back}>
       <p className="title">My account Page</p>
@@ -278,7 +298,7 @@ export default function BusinessCabinetCom() {
           {isAccountingOpen ? (
             <div className={styles.info_part}>
               {edit ? (
-                <button onClick={() => setEdit(!edit)} className="b_button">
+                <button onClick={() => Save()} className="b_button">
                   Save information
                 </button>
               ) : (
@@ -291,37 +311,55 @@ export default function BusinessCabinetCom() {
               )}
               {edit ? (
                 <>
+                                  <p className="text">Your contact phone :</p>
                   <input
                     type="text"
                     value={editPhone}
                     onChange={(e) => setEditPhone(e.target.value)}
-                    className={`${styles.changeinfo_input} text`}
+                    // className={`${styles.changeinfo_input} text`}
+                    className="a_input"
                   />
+                      <p className="text">
+                    Business post price : {userInfo?.postPrice / 100}$
+                  </p>
                   <input
                     type="text"
-                    value={editPostPrice}
+                    value={editPostPrice/100}
                     onChange={(e) => setEditPostPrice(e.target.value)}
-                    className={`${styles.changeinfo_input} text`}
+                    className="a_input"
                   />
+                  <p className="text">
+                    Business physical location : {userInfo?.address}
+                  </p>
                   <input
                     type="text"
                     value={editAddress}
                     onChange={(e) => setEditAddress(e.target.value)}
-                    className={`${styles.changeinfo_input} text`}
+                    className="a_input"
                   />
                   <h1>Here image</h1>
+                  <img src={userInfo?.image} className={styles.brandimage} />
+                  <p className="text">
+                    Business website link : {userInfo?.websiteLink}
+                  </p>
                   <input
                     type="text"
                     value={editWebsiteLink}
                     onChange={(e) => setEditWebsiteLink(e.target.value)}
-                    className={`${styles.changeinfo_input} text`}
+                    className="a_input"
                   />
+                                <p className="text">
+                    Business brand description : {userInfo?.brandDescription}
+                  </p>
                   <input
                     type="text"
                     value={editBrandDescription}
                     onChange={(e) => setEditBrandDescription(e.target.value)}
-                    className={`${styles.changeinfo_input} text`}
+                    className="a_input"
                   />
+      
+    
+                  {/* <p className="text">Your social media : </p> */}
                 </>
               ) : (
                 <>
@@ -339,7 +377,7 @@ export default function BusinessCabinetCom() {
                   <p className="text">
                     Business brand description : {userInfo?.brandDescription}
                   </p>
-                  <p className="text">Your social media : </p>
+                  {/* <p className="text">Your social media : </p> */}
                 </>
               )}
 

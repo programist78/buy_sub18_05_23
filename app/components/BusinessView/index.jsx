@@ -42,7 +42,7 @@ const BusinessView = ({ _id, brandname, image, postPrice, address }) => {
   return (
     <div>
       {!inView ? (
-        <Link href={`/brand/${brandname}`}>
+        <Link href={`/business/${brandname}`}>
           <div className={styles.back}>
             <div className={styles.price}>{postPrice / 100}$</div>
             <img src={image} alt={brandname} className={styles.image} />

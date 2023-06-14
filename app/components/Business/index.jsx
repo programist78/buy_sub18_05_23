@@ -5,6 +5,7 @@ import { GET_BUSINESS_QUERY } from "../../apollo/posters";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import MapComponent from "../MapComponent";
+import Link from "next/link";
 export default function BusinessPageCom({ queryId }) {
   const [data, setData] = useState();
   const { data: brandData } = useQuery(GET_BUSINESS_QUERY, {
@@ -32,9 +33,9 @@ export default function BusinessPageCom({ queryId }) {
         <div className={styles.pricebox}>
           <div className={styles.left_child_box}>
             <p className="navtext">Create a post on Instagram with our brand</p>
-            <p className="text">6$</p>
+            <p className="text">{data?.postPrice/100}$</p>
           </div>
-          <div className={`b_button ${styles.right_child_post}`}>Start</div>
+          <Link href="/poster"><div className={`b_button ${styles.right_child_post}`}>Start</div></Link>
         </div>
 
         <div className={styles.social}>
@@ -74,7 +75,7 @@ export default function BusinessPageCom({ queryId }) {
       <div className={styles.map_part}>
         <p className="pretitle">Map with locations of Businesss</p>
         {/* <Image src="/fake_map.png" width={895} height={506} alt="map"/> */}
-        <MapComponent />
+        <MapComponent latitude={data?.physicalLocation?.latitude} longitude={data?.physicalLocation?.longitude} />
       </div>
       <p className={`text ${styles.text}`}>{data?.brandDescription}</p>
     </div>

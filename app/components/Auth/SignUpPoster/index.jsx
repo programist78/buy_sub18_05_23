@@ -9,15 +9,32 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../../../apollo/auth";
+import { LOGIN_USER, POSTER_COMPLETE_REGISTER, REGISTER_USER } from "../../../apollo/auth";
 import Image from "next/image";
 import { Button, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
+import { setUserInfo } from "../../../redux/slices/userInfo";
 export default function SignUpPosterCom() {
+  const [images, setImage] = useState([])
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
+  const [isCaptcha, setIsCaptcha] = useState(false);
   const [messageError, setMessageError] = useState("");
-  const [isStart, setIsStart] = useState(false);
+  const [messageCaptcha, setMessageCaptcha] = useState("");
+  const [isStart, setIsStart] = useState(true);
+  const [posterId, setPosterId] = useState("")
+
+  const [tiktokUserName, setTiktokUserName] = useState("")
+  const [tiktokFollowers, setTiktokFollowers] = useState("")
+  const [instagramUserName, setInstagramUserName] = useState("")
+  const [instagramFollowers, setInstagramFollowers] = useState("")
+  const [facebookUserName, setFacebookUserName] = useState("")
+  const [facebookFollowers, setFacebookFollowers] = useState("")
+  const [yelpReview, setYelpReview] = useState("")
+  const [tripadvisorReview, setTripadvisorReview] = useState("")
+  const [googleReview, setGoogleReview] = useState("")
+
 
   useEffect(() => {
     if (!isChecked1 || !isChecked2) {
@@ -35,9 +52,10 @@ export default function SignUpPosterCom() {
     setIsChecked2(!isChecked2);
   };
 
-  function onChange(value) {
-    console.log("Captcha value:", value);
-  }
+  const handleCaptchaChange = () => {
+    setIsCaptcha(!isCaptcha);
+  };
+
   const context = useContext(AuthContext) || "";
   const router = useRouter();
   const { userInfo } = useSelector((state) => state.userInfo);
@@ -55,8 +73,8 @@ export default function SignUpPosterCom() {
       .required("Password is required")
       .min(5, "Password must be at least 5 characters")
       .max(40, "Password must not exceed 40 characters"),
-    confirmpassword: Yup.string()
-      .required("Please retype your password.")
+    confirm_password: Yup.string()
+      .required("Confirm your password.")
       .oneOf([Yup.ref("password")], "Your passwords do not match."),
   });
 
@@ -71,21 +89,47 @@ export default function SignUpPosterCom() {
 
   const [data, setData] = useState();
 
-  const onSubmit1 = (data) => {
-    setData(data);
-    setIsStart(!isStart);
-    // setTimeout(() => loginUser(), 500)
+  const onSubmit1 = (data, event) => {
+      //TODO CHange     if (!isCaptcha) {
+      if (isCaptcha){
+      setMessageCaptcha(() => "Captcha is required!");
+    } else{
+      event.preventDefault();
+      setData(data);
+      
+      setTimeout(() => registerUser(), 500)
+      // setTimeout(() => console.log(data), 500)
+    }
   };
 
   const onSubmit2 = (data) => {
-    setInformation((prevData) => [...prevData, data]);
-    setIsStart(!isStart);
+    event.preventDefault();
+    setTimeout(() => completeRegister(), 500)
     // setTimeout(() => loginUser(), 500)
   };
-  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-    update(proxy, { data: { loginUser: userData } }) {
+  const [registerUser, { loading }] = useMutation(REGISTER_USER, {
+    onError(error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error}`,
+      });
+    },
+    onCompleted: (data) => {
+      Swal.fire({
+        icon: "success",
+        title: `Success!`,
+      });
+      setIsStart(!isStart);
+      setPosterId(data.registerUser.user.id)
+    },
+    variables: { about: data },
+  });
+  const [completeRegister] = useMutation(POSTER_COMPLETE_REGISTER, {
+    
+    update(proxy, { data: { registerUserComplete: userData } }) {
       context.login(userData);
-      router.push("/");
+      dispatch(setUserInfo(userData));
+      router.reload()
     },
     onError(error) {
       Swal.fire({
@@ -96,17 +140,15 @@ export default function SignUpPosterCom() {
     onCompleted: (data) => {
       Swal.fire({
         icon: "success",
-        title: `Loading`,
+        title: `Success!`,
       });
+      setIsStart(!isStart);
     },
-    variables: { about: data },
+    // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
+    variables: { registerUserCompleteId: posterId,  social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}, review: {yelpReview, tripadvisorReview, googleReview}, images},
   });
   const props = {
     name: "file",
-    // action: {set},
-    // headers: {
-    //   authorization: 'authorization-text',
-    // },
     onChange({ file, fileList }) {
       if (file.status !== "uploading") {
         setImage((prevImage) => [...prevImage, file.originFileObj]); // Добавляем новые файлы к существующему состоянию image
@@ -114,52 +156,6 @@ export default function SignUpPosterCom() {
     },
   };
   return (
-    // <div className={styles.back}>
-    //     {isStart ?
-    //     <>
-    //   <p className="pretitle">Welcome to the Poster Sign Up Page!</p>
-    //   <p className="text"></p>
-    //     <input type="text" placeholder="Fullname" />
-    //     <input type="text" placeholder="Your email" />
-    //     <input type="text" placeholder="Phone" />
-    //     <input type="password" placeholder="Password" />
-    //     <input type="password" placeholder="Confirm Password" />
-    //     <p className="text">We've sent you confirmation to your profile</p>
-    //     <div className="a_instrusctions">
-    //       <p>Privacy and Policy</p>
-    //       <p>Wording for policy...</p>
-    //     </div>
-    //     <label className="checkbox">
-    //       <input
-    //         type="checkbox"
-    //         checked={isChecked}
-    //         onChange={handleCheckboxChange}
-    //       />
-    //       <span className="checkmark"></span>
-    //       You confirm that you are at least 18 years old
-    //     </label>
-    //     <label className="checkbox">
-    //       <input
-    //         type="checkbox"
-    //         checked={isChecked}
-    //         onChange={handleCheckboxChange}
-    //       />
-    //       <span className="checkmark"></span>
-    //       <Link href="/privacy" style={{textDecoration: "underLine"}}>You agree to all site policies and privacy rules</Link>
-    //       <ReCAPTCHA
-    //         sitekey="6LcBFlwmAAAAAJWblnjYhb4ftrng3BghULF6hy8I"
-    //         onChange={onChange}
-    //         />
-    //       <button className={`b_button ${styles.custom_input}`}>Next</button>
-    //     </label>
-    //
-    //   </>
-    //   :
-    //   <>
-
-    //   </>
-    //   }
-    // </div>
     <div className={styles.back}>
       {isStart ? (
         <>
@@ -184,6 +180,7 @@ export default function SignUpPosterCom() {
                 type="text"
                 {...register("fullname")}
                 placeholder="Fullname"
+                required
                 className={`a_input ${errors.fullname ? "is-invalid" : ""}`}
               />
               <p className={styles.errors}>{errors.fullname?.message}</p>
@@ -191,7 +188,8 @@ export default function SignUpPosterCom() {
             <div>
               <input
                 name="email"
-                type="text"
+                type="email"
+                required
                 {...register("email")}
                 placeholder="Your email"
                 className={`a_input ${errors.email ? "is-invalid" : ""}`}
@@ -201,7 +199,9 @@ export default function SignUpPosterCom() {
             <div>
               <input
                 name="phone"
-                type="text"
+                type="tel" id="phone" 
+                // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                required
                 {...register("phone")}
                 placeholder="Your phone"
                 className={`a_input ${errors.phone ? "is-invalid" : ""}`}
@@ -212,6 +212,7 @@ export default function SignUpPosterCom() {
               <input
                 name="password"
                 type="password"
+                required
                 {...register("password")}
                 placeholder="Your password"
                 className={`a_input ${errors.password ? "is-invalid" : ""}`}
@@ -228,7 +229,7 @@ export default function SignUpPosterCom() {
                   errors.confirm_password ? "is-invalid" : ""
                 }`}
               />
-              <p className={styles.errors}>{errors.confirmpassword?.message}</p>
+              <p className={styles.errors}>{errors.confirm_password?.message}</p>
             </div>
             <div className="a_instrusctions">
               <p>Privacy and Policy</p>
@@ -238,6 +239,7 @@ export default function SignUpPosterCom() {
               <input
                 type="checkbox"
                 checked={isChecked1}
+                required
                 onChange={handleCheckboxChange1}
               />
               <span className="checkmark"></span>
@@ -247,6 +249,7 @@ export default function SignUpPosterCom() {
               <input
                 type="checkbox"
                 checked={isChecked2}
+                required
                 onChange={handleCheckboxChange2}
               />
               <span className="checkmark"></span>
@@ -257,8 +260,10 @@ export default function SignUpPosterCom() {
             <p className={styles.errors}>{messageError}</p>
             <ReCAPTCHA
               sitekey="6LcBFlwmAAAAAJWblnjYhb4ftrng3BghULF6hy8I"
-              onChange={onChange}
+              onChange={handleCaptchaChange}
+              // aria-required
             />
+                        <p className={styles.errors}>{messageCaptcha}</p>
             <button type="submit" className={`b_button ${styles.b_button}`}>
               Next
             </button>
@@ -292,11 +297,13 @@ export default function SignUpPosterCom() {
               <input
                 className={`a_input ${styles.nick_input}`}
                 type="text"
+                onChange={(e) => setFacebookUserName(e.target.value)}
                 placeholder="Your Facebook Username"
               />
               <input
-                type="text"
+                type="number"
                 className={`a_input ${styles.number_input}`}
+                onChange={(e) => setFacebookFollowers(e.target.value)}
                 placeholder="Number of your friends"
               />
               <Image
@@ -319,16 +326,19 @@ export default function SignUpPosterCom() {
                 src="/instagram.svg"
                 width={40}
                 height={40}
+
                 alt="instagram"
               />
               <input
                 type="text"
                 className={`a_input ${styles.nick_input}`}
+                onChange={(e) => setInstagramUserName(e.target.value)}
                 placeholder="Your Instagram Username"
               />
               <input
-                type="text"
+                type="number"
                 className={`a_input ${styles.number_input}`}
+                onChange={(e) => setInstagramFollowers(e.target.value)}
                 placeholder="Number of your followers"
               />
               <Image
@@ -347,15 +357,17 @@ export default function SignUpPosterCom() {
           </Upload>
             </div>
             <div className={styles.social_input}>
-              <Image src="/tiktok.svg" width={40} height={40} alt="tiktok" />
+              <Image src="/tiktok.svg" style={{borderRadius: "50%"}} width={40} height={40} alt="tiktok" />
               <input
                 type="text"
+                onChange={(e) => setTiktokUserName(e.target.value)}
                 className={`a_input ${styles.nick_input}`}
                 placeholder="Your TikTok Username"
               />
               <input
-                type="text"
+                type="number"
                 className={`a_input ${styles.number_input}`}
+                onChange={(e) => setTiktokFollowers(e.target.value)}
                 placeholder="Number of your followers"
               />
               <Image
@@ -386,13 +398,16 @@ export default function SignUpPosterCom() {
               <input
                 type="text"
                 className="a_input"
+                onChange={(e) => setGoogleReview(e.target.value)}
                 placeholder="Your Google"
               />
               <button className={`b_button`}>Sign up</button>
             </div>
             <div className={styles.social_input}>
               <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
-              <input type="text" className="a_input" placeholder="Your Yelp" />
+              <input type="text" className="a_input"                 
+              onChange={(e) => setYelpReview(e.target.value)}
+                placeholder="Your Yelp" />
               <button className={`b_button`}>Sign up</button>
             </div>
             <div className={styles.social_input}>
@@ -405,13 +420,14 @@ export default function SignUpPosterCom() {
               <input
                 type="text"
                 className="a_input"
+                onChange={(e) => setTripadvisorReview(e.target.value)}
                 placeholder="Your Tripadvisor"
               />
               <button className={`b_button`}>Sign up</button>
             </div>
             <button
               type="submit"
-              disabled={messageError == "" ? false : true}
+              // disabled={messageError == "" ? false : true}
               className={`b_button ${styles.b_button}`}
             >
               Register

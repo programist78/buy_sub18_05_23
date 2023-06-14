@@ -72,7 +72,7 @@ export default function Navbar() {
                 {/* <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
      <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Businesses</button></Link> */}
                 {userInfo.role == "BUSINESS" && (
-                  <Link href="/personal/brand">
+                  <Link href="/personal/business">
                     {" "}
                     <button className="a_button">Business panel</button>
                   </Link>
@@ -132,12 +132,12 @@ export default function Navbar() {
         <div className={styles.links}>
           {/* <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
      <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Businesses</button></Link> */}
-          {/* {(userInfo.role == "BUSINESS") && <Link href="/personal/brand"> <button className='a_button'>Business panel</button></Link>  }
+          {/* {(userInfo.role == "BUSINESS") && <Link href="/personal/business"> <button className='a_button'>Business panel</button></Link>  }
      {(userInfo.role == "USER") && <Link href="/personal/poster"> <button className='a_button'>Poster panel</button></Link>  }
      {(userInfo.role == "ADMIN") && <Link href="/personal/poster"> <button className='a_button'>Admin panel</button></Link>  } */}
           <Link
             href={
-              userInfo?.role == "USER" ? "/personal/poster" : "/personal/brand"
+              userInfo?.role == "USER" ? "/personal/poster" : "/personal/business"
             }
           >
             <button className="a_button">Personal Panel</button>

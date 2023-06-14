@@ -56,48 +56,123 @@ export const LOGIN_USER = gql`
   }
 `;
 
+export const CHANGE_USER = gql`
+mutation ChangeUser($about: ChangeUserInput, $changeUserId: ID) {
+  changeUser(about: $about, id: $changeUserId)
+}
+`
+
 export const REGISTER_USER = gql`
-  mutation Mutation(
-    $about: RegisterInput
-    $info: SocialMediaInput
-    $image: [Upload]
-  ) {
-    registerUser(about: $about, info: $info, image: $image) {
-      user {
-        id
-        fullname
-        email
-        role
-        socialMedia {
-          images
-          number
-          nick
-        }
-        confirmedEmail
-        avatarUrl
-        phone
-        pendingPosts
-        completedPosts
-        balance
-        brandPendingPosts
-        brandCompletedPosts
-        postPrice
-        brandname
-        physicalLocation {
-          latitude
-          longitude
-        }
-        brandDirection
-        plan
-        hasTrial
-        endDate
-        websiteLink
-        address
+mutation RegisterUser($about: RegisterInput) {
+  registerUser(about: $about) {
+    user {
+      id
+      fullname
+      email
+      role
+      reviewMedia {
+        google
+        yelp
+        tripadvisor
       }
-      token
+      confirmedEmail
+      avatarUrl
+      phone
+      pendingPosts
+      completedPosts
+      balance
+      brandPendingPosts
+      brandCompletedPosts
+      postPrice
+      brandname
+      physicalLocation {
+        latitude
+        longitude
+      }
+      brandDirection
+      plan
+      hasTrial
+      endDate
+      websiteLink
+      address
+      brandDescription
+      image
+      socialMedia {
+        instagram {
+          name
+          followers
+        }
+        tiktok {
+          name
+          followers
+        }
+        facebook {
+          name
+          followers
+        }
+        aproveScreenshots
+      }
     }
+    token
   }
+}
 `;
+
+export const POSTER_COMPLETE_REGISTER = gql`
+mutation Mutation($registerUserCompleteId: ID, $social: SocialMediaInput, $review: ReviewMediaInput, $images: [Upload]) {
+  registerUserComplete(id: $registerUserCompleteId, social: $social, review: $review, images: $images) {
+    user {
+      id
+      fullname
+      email
+      role
+      socialMedia {
+        instagram {
+          name
+          followers
+        }
+        facebook {
+          name
+          followers
+        }
+        tiktok {
+          name
+          followers
+        }
+        aproveScreenshots
+      }
+      reviewMedia {
+        google
+        yelp
+        tripadvisor
+      }
+      confirmedEmail
+      avatarUrl
+      phone
+      pendingPosts
+      completedPosts
+      balance
+      brandPendingPosts
+      brandCompletedPosts
+      postPrice
+      brandname
+      physicalLocation {
+        latitude
+        longitude
+      }
+      brandDirection
+      plan
+      hasTrial
+      endDate
+      websiteLink
+      address
+      brandDescription
+      image
+    }
+    token
+  }
+}
+`
 
 export const GETUSER_BYTOKEN = gql`
   query GetUserbyToken($token: String) {

@@ -62,7 +62,7 @@ export default function Part1() {
       {userInfo ? (
         <Link
           href={
-            userInfo?.role == "USER" ? "/personal/poster" : "/personal/brand"
+            userInfo?.role == "USER" ? "/personal/poster" : "/personal/business"
           }
         >
           <button className="b_button">Personal Panel</button>

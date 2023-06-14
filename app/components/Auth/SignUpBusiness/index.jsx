@@ -6,7 +6,7 @@ import { LOGIN_USER, REGISTER_USER } from "../../../apollo/auth";
 import { AuthContext } from "../../../hooks/AuthContext";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CiLogin } from "react-icons/ci";
 
 
@@ -14,10 +14,14 @@ import Swal from "sweetalert2";
 import { useState, useContext, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import Link from "next/link";
+import { setUserInfo } from "../../../redux/slices/userInfo";
 export default function SignUpBusiness() {
+  const [isCaptcha, setIsCaptcha] = useState(false);
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [messageError, setMessageError] = useState("");
+  const [messageCaptcha, setMessageCaptcha] = useState("");
+
 
   useEffect(() => {
     if (!isChecked1 || !isChecked2) {
@@ -44,26 +48,28 @@ export default function SignUpBusiness() {
   }
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(5, "Password must be at least 5 characters")
-      .max(40, "Password must not exceed 40 characters"),
     // acceptTerms: Yup.bool().oneOf([true], 'Accept Terms is required')
-    fullname: Yup.string().required("Fullname is required"),
-    phone: Yup.string()
-      .required("Phone is required")
-      .min(5, "Password must be at least 5 characters")
-      .max(40, "Password must not exceed 40 characters"),
-    address: Yup.string().required("Phone is required"),
     password: Yup.string()
-      .required("Password is required")
-      .min(5, "Password must be at least 5 characters")
-      .max(40, "Password must not exceed 40 characters"),
-    confirm_password: Yup.string()
-      .required("Please retype your password.")
-      .oneOf([Yup.ref("password")], "Your passwords do not match."),
+    .required("Password is required")
+    .min(5, "Password must be at least 5 characters")
+    .max(40, "Password must not exceed 40 characters"),
+  confirm_password: Yup.string()
+    .required("Please retype your password.")
+    .oneOf([Yup.ref("password")], "Your passwords do not match."),
+    fullname: Yup.string().required("Fullname is required"),
     brandname: Yup.string().required("Business name is required!"),
+    websiteLink: Yup.string(),
+    // phone: Yup.string()
+    //   .required("Phone is required")
+    //   .min(5, "Password must be at least 5 characters")
+    //   .max(40, "Password must not exceed 40 characters"),
+    // address: Yup.string().required("Phone is required"),
+    
   });
+
+  const handleCaptchaChange = () => {
+    setIsCaptcha(!isCaptcha);
+  };
 
   const {
     register,
@@ -76,15 +82,23 @@ export default function SignUpBusiness() {
 
   const [data, setData] = useState();
 
-  const onSubmit = (data) => {
-    setData(data);
-    setTimeout(() => registerUser(), 500);
+  const onSubmit1 = (data) => {
+    if (isCaptcha){
+      setMessageCaptcha(() => "Captcha is required!");
+    } else{
+      // event.preventDefault();
+      setData(data);
+      setTimeout(() => registerUser(), 500);
+      // setTimeout(() => console.log(data), 500)
+    }
   };
+  const dispatch = useDispatch()
 
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, { data: { registerUser: userData } }) {
       context.login(userData);
-      router.push("/");
+      router.reload()
+      dispatch(setUserInfo(userData));
     },
     onError(error) {
       Swal.fire({
@@ -102,7 +116,7 @@ export default function SignUpBusiness() {
   });
   return (
     <div className={styles.back}>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.back}>
+      <form onSubmit={handleSubmit(onSubmit1)} className={styles.back}>
         <p className="title">Information about your Business</p>
         <div className={styles.parts}>
           <div className={styles.part1}>
@@ -205,13 +219,15 @@ export default function SignUpBusiness() {
                 type="text"
                 {...register("websiteLink")}
                 placeholder="Your website link(if you have one)"
-                className={`a_input ${errors.address ? "is-invalid" : ""}`}
+                className={`a_input ${errors.websiteLink ? "is-invalid" : ""}`}
               />
             </div>
 
             <label className="checkbox">
               <input
                 type="checkbox"
+                name="checkbox1"
+                // required
                 checked={isChecked1}
                 onChange={handleCheckboxChange1}
               />
@@ -220,7 +236,9 @@ export default function SignUpBusiness() {
             </label>
             <label className="checkbox">
               <input
+                name="checkbox2"
                 type="checkbox"
+                // required
                 checked={isChecked2}
                 onChange={handleCheckboxChange2}
               />
@@ -232,8 +250,9 @@ export default function SignUpBusiness() {
             <p className={styles.errors}>{messageError}</p>
             <ReCAPTCHA
               sitekey="6LcBFlwmAAAAAJWblnjYhb4ftrng3BghULF6hy8I"
-              onChange={onChange}
+              onChange={handleCaptchaChange}
             />
+            <p className={styles.errors}>{messageCaptcha}</p>
           </div>
         </div>
         <button type="submit" className={`b_button ${styles.b_button}`}>

@@ -17,9 +17,12 @@ export const CREATE_POSTER_POST = gql`
 `;
 
 export const GET_BUSINESS = gql`
-  mutation Mutation($brandname: String) {
-    getBusiness(brandname: $brandname)
+mutation GetBusiness($brandname: String) {
+  getBusiness(brandname: $brandname) {
+    postPrice
+    id
   }
+}
 `;
 
 export const GET_BUSINESS_QUERY = gql`

@@ -60,7 +60,8 @@ function LoginCom() {
         icon: "success",
         title: `Loading`,
       });
-      router.push("/");
+      // router.push("/");
+      router.reload()
     },
     variables: { about: data },
   });

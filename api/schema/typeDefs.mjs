@@ -108,6 +108,11 @@ const typeDefs = `#graphql
     email: String
   }
 
+  type BusinessIdAndPrice {
+    postPrice: String
+    id: ID
+  }
+
 
 
   type Query {
@@ -200,6 +205,14 @@ const typeDefs = `#graphql
   identifier: String
 }
 
+input ChangeUserInput{
+  phone: String
+  postPrice: String
+  address: String
+  websiteLink: String
+  brandDescription: String
+}
+
   type Mutation {
     loginUser(about: LoginInput): AuthPayload
     registerUser(about: RegisterInput): AuthPayload
@@ -209,6 +222,7 @@ const typeDefs = `#graphql
     forgotPassword(email: String, confirmationCode: String, password: String): String
     forgotPasswordSend(email: String): String
     addAdmin(email: String): String
+    changeUser(about: ChangeUserInput, id: ID): String
 
     addSocialMediaPoster(info: SocialMediaInput,  image: [Upload]!): User
     deleteSocialMediaPoster(email: String, id: String): User
@@ -228,7 +242,7 @@ const typeDefs = `#graphql
 
     updatetoSchema(newfield: String, value: String): [User]
 
-    getBusiness(brandname: String): String
+    getBusiness(brandname: String): BusinessIdAndPrice
   }
 `;
 

@@ -21,6 +21,7 @@ import { clearToken } from "../../../redux/slices/auth";
 export default function PosterCabinetCom() {
   const router = useRouter();
   const [filter, setFilter] = useState("1");
+  const [businessPrice, setBusinessPrice] = useState("")
   const { userInfo } = useSelector((state) => state.userInfo);
   {
     !userInfo ? router.push("/") : "";
@@ -43,7 +44,8 @@ export default function PosterCabinetCom() {
       });
     },
     onCompleted: (data) => {
-      setBusinessId(data.getBusiness);
+      setBusinessId(data.getBusiness.id);
+      setBusinessPrice(data.getBusiness.postPrice);
       Swal.fire({
         icon: "success",
         title: `Keep creating the post `,
@@ -60,7 +62,8 @@ export default function PosterCabinetCom() {
       });
     },
     onCompleted: (data) => {
-      setBusinessId(data);
+      setBusinessId(data.id);
+      setBusinessPrice(data.postPrice)
       Swal.fire({
         icon: "success",
         title: `Success! `,
@@ -77,6 +80,8 @@ export default function PosterCabinetCom() {
       },
     },
   });
+
+  console.log(brandId)
 
   const onLogout = () => {
     logout();
@@ -167,7 +172,7 @@ export default function PosterCabinetCom() {
           </div>
           <div className={styles.row_part}>
             <p className="nav_text">Payment for the completed tasks</p>
-            <button className="a_button">10$</button>
+            <button className="a_button">{!businessPrice ? `Find business!` : `${businessPrice/100}$`}</button>
             {/* <WithdrawCom /> */}
           </div>
         </div>
