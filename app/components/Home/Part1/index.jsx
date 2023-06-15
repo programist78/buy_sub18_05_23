@@ -68,8 +68,8 @@ export default function Part1() {
           <button className="b_button">Personal Panel</button>
         </Link>
       ) : (
-        <Link href="/auth/login">
-          <button className="b_button">Log In now</button>
+        <Link href="/auth/poster-sign-up">
+          <button className="b_button">Sign Up Posters</button>
         </Link>
       )}
     </div>

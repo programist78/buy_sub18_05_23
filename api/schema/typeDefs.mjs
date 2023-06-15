@@ -94,6 +94,7 @@ const typeDefs = `#graphql
     address: String
     brandDescription: String
     image: String
+    zipCode: String
   }
 
   type AuthPayload {
@@ -106,6 +107,22 @@ const typeDefs = `#graphql
     brandname: String
     address: String
     email: String
+    brandDescription: String
+  }
+
+  type UserRegister {
+    createdAt: String
+    fullname: String
+    reviewMedia: ReviewMedia
+    email: String
+  }
+
+  type BusinessInfo {
+    createdAt: String
+    zipCode: String
+    brandname: String
+    websiteLink: String
+    confirmed: String
   }
 
   type BusinessIdAndPrice {
@@ -132,8 +149,15 @@ const typeDefs = `#graphql
   getPopularBusinesss: [User]
 
   getBusinessQuery(brandname: String!): User
+  
 
   getBusinessRegister(argument: String): [BusinessRegister]
+  getBusinessRegisterwAddInfo(argument: String): [BusinessRegister]
+
+  getPosterRegister(argument: String): [UserRegister]
+  getPosterRegisterwAddInfo(argument: String): [UserRegister]
+
+  getBusinessInfowPosts(argument: String): [BusinessInfo]
   }
 
   type Image {

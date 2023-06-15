@@ -99,6 +99,7 @@ export default function SignUpBusiness() {
       context.login(userData);
       router.reload()
       dispatch(setUserInfo(userData));
+      router.push("/personal/business")
     },
     onError(error) {
       Swal.fire({

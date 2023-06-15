@@ -65,7 +65,8 @@ const User = new mongoose.Schema(
     plan: { type: String, enum: ['none', 'month'], default: 'none' },
     hasTrial: { type: Boolean, default: false },
     endDate: { type: Date, default: null },
-    brandDescription: {type: String}
+    brandDescription: {type: String},
+    zipCode: {type: String}
   },
   {
     timestamps: true,

@@ -130,6 +130,7 @@ export default function SignUpPosterCom() {
       context.login(userData);
       dispatch(setUserInfo(userData));
       router.reload()
+      router.push("/personal/poster")
     },
     onError(error) {
       Swal.fire({
@@ -165,13 +166,13 @@ export default function SignUpPosterCom() {
           <p className={`text ${styles.text}`}>
             {" "}
             Posters can explore various Businesses on the platform and choose
-            the ones that interest them to post about. Payments are made via
-            Paypal/Stripe to your email address see policy for more information
-            details. Post authors then create a post on one of their approved
+            the ones that interest them to post about. Post authors then create a post on one of their approved
             social media platforms and follow the instructions on the post page
             to submit it for review. Once approved, then the Poster gets paid
             into their account. These funds (minus our percentage) are available
-            for payment to the poster upon request.
+            for payment to the poster upon request. Payments are made via
+            Paypal/Stripe to your email address, see policy for more information
+            details.
           </p>
           <form onSubmit={handleSubmit(onSubmit1)} className={styles.form}>
             <div>

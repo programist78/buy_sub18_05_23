@@ -48,6 +48,18 @@ function LoginCom() {
     update(proxy, { data: { loginUser: userData } }) {
       context.login(userData);
       dispatch(setUserInfo(userData));
+      if (userData.user.role == "USER") {
+        router.reload()
+        setTimeout(() => router.push("/personal/poster"), 500)
+       }
+       if (userData.user.role == "BUSINESS") {
+        router.reload()
+        setTimeout(() => router.push("/personal/business"), 500)
+       }
+       if (userData.user.role == "ADMIN") {
+        router.reload()
+        setTimeout(() => router.push("/personal/admin"), 500)
+       }
     },
     onError(error) {
       Swal.fire({
@@ -61,7 +73,8 @@ function LoginCom() {
         title: `Loading`,
       });
       // router.push("/");
-      router.reload()
+      
+
     },
     variables: { about: data },
   });

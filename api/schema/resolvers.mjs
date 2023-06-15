@@ -137,7 +137,36 @@ const resolvers = {
               const users = await User.find(filter).sort({ [argument]: -1 });;
               console.log(users)
               return users
-        }
+        },
+        getBusinessRegisterwAddInfo: async(_parent, {argument}, _context, _info) => {
+            console.log(argument)
+            const filter = {
+                role: "BUSINESS",
+                brandDescription: { $regex: /[a-zA-Z]/ } // Проверка наличия хотя бы одной буквы
+            };
+              const users = await User.find(filter).sort({ [argument]: -1 });;
+              console.log(users)
+              return users
+        },
+        getPosterRegister: async(_parent, {argument}, _context, _info) => {
+            console.log(argument)
+            const filter = {
+                role: "USER",
+              };
+              const users = await User.find(filter).sort({ [argument]: -1 });;
+              console.log(users)
+              return users
+        },
+        getPosterRegisterwAddInfo: async(_parent, {argument}, _context, _info) => {
+            console.log(argument)
+            const filter = {
+                role: "USER",
+                reviewMedia: { $exists: true, $ne: [] } // Проверка наличия значения в массиве reviewMedia
+            };
+              const users = await User.find(filter).sort({ [argument]: -1 });;
+              console.log(users)
+              return users
+        },
     },
     Mutation: {
         //authorisation

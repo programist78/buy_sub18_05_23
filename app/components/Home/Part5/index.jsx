@@ -20,7 +20,7 @@ export default function Part5() {
           </Link>
         ) : (
           <Link href="/auth/login">
-            <button className="b_button">Log In now</button>
+            <button className="b_button">Sign Up Businesses</button>
           </Link>
         )}
         {/* <button className="b_button">Log In Now</button> */}
