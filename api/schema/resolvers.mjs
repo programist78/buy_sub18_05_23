@@ -130,7 +130,6 @@ const resolvers = {
                 return user
         },
         getBusinessRegister: async(_parent, {argument}, _context, _info) => {
-            console.log(argument)
             const filter = {
                 role: "BUSINESS",
               };
@@ -139,7 +138,6 @@ const resolvers = {
               return users
         },
         getBusinessRegisterwAddInfo: async(_parent, {argument}, _context, _info) => {
-            console.log(argument)
             const filter = {
                 role: "BUSINESS",
                 brandDescription: { $regex: /[a-zA-Z]/ } // Проверка наличия хотя бы одной буквы
@@ -149,7 +147,6 @@ const resolvers = {
               return users
         },
         getPosterRegister: async(_parent, {argument}, _context, _info) => {
-            console.log(argument)
             const filter = {
                 role: "USER",
               };
@@ -158,11 +155,141 @@ const resolvers = {
               return users
         },
         getPosterRegisterwAddInfo: async(_parent, {argument}, _context, _info) => {
-            console.log(argument)
             const filter = {
                 role: "USER",
                 reviewMedia: { $exists: true, $ne: [] } // Проверка наличия значения в массиве reviewMedia
             };
+              const users = await User.find(filter).sort({ [argument]: -1 });;
+              console.log(users)
+              return users
+        },
+        getBusinessInfoWPosts: async (_parent, { argument }, _context, _info) => {
+            const posts = await PosterPost.find().sort({ [argument]: -1 });
+          
+            const postsWithUserDetails = await Promise.all(
+              posts.map(async (post) => {
+                const user = await User.findById(post.brandId);
+                return {
+                  ...post._doc,
+                  brandname: user.brandname,
+                  websiteLink: user.name,
+                  zipCode: user.zipCode,
+                  postPrice: user.postPrice
+                };
+              })
+            );
+          
+            return postsWithUserDetails;
+          },
+          getAcceptedBusinessInfoWPosts: async(_parent, {argument}, _context, _info) => {
+            const filter = {
+                confirmed: true,
+            };
+            const posts = await PosterPost.find(filter).sort({ [argument]: -1 });
+          
+            const postsWithUserDetails = await Promise.all(
+              posts.map(async (post) => {
+                const user = await User.findById(post.brandId);
+                return {
+                  ...post._doc,
+                  brandname: user.brandname,
+                  websiteLink: user.name,
+                  zipCode: user.zipCode,
+                  postPrice: user.postPrice
+                };
+              })
+            );
+          
+            return postsWithUserDetails;
+        },
+        getUnAcceptedBusinessInfoWPosts: async(_parent, {argument}, _context, _info) => {
+            const filter = {
+                confirmed: false,
+            };
+            const posts = await PosterPost.find(filter).sort({ [argument]: -1 });
+          
+            const postsWithUserDetails = await Promise.all(
+              posts.map(async (post) => {
+                const user = await User.findById(post.brandId);
+                return {
+                  ...post._doc,
+                  brandname: user.brandname,
+                  websiteLink: user.name,
+                  zipCode: user.zipCode,
+                  postPrice: user.postPrice
+                };
+              })
+            );
+          
+            return postsWithUserDetails;
+        },
+
+        getPosterInfoWPosts: async (_parent, { argument }, _context, _info) => {
+            const posts = await PosterPost.find().sort({ [argument]: -1 });
+          
+            const postsWithUserDetails = await Promise.all(
+              posts.map(async (post) => {
+                const user = await User.findById(post.brandId);
+                return {
+                  ...post._doc,
+                  fullname: user.fullname,
+                  email: user.email
+                };
+              })
+            );
+          
+            return postsWithUserDetails;
+          },
+          getAcceptedPosterInfoWPosts: async(_parent, {argument}, _context, _info) => {
+            const filter = {
+                confirmed: true,
+            };
+            const posts = await PosterPost.find(filter).sort({ [argument]: -1 });
+          
+            const postsWithUserDetails = await Promise.all(
+              posts.map(async (post) => {
+                const user = await User.findById(post.brandId);
+                return {
+                  ...post._doc,
+                  fullname: user.fullname,
+                  email: user.email
+                };
+              })
+            );
+          
+            return postsWithUserDetails;
+        },
+        getUnAcceptedBusinessInfoWPosts: async(_parent, {argument}, _context, _info) => {
+            const filter = {
+                confirmed: false,
+            };
+            const posts = await PosterPost.find(filter).sort({ [argument]: -1 });
+          
+            const postsWithUserDetails = await Promise.all(
+              posts.map(async (post) => {
+                const user = await User.findById(post.brandId);
+                return {
+                  ...post._doc,
+                  fullname: user.fullname,
+                  email: user.email
+                };
+              })
+            );
+          
+            return postsWithUserDetails;
+        },
+        getBusinesswWholeInfo: async(_parent, {argument}, _context, _info) => {
+            const filter = {
+                role: "BUSINESS",
+              };
+              const users = await User.find(filter).sort({ [argument]: -1 });;
+              console.log(users)
+              return users
+        },
+        getPosterwWholeInfo: async(_parent, {argument}, _context, _info) => {
+            const filter = {
+                role: "USER",
+              };
               const users = await User.find(filter).sort({ [argument]: -1 });;
               console.log(users)
               return users
@@ -205,7 +332,7 @@ const resolvers = {
            if (brand_exist) {
             throw new GraphQLError("Email already exists");
         }
-        user = new User({ fullname,email, passwordHash,address, role: "BUSINESS",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice})
+        user = new User({ fullname,email, passwordHash,address, role: "BUSINESS",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice, paidOut: 0})
         } else{
             user = new User({ fullname,email, passwordHash, role: "USER",
             confirmedEmail: false, confirmationCode, avatarUrl, balance: 0,
@@ -438,11 +565,11 @@ const resolvers = {
               }
             const newbrand = await User.findByIdAndUpdate(
                 posterpost.brandId,
-                { $pull: { brandPendingPosts: posterPostId }, $push: { brandCompletedPosts: posterPostId }},
+                { $pull: { brandPendingPosts: posterPostId }, $push: { brandCompletedPosts: posterPostId }, $inc: { paidOut: brand.postPrice }},
                 { new: true }
               );   
               if (!newbrand) {
-                throw new GraphQLError("Some problems with this brand")
+                throw new GraphQLError("Some problems with this business")
             }
             const newposterpost = await PosterPost.findByIdAndUpdate(
                 posterPostId,

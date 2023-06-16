@@ -123,6 +123,31 @@ const typeDefs = `#graphql
     brandname: String
     websiteLink: String
     confirmed: String
+    postPrice: String
+  }
+
+  type PosterInfo {
+    createdAt: String
+    fullname: String
+    confirmed: String
+    selectedSocial: String
+    selectedReview: String
+  }
+
+  type BusinessWholeInfo {
+    createdAt: String
+    brandname: String
+    address: String
+    brandCompletedPosts: [String]
+    paidOut: String
+  }
+
+  type PosterWholeInfo {
+    createdAt: String
+    fullname: String
+    phone: String
+    balance: String
+    paidOut: String
   }
 
   type BusinessIdAndPrice {
@@ -157,7 +182,16 @@ const typeDefs = `#graphql
   getPosterRegister(argument: String): [UserRegister]
   getPosterRegisterwAddInfo(argument: String): [UserRegister]
 
-  getBusinessInfowPosts(argument: String): [BusinessInfo]
+  getBusinessInfoWPosts(argument: String): [BusinessInfo]
+  getAcceptedBusinessInfoWPosts(argument: String): [BusinessInfo]
+  getUnAcceptedBusinessInfoWPosts(argument: String): [BusinessInfo]
+
+  getPosterInfoWPosts(argument: String): [PosterInfo]
+  getAcceptedPosterInfoWPosts(argument: String): [PosterInfo]
+  getUnAcceptedPosterInfoWPosts(argument: String): [PosterInfo]
+
+  getBusinesswWholeInfo(argument: String): [BusinessWholeInfo]
+  getPosterwWholeInfo(argument: String): [PosterWholeInfo]
   }
 
   type Image {

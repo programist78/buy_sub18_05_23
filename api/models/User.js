@@ -66,7 +66,8 @@ const User = new mongoose.Schema(
     hasTrial: { type: Boolean, default: false },
     endDate: { type: Date, default: null },
     brandDescription: {type: String},
-    zipCode: {type: String}
+    zipCode: {type: String},
+    paidOut: {type: Number}
   },
   {
     timestamps: true,
