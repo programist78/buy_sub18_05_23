@@ -157,20 +157,35 @@ const resolvers = {
             const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
               return users
         },
-        getPosterRegister: async(_parent, {argument}, _context, _info) => {
+        getPosterRegister: async(_parent, {argument, page}, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
             const filter = {
-                role: "USER",
+                role: "USER"
               };
-              const users = await User.find(filter).sort({ [argument]: -1 });;
+              const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
               console.log(users)
               return users
         },
-        getPosterRegisterwAddInfo: async(_parent, {argument}, _context, _info) => {
+        getPosterRegisterwSignup: async(_parent, {argument, page}, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
             const filter = {
                 role: "USER",
-                reviewMedia: { $exists: true, $ne: [] } // Проверка наличия значения в массиве reviewMedia
-            };
-              const users = await User.find(filter).sort({ [argument]: -1 });;
+                socialMedia: { $exists: false },
+              };
+              const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
+              console.log(users)
+              return users
+        },
+        getPosterRegisterwDetails: async(_parent, {argument, page}, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
+            const filter = {
+                role: "USER",
+                socialMedia: { $exists: true },
+              };
+              const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
               console.log(users)
               return users
         },

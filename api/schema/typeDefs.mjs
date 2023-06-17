@@ -180,8 +180,9 @@ const typeDefs = `#graphql
   getBusinessRegisterwAddInfo(argument: String, page: String): [BusinessRegister]
   getBusinessRegisterNeedAddInfo(argument: String, page: String): [BusinessRegister]
 
-  getPosterRegister(argument: String): [UserRegister]
-  getPosterRegisterwAddInfo(argument: String): [UserRegister]
+  getPosterRegister(argument: String, page: String): [UserRegister]
+  getPosterRegisterwSignup(argument: String, page: String): [UserRegister]
+  getPosterRegisterwDetails(argument: String, page: String): [UserRegister]
 
   getBusinessInfoWPosts(argument: String): [BusinessInfo]
   getAcceptedBusinessInfoWPosts(argument: String): [BusinessInfo]

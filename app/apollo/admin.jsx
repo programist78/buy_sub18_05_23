@@ -36,10 +36,9 @@ query GetBusinessRegisterNeedAddInfo($argument: String, $page: String) {
   }
 `
 
-
 export const GET_POSTER_REGISTER = gql`
-query GetPosterRegister($argument: String) {
-    getPosterRegister(argument: $argument) {
+query GetPosterRegister($argument: String, $page: String) {
+    getPosterRegister(argument: $argument, page: $page) {
       createdAt
       fullname
       reviewMedia {
@@ -52,9 +51,25 @@ query GetPosterRegister($argument: String) {
   }
 `
 
-export const GET_POSTER_REGISTER_INFO = gql`
-query GetPosterRegisterwAddInfo($argument: String) {
-    getPosterRegisterwAddInfo(argument: $argument) {
+
+export const GET_POSTER_REGISTER_SIGNUP = gql`
+query GetPosterRegisterwSignup($argument: String, $page: String) {
+    getPosterRegisterwSignup(argument: $argument, page: $page) {
+      createdAt
+      fullname
+      reviewMedia {
+        google
+        yelp
+        tripadvisor
+      }
+      email
+    }
+  }
+`
+
+export const GET_POSTER_REGISTER_DETAILS = gql`
+query GetPosterRegisterwDetails($argument: String, $page: String) {
+    getPosterRegisterwDetails(argument: $argument, page: $page) {
       createdAt
       fullname
       reviewMedia {
