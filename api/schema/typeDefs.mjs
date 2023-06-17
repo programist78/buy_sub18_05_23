@@ -176,8 +176,9 @@ const typeDefs = `#graphql
   getBusinessQuery(brandname: String!): User
   
 
-  getBusinessRegister(argument: String): [BusinessRegister]
-  getBusinessRegisterwAddInfo(argument: String): [BusinessRegister]
+  getBusinessRegister(argument: String, page: String): [BusinessRegister]
+  getBusinessRegisterwAddInfo(argument: String, page: String): [BusinessRegister]
+  getBusinessRegisterNeedAddInfo(argument: String, page: String): [BusinessRegister]
 
   getPosterRegister(argument: String): [UserRegister]
   getPosterRegisterwAddInfo(argument: String): [UserRegister]

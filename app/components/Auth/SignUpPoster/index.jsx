@@ -254,9 +254,9 @@ export default function SignUpPosterCom() {
                 onChange={handleCheckboxChange2}
               />
               <span className="checkmark"></span>
-              <Link href="/privacy" style={{ textDecoration: "underLine" }}>
+              {/* <Link href="/privacy" style={{ textDecoration: "underLine" }}> */}
                 You agree to all site policies and privacy rules
-              </Link>
+              {/* </Link> */}
             </label>
             <p className={styles.errors}>{messageError}</p>
             {/* <ReCAPTCHA

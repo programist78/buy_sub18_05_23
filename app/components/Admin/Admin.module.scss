@@ -1,0 +1,133 @@
+// Admin.module.scss
+
+.back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    gap: 100px;
+    padding-top: 175px;
+  }
+  .part{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    opacity: 0.65;
+    div{
+        display: flex;
+        flex-direction: row;
+        padding: 5px 15px;
+    }
+  }
+
+  .this{
+    border-bottom: 2px solid rgba(0, 0, 0, 0.478);
+  }
+
+  .custom_table {
+    width: 70vw;
+    border-radius: 10px;
+    overflow: hidden;
+    border-collapse: collapse;
+    background-color: white; /* Белый фон для таблицы */
+  }
+
+  .foot{
+    // width: 100;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    input{
+      width: 50px;
+    }
+  }
+
+  .arrow{
+    width: 40px;
+    height: 40px;
+  }
+  
+  .custom_table thead th {
+    
+    background-color: black; /* Черный фон для шапки таблицы */
+    color: white;
+    /* Другие стили для шапки */
+  }
+  
+  .custom_table tbody td {
+    /* Стили для ячеек внутри tbody */
+    padding: 20px 0;
+    border: 1px solid #ccc; /* Линии разграничивающие столбцы */
+  }
+  
+  .custom_table tbody tr:nth-child(even) {
+    background-color: rgb(153, 206, 255, 0.15); /* Синий оттенок для каждой второй строки */
+  }
+  
+  .green{
+    display: flex;
+justify-content: center;
+align-items: center;
+width: auto;
+color: #7FBA63;
+background: rgba(127, 186, 99, 0.14);
+border: 1px solid #7FBA63;
+border-radius: 15px;
+margin-left: 15px;
+margin-right: 15px;
+  }
+  .yellow{
+    display: flex;
+justify-content: center;
+align-items: center;
+width: auto;
+color: #FFAF12;
+background: rgba(255, 175, 18, 0.1);
+border: 1px solid rgba(255, 175, 18, 1);
+border-radius: 15px;
+margin-left: 15px;
+margin-right: 15px;
+  }
+
+  .sortby {
+    display: flex;
+    flex-direction: column;
+    .button {
+      // Стили для кнопки
+      cursor: pointer;
+      
+      // Расположение иконки
+      display: flex;
+      align-items: center;
+      p {
+        margin-right: 8px;
+      }
+      
+      // Изменение иконки при открытии меню
+      &.open {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    
+    .menu {
+      // Стили для меню
+      margin-top: 8px;
+      position: absolute;
+      display: flex;
+      background-color: white !important;
+      flex-direction: column;
+      margin-top: 50px;
+      div {
+        margin-bottom: 8px;
+      }
+    }
+  }

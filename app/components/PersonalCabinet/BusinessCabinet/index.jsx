@@ -25,6 +25,8 @@ export default function BusinessCabinetCom() {
   const [editBrandDescription, setEditBrandDescription] = useState("");
   //user Info
   const { userInfo } = useSelector((state) => state.userInfo);
+
+  
   //open modules
   const [isAccountingOpen, setIsAccountingOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

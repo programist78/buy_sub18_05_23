@@ -129,21 +129,32 @@ const resolvers = {
                 }
                 return user
         },
-        getBusinessRegister: async(_parent, {argument}, _context, _info) => {
+        getBusinessRegister: async(_parent, {argument, page}, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
             const filter = {
                 role: "BUSINESS",
               };
-              const users = await User.find(filter).sort({ [argument]: -1 });;
-              console.log(users)
+              const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
               return users
         },
-        getBusinessRegisterwAddInfo: async(_parent, {argument}, _context, _info) => {
+        getBusinessRegisterwAddInfo: async(_parent, {argument, page}, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
             const filter = {
                 role: "BUSINESS",
                 brandDescription: { $regex: /[a-zA-Z]/ } // Проверка наличия хотя бы одной буквы
             };
-              const users = await User.find(filter).sort({ [argument]: -1 });;
-              console.log(users)
+            const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
+              return users
+        },
+        getBusinessRegisterNeedAddInfo: async(_parent, {argument, page}, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
+            const filter = {
+                role: "BUSINESS",
+                $or: [{ brandDescription: null }, { brandDescription: { $exists: false } }]            };
+            const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
               return users
         },
         getPosterRegister: async(_parent, {argument}, _context, _info) => {
@@ -329,10 +340,14 @@ const resolvers = {
 
         if (brandname) {
            const brand_exist = await User.findOne({ email });
+           const brandname_exist = await User.findOne({ brandname });
            if (brand_exist) {
             throw new GraphQLError("Email already exists");
         }
-        user = new User({ fullname,email, passwordHash,address, role: "BUSINESS",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice, paidOut: 0})
+        if (brandname_exist) {
+            throw new GraphQLError("Business name already exists");
+        }
+        user = new User({ fullname,email, passwordHash,address, role: "BUSINESS",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice, paidOut: 0, brandDescription: ""})
         } else{
             user = new User({ fullname,email, passwordHash, role: "USER",
             confirmedEmail: false, confirmationCode, avatarUrl, balance: 0,
