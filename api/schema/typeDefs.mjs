@@ -271,6 +271,9 @@ input ChangeUserInput{
   address: String
   websiteLink: String
   brandDescription: String
+  instagram: String
+  facebook: String
+  twitter: String
 }
 
   type Mutation {
@@ -283,6 +286,8 @@ input ChangeUserInput{
     forgotPasswordSend(email: String): String
     addAdmin(email: String): String
     changeUser(about: ChangeUserInput, id: ID): String
+    changeImage(image: [Upload], id: ID): String
+    changeLogo(image: [Upload], id: ID): String
 
     addSocialMediaPoster(info: SocialMediaInput,  image: [Upload]!): User
     deleteSocialMediaPoster(email: String, id: String): User

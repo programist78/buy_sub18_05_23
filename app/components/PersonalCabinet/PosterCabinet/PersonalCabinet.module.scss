@@ -74,7 +74,15 @@
     align-items: center;
     padding: 100px;
   }
-
+  .back2{
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 1000px;
+  }
   .social_part {
     width: 440px;
     display: flex;

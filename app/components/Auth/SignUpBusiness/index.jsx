@@ -97,7 +97,6 @@ export default function SignUpBusiness() {
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, { data: { registerUser: userData } }) {
       context.login(userData);
-      router.reload()
       dispatch(setUserInfo(userData));
       router.push("/personal/business")
     },

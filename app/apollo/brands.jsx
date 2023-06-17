@@ -47,3 +47,15 @@ export const COMPLETED_POSTS_FOR_BUSINESS = gql`
     }
   }
 `;
+
+export const CHANGE_IMAGE = gql`
+mutation ChangeImage($changeImageId: ID, $image: [Upload]) {
+  changeImage(id: $changeImageId, image: $image)
+}
+`
+
+export const CHANGE_LOGO = gql`
+mutation ChangeLogo($image: [Upload], $changeLogoId: ID) {
+  changeLogo(image: $image, id: $changeLogoId)
+}
+`

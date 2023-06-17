@@ -49,16 +49,13 @@ function LoginCom() {
       context.login(userData);
       dispatch(setUserInfo(userData));
       if (userData.user.role == "USER") {
-        router.reload()
-        setTimeout(() => router.push("/personal/poster"), 500)
+        router.push("/personal/poster")
        }
        if (userData.user.role == "BUSINESS") {
-        router.reload()
-        setTimeout(() => router.push("/personal/business"), 500)
+        router.push("/personal/business")
        }
        if (userData.user.role == "ADMIN") {
-        router.reload()
-        setTimeout(() => router.push("/personal/admin"), 500)
+        router.push("/personal/admin")
        }
     },
     onError(error) {

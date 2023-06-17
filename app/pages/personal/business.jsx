@@ -14,6 +14,7 @@ export default function PersonalCabinetBusiness() {
   if (userInfo?.role == "BUSINESS") {
     return <BusinessCabinetCom />;
   } else {
+    router.reload()
     return <NoAccess />
   }} else {
     return <UnAuth />

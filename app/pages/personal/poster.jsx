@@ -3,7 +3,6 @@ import PosterCabinetCom from "../../components/PersonalCabinet/PosterCabinet";
 import { useSelector } from "react-redux";
 import UnAuth from "../../components/UnAuth";
 import NoAccess from "../../components/NOAccess";
-import BusinessCabinetCom from "../../components/PersonalCabinet/BusinessCabinet";
 import BigLoader from "../../components/Loaders/BigLoader";
 export default function Poster() {
   const { userInfo, loading  } = useSelector((state) => state.userInfo);
@@ -12,9 +11,10 @@ export default function Poster() {
     return <BigLoader />;
   }
   if (userInfo) {
-  if (userInfo?.role == "BUSINESS") {
-    return <BusinessCabinetCom />;
+  if (userInfo?.role == "USER") {
+    return <PosterCabinetCom />;
   } else {
+    router.reload()
     return <NoAccess />
   }} else {
     return <UnAuth />

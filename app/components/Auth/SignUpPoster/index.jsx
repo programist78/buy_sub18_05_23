@@ -129,7 +129,6 @@ export default function SignUpPosterCom() {
     update(proxy, { data: { registerUserComplete: userData } }) {
       context.login(userData);
       dispatch(setUserInfo(userData));
-      router.reload()
       router.push("/personal/poster")
     },
     onError(error) {

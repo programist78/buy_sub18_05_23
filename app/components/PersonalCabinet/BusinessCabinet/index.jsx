@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   ACCEPT_POSTER_POST,
+  CHANGE_IMAGE,
+  CHANGE_LOGO,
   COMPLETED_POSTS_FOR_BUSINESS,
   DECLINE_POSTER_POST,
   PENDING_POSTS_FOR_BUSINESS,
@@ -15,14 +17,25 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import SmallLoader from "../../Loaders/SmallLoader";
 import { BiPencil } from "react-icons/bi";
 import { CHANGE_USER } from "../../../apollo/auth";
+import { Button, Modal as ModalAntd, Upload } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
+
+import { UploadOutlined } from "@ant-design/icons";
 export default function BusinessCabinetCom() {
   //edit Information
   const [edit, setEdit] = useState(false);
+  const [editDetails, setEditDetails] = useState(false)
+  const [newImage, setNewImage] = useState(false);
   const [editPhone, setEditPhone] = useState("");
   const [editAddress, setEditAddress] = useState("");
   const [editPostPrice, setEditPostPrice] = useState("");
   const [editWebsiteLink, setEditWebsiteLink] = useState("");
   const [editBrandDescription, setEditBrandDescription] = useState("");
+  const [image, setImage] = useState()
+  const [imageLogo, setImageLogo] = useState()
+  const [editInstagramLink, setEditInstagramLink] = useState("")
+  const [editFacebookLink, setEditFacebookLink] = useState("")
+  const [editTwitterLink, setEditTwitterLink] = useState("")
   //user Info
   const { userInfo } = useSelector((state) => state.userInfo);
 
@@ -49,8 +62,20 @@ export default function BusinessCabinetCom() {
   }, [userInfo?.websiteLink]);
 
   useEffect(() => {
-    setEditBrandDescription(userInfo?.editBrandDescription);
-  }, [userInfo?.editBrandDescription]);
+    setEditBrandDescription(userInfo?.brandDescription);
+  }, [userInfo?.brandDescription]);
+
+  useEffect(() => {
+    setEditInstagramLink(userInfo?.instagram);
+  }, [userInfo?.socialMedia?.instagram]);
+
+  useEffect(() => {
+    setEditFacebookLink(userInfo?.facebook);
+  }, [userInfo?.socialMedia?.facebook]);
+
+  useEffect(() => {
+    setEditTwitterLink(userInfo?.twitter);
+  }, [userInfo?.socialMedia?.twitter]);
 
   const openModal = () => {
     setIsOpen(true);
@@ -133,9 +158,66 @@ export default function BusinessCabinetCom() {
       setEdit(!edit);
     },
     variables: {
-      // about: {websiteLink: editWebsiteLink, postPrice: editPostPrice, phone: editPhone, brandDescription: editBrandDescription, address: editAddress},
+      about: {websiteLink: editWebsiteLink, postPrice: editPostPrice?.toString(), phone: editPhone, brandDescription: editBrandDescription, address: editAddress, instagram: editInstagramLink, twitter: editTwitterLink, facebook: editFacebookLink},
      changeUserId: userInfo?.id},
   })
+
+  const [changeImage] = useMutation(CHANGE_IMAGE, {
+    onError(error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error}`,
+      });
+    },
+    onCompleted: (data) => {
+      Swal.fire({
+        icon: "success",
+        title: `Loading`,
+      });
+      setEdit(!edit);
+    },
+    variables: {
+      image,
+      changeImageId: userInfo?.id},
+  })
+
+  const [changeLogo] = useMutation(CHANGE_LOGO, {
+    onError(error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error}`,
+      });
+    },
+    onCompleted: (data) => {
+      Swal.fire({
+        icon: "success",
+        title: `Loading`,
+      });
+      setEdit(!edit);
+    },
+    variables: {
+      image: imageLogo,
+      changeLogoId: userInfo?.id},
+  })
+
+  const props = {
+    name: "file",
+    onChange({ file, fileList }) {
+      if (file.status !== "uploading") {
+        setImage(file.originFileObj); // Добавляем новые файлы к существующему состоянию image
+      }
+    },
+  };
+
+  const props2 = {
+    name: "file",
+    onChange({ file, fileList }) {
+      if (file.status !== "uploading") {
+        setImageLogo(file.originFileObj); // Добавляем новые файлы к существующему состоянию image
+      }
+    },
+  };
+
   return (
     <div className={styles.back}>
       <p className="title">My account Page</p>
@@ -148,11 +230,23 @@ export default function BusinessCabinetCom() {
                 src={userInfo?.avatarUrl}
                 alt="logo"
                 width={139}
+                style={{borderRadius: "50%", objectFit: "cover"}}
                 height={139}
               />
-              <p className={`navtext ${styles.navtext}`}>
-                Edit Business Details
-              </p>
+              {editDetails
+              ?
+              <div>
+                                <Upload {...props2}>
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
+                <p className={`navtext ${styles.navtext}`} onClick={(() => changeLogo())}>Save</p>
+              </div>
+              :
+              <p onClick={() => setEditDetails(!editDetails)} className={`navtext ${styles.navtext}`}>
+              Edit Business Details
+            </p>
+              }
+
             </div>
             <div className={styles.info_part}>
               <p className="pretitle">Posts Status</p>
@@ -340,6 +434,20 @@ export default function BusinessCabinetCom() {
                     className="a_input"
                   />
                   <h1>Here image</h1>
+                  {newImage ?
+                  <div>
+                  <Upload {...props}>
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
+                  <button className="b_button" onClick={() => changeImage()}>Click here for change</button>  
+                  </div>
+                  :
+                  <button onClick={() => setNewImage(!newImage)} className="b_button">
+                  Add another Image 
+                  <span>
+                  </span>
+                </button>
+                }
                   <img src={userInfo?.image} className={styles.brandimage} />
                   <p className="text">
                     Business website link : {userInfo?.websiteLink}
@@ -359,8 +467,36 @@ export default function BusinessCabinetCom() {
                     onChange={(e) => setEditBrandDescription(e.target.value)}
                     className="a_input"
                   />
-      
-    
+                    <p className="text">
+                    Brand Social Media:
+                  </p>
+                  <p className="text">
+                    Instagram:  
+                  </p>
+                  <input
+                    type="text"
+                    value={editInstagramLink}
+                    onChange={(e) => setEditInstagramLink(e.target.value)}
+                    className="a_input"
+                  />
+                   <p className="text">
+                    Facebook: 
+                  </p>
+                  <input
+                    type="text"
+                    value={editFacebookLink}
+                    onChange={(e) => setEditFacebookLink(e.target.value)}
+                    className="a_input"
+                  />
+                                     <p className="text">
+                    Twitter:  
+                  </p>
+                  <input
+                    type="text"
+                    value={editTwitterLink}
+                    onChange={(e) => setEditTwitterLink(e.target.value)}
+                    className="a_input"
+                  />
                   {/* <p className="text">Your social media : </p> */}
                 </>
               ) : (
@@ -379,6 +515,15 @@ export default function BusinessCabinetCom() {
                   <p className="text">
                     Business brand description : {userInfo?.brandDescription}
                   </p>
+                  {/* <p className="text">
+                    Instagram : {userInfo?.socialMedia?.instagram}
+                  </p>
+                  <p className="text">
+                    Facebook : {userInfo?.socialMedia?.facebook}
+                  </p>
+                  <p className="text">
+                    Twitter : {userInfo?.socialMedia?.twitter}
+                  </p> */}
                   {/* <p className="text">Your social media : </p> */}
                 </>
               )}

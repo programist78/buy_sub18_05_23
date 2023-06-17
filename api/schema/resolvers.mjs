@@ -376,7 +376,7 @@ const resolvers = {
         if (brandname_exist) {
             throw new GraphQLError("Business name already exists");
         }
-        user = new User({ fullname,email, passwordHash,address, role: "BUSINESS",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice, paidOut: 0, brandDescription: ""})
+        user = new User({ fullname,email, passwordHash,address, role: "BUSINESS",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice, paidOut: 0, brandDescription: "", socialMedia: {instagram: "", facebook: "", twitter: ""}})
         } else{
             user = new User({ fullname,email, passwordHash, role: "USER",
             confirmedEmail: false, confirmationCode, avatarUrl, balance: 0,
@@ -407,12 +407,73 @@ const resolvers = {
                 address: about?.address,
                 websiteLink: about?.websiteLink,
                 brandDescription: about?.brandDescription,
+                socialMedia: {instagram: about.instagram, facebook: about.facebook, twitter: about.twitter}
               },
               { new: true }
             );
-          
+              if (!user) {
+                throw new GraphQLError("Something went wrong")
+              }
             return "Done!";
-          },          
+          },  
+          changeImage: async (parent, { image, id }, social, context, _info) => {
+            const userFind = await User.findById(id);
+            if (!userFind) {
+              throw new GraphQLError("Business is undefined");
+            }
+            let images = [];
+            
+            for (let i = 0; i < image.length; i++) {
+            const { createReadStream, filename, mimetype } = await image[i];
+            const stream = createReadStream();
+            const assetUniqName = fileRenamer(filename);
+            let extension = mimetype.split("/")[1];
+            const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+            await stream.pipe(fs.createWriteStream(pathName));
+            const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+            images.push(urlForArray);
+            }
+            const user = await User.findByIdAndUpdate(
+              id,
+              {
+                image: images[0]
+              },
+              { new: true }
+            );
+              if (!user) {
+                throw new GraphQLError("Something went wrong")
+              }
+            return "Done!";
+          },  
+          changeLogo: async (parent, { image, id }, social, context, _info) => {
+            const userFind = await User.findById(id);
+            if (!userFind) {
+              throw new GraphQLError("Business is undefined");
+            }
+            let images = [];
+            
+            for (let i = 0; i < image.length; i++) {
+            const { createReadStream, filename, mimetype } = await image[i];
+            const stream = createReadStream();
+            const assetUniqName = fileRenamer(filename);
+            let extension = mimetype.split("/")[1];
+            const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+            await stream.pipe(fs.createWriteStream(pathName));
+            const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+            images.push(urlForArray);
+            }
+            const user = await User.findByIdAndUpdate(
+              id,
+              {
+                avatarUrl: images[0]
+              },
+              { new: true }
+            );
+              if (!user) {
+                throw new GraphQLError("Something went wrong")
+              }
+            return "Done!";
+          },           
         registerUserComplete: async (_, args, context, info) => {
             const {instagramUserName, instagramFollowers,
                 facebookUserName, facebookFollowers,
