@@ -83,87 +83,100 @@ query GetPosterRegisterwDetails($argument: String, $page: String) {
 `
 
 export const GET_BUSINESS_INFO_POSTS = gql`
-query GetBusinessInfoWPosts($argument: String) {
-    getBusinessInfoWPosts(argument: $argument) {
-      createdAt
-      zipCode
-      brandname
-      websiteLink
-      confirmed
-      postPrice
-    }
+query GetBusinessInfoWPosts($argument: String, $page: String) {
+  getBusinessInfoWPosts(argument: $argument, page: $page) {
+    createdAt
+    zipCode
+    brandname
+    websiteLink
+    confirmed
+    postPrice
   }
+}
+`
+
+export const GET_ACCEPTED_BUSINESS_INFO_POSTS = gql`
+query GetAcceptedBusinessInfoWPosts($argument: String, $page: String) {
+  getAcceptedBusinessInfoWPosts(argument: $argument, page: $page) {
+    createdAt
+    zipCode
+    brandname
+    websiteLink
+    confirmed
+    postPrice
+  }
+}
 `
 
 export const GET_UNACCEPTED_BUSINESS_INFO_POSTS = gql`
-query GetUnAcceptedBusinessInfoWPosts($argument: String) {
-    getUnAcceptedBusinessInfoWPosts(argument: $argument) {
-      createdAt
-      zipCode
-      brandname
-      websiteLink
-      confirmed
-      postPrice
-    }
+query GetUnAcceptedBusinessInfoWPosts($argument: String, $page: String) {
+  getUnAcceptedBusinessInfoWPosts(argument: $argument, page: $page) {
+    createdAt
+    zipCode
+    brandname
+    websiteLink
+    confirmed
+    postPrice
   }
+}
 `
 
 export const GET_POSTER_INFO_POSTS = gql`
-query GetPosterInfoWPosts($argument: String) {
-    getPosterInfoWPosts(argument: $argument) {
-      createdAt
-      fullname
-      confirmed
-      selectedSocial
-      selectedReview
-    }
+query GetPosterInfoWPosts($argument: String, $page: String) {
+  getPosterInfoWPosts(argument: $argument, page: $page) {
+    createdAt
+    fullname
+    confirmed
+    selectedSocial
+    selectedReview
   }
+}
 `
 
 export const GET_ACCEPTED_POSTER_INFO_POSTS = gql`
-query GetAcceptedPosterInfoWPosts($argument: String) {
-    getAcceptedPosterInfoWPosts(argument: $argument) {
-      createdAt
-      fullname
-      confirmed
-      selectedSocial
-      selectedReview
-    }
+query GetAcceptedPosterInfoWPosts($argument: String, $page: String) {
+  getAcceptedPosterInfoWPosts(argument: $argument, page: $page) {
+    createdAt
+    fullname
+    confirmed
+    selectedSocial
+    selectedReview
   }
+}
 `
 
 export const GET_UNACCEPTED_POSTER_INFO_POSTS = gql`
-query GetUnAcceptedPosterInfoWPosts($argument: String) {
-    getUnAcceptedPosterInfoWPosts(argument: $argument) {
-      createdAt
-      fullname
-      confirmed
-      selectedSocial
-      selectedReview
-    }
+query GetUnAcceptedPosterInfoWPosts($argument: String, $page: String) {
+  getUnAcceptedPosterInfoWPosts(argument: $argument, page: $page) {
+    createdAt
+    fullname
+    confirmed
+    selectedSocial
+    selectedReview
   }
+}
 `
 
 export const GET_BUSINESS_WHOLE_INFO = gql`
-query GetBusinesswWholeInfo($argument: String) {
-    getBusinesswWholeInfo(argument: $argument) {
-      createdAt
-      brandname
-      address
-      brandCompletedPosts
-      paidOut
-    }
+query GetBusinesswWholeInfo($argument: String, $page: String) {
+  getBusinesswWholeInfo(argument: $argument, page: $page) {
+    createdAt
+    brandname
+    address
+    brandCompletedPosts
+    paidOut
   }
+}
 `
 
 export const GET_POSTER_WHOLE_INFO = gql`
-query GetPosterwWholeInfo($argument: String) {
-    getPosterwWholeInfo(argument: $argument) {
-      createdAt
-      fullname
-      phone
-      balance
-      paidOut
-    }
+query GetPosterwWholeInfo($argument: String, $page: String) {
+  getPosterwWholeInfo(argument: $argument, page: $page) {
+    createdAt
+    fullname
+    phone
+    balance
+    paidOut
   }
+}
 `

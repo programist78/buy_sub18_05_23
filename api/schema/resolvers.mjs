@@ -189,16 +189,17 @@ const resolvers = {
               console.log(users)
               return users
         },
-        getBusinessInfoWPosts: async (_parent, { argument }, _context, _info) => {
-            const posts = await PosterPost.find().sort({ [argument]: -1 });
-          
+        getBusinessInfoWPosts: async (_parent, {argument, page }, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
+            const posts = await PosterPost.find().skip(skip).limit(limit).sort({ [argument]: -1 });
             const postsWithUserDetails = await Promise.all(
               posts.map(async (post) => {
                 const user = await User.findById(post.brandId);
                 return {
                   ...post._doc,
                   brandname: user.brandname,
-                  websiteLink: user.name,
+                  websiteLink: user.websiteLink,
                   zipCode: user.zipCode,
                   postPrice: user.postPrice
                 };
@@ -207,11 +208,13 @@ const resolvers = {
           
             return postsWithUserDetails;
           },
-          getAcceptedBusinessInfoWPosts: async(_parent, {argument}, _context, _info) => {
+          getAcceptedBusinessInfoWPosts: async(_parent, {argument, page}, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
             const filter = {
                 confirmed: true,
             };
-            const posts = await PosterPost.find(filter).sort({ [argument]: -1 });
+            const posts = await PosterPost.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });
           
             const postsWithUserDetails = await Promise.all(
               posts.map(async (post) => {
@@ -219,7 +222,7 @@ const resolvers = {
                 return {
                   ...post._doc,
                   brandname: user.brandname,
-                  websiteLink: user.name,
+                  websiteLink: user.websiteLink,
                   zipCode: user.zipCode,
                   postPrice: user.postPrice
                 };
@@ -228,11 +231,13 @@ const resolvers = {
           
             return postsWithUserDetails;
         },
-        getUnAcceptedBusinessInfoWPosts: async(_parent, {argument}, _context, _info) => {
+        getUnAcceptedBusinessInfoWPosts: async(_parent, {argument, page}, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
             const filter = {
                 confirmed: false,
             };
-            const posts = await PosterPost.find(filter).sort({ [argument]: -1 });
+            const posts = await PosterPost.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });
           
             const postsWithUserDetails = await Promise.all(
               posts.map(async (post) => {
@@ -240,7 +245,7 @@ const resolvers = {
                 return {
                   ...post._doc,
                   brandname: user.brandname,
-                  websiteLink: user.name,
+                  websiteLink: user.websiteLink,
                   zipCode: user.zipCode,
                   postPrice: user.postPrice
                 };
@@ -249,9 +254,10 @@ const resolvers = {
           
             return postsWithUserDetails;
         },
-
-        getPosterInfoWPosts: async (_parent, { argument }, _context, _info) => {
-            const posts = await PosterPost.find().sort({ [argument]: -1 });
+        getPosterInfoWPosts: async (_parent, { argument, page }, _context, _info) => {
+            const limit = 6;
+            const skip = (page - 1) * limit;
+            const posts = await PosterPost.find().skip(skip).limit(limit).sort({ [argument]: -1 });
           
             const postsWithUserDetails = await Promise.all(
               posts.map(async (post) => {
@@ -266,11 +272,13 @@ const resolvers = {
           
             return postsWithUserDetails;
           },
-          getAcceptedPosterInfoWPosts: async(_parent, {argument}, _context, _info) => {
+          getAcceptedPosterInfoWPosts: async(_parent, {argument, page}, _context, _info) => {
             const filter = {
                 confirmed: true,
             };
-            const posts = await PosterPost.find(filter).sort({ [argument]: -1 });
+            const limit = 6;
+            const skip = (page - 1) * limit;
+            const posts = await PosterPost.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });
           
             const postsWithUserDetails = await Promise.all(
               posts.map(async (post) => {
@@ -285,11 +293,13 @@ const resolvers = {
           
             return postsWithUserDetails;
         },
-        getUnAcceptedBusinessInfoWPosts: async(_parent, {argument}, _context, _info) => {
+        getUnAcceptedPosterInfoWPosts: async(_parent, {argument, page}, _context, _info) => {
             const filter = {
                 confirmed: false,
             };
-            const posts = await PosterPost.find(filter).sort({ [argument]: -1 });
+            const limit = 6;
+            const skip = (page - 1) * limit;
+            const posts = await PosterPost.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });
           
             const postsWithUserDetails = await Promise.all(
               posts.map(async (post) => {
@@ -304,19 +314,23 @@ const resolvers = {
           
             return postsWithUserDetails;
         },
-        getBusinesswWholeInfo: async(_parent, {argument}, _context, _info) => {
+        getBusinesswWholeInfo: async(_parent, {argument, page}, _context, _info) => {
             const filter = {
                 role: "BUSINESS",
               };
-              const users = await User.find(filter).sort({ [argument]: -1 });;
+              const limit = 6;
+              const skip = (page - 1) * limit;
+              const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
               console.log(users)
               return users
         },
-        getPosterwWholeInfo: async(_parent, {argument}, _context, _info) => {
+        getPosterwWholeInfo: async(_parent, {argument, page}, _context, _info) => {
             const filter = {
                 role: "USER",
               };
-              const users = await User.find(filter).sort({ [argument]: -1 });;
+              const limit = 6;
+              const skip = (page - 1) * limit;
+              const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
               console.log(users)
               return users
         },

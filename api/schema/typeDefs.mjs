@@ -184,16 +184,16 @@ const typeDefs = `#graphql
   getPosterRegisterwSignup(argument: String, page: String): [UserRegister]
   getPosterRegisterwDetails(argument: String, page: String): [UserRegister]
 
-  getBusinessInfoWPosts(argument: String): [BusinessInfo]
-  getAcceptedBusinessInfoWPosts(argument: String): [BusinessInfo]
-  getUnAcceptedBusinessInfoWPosts(argument: String): [BusinessInfo]
+  getBusinessInfoWPosts(argument: String, page: String): [BusinessInfo]
+  getAcceptedBusinessInfoWPosts(argument: String, page: String): [BusinessInfo]
+  getUnAcceptedBusinessInfoWPosts(argument: String, page: String): [BusinessInfo]
 
-  getPosterInfoWPosts(argument: String): [PosterInfo]
-  getAcceptedPosterInfoWPosts(argument: String): [PosterInfo]
-  getUnAcceptedPosterInfoWPosts(argument: String): [PosterInfo]
+  getPosterInfoWPosts(argument: String, page: String): [PosterInfo]
+  getAcceptedPosterInfoWPosts(argument: String, page: String): [PosterInfo]
+  getUnAcceptedPosterInfoWPosts(argument: String, page: String): [PosterInfo]
 
-  getBusinesswWholeInfo(argument: String): [BusinessWholeInfo]
-  getPosterwWholeInfo(argument: String): [PosterWholeInfo]
+  getBusinesswWholeInfo(argument: String, page: String): [BusinessWholeInfo]
+  getPosterwWholeInfo(argument: String, page: String): [PosterWholeInfo]
   }
 
   type Image {
