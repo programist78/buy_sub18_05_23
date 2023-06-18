@@ -1,10 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GET_ACCEPTED_BUSINESS_INFO_POSTS, GET_ACCEPTED_POSTER_INFO_POSTS, GET_BUSINESS_INFO_POSTS, GET_BUSINESS_REGISTER, GET_BUSINESS_REGISTER_ADDINFO, GET_BUSINESS_REGISTER_NEED_ADDINFO, GET_BUSINESS_WHOLE_INFO, GET_POSTER_INFO_POSTS, GET_POSTER_REGISTER, GET_POSTER_REGISTER_DETAILS, GET_POSTER_REGISTER_SIGNUP, GET_POSTER_WHOLE_INFO, GET_UNACCEPTED_BUSINESS_INFO_POSTS, GET_UNACCEPTED_POSTER_INFO_POSTS } from "../../apollo/admin";
 import styles from "./Admin.module.scss";
 import { useQuery } from "@apollo/client";
 import { IoIosArrowDown, IoIosArrowBack, IoIosArrowForward, IoIosArrowUp } from "react-icons/io";
 
 export default function AdminCom() {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Очистка слушателя события при размонтировании компонента
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  if (screenWidth <= 1024) {
+    return <div style={{display: "flex", justifyContent: "center", alignItems: "center", width: "100vw", height: "100vh"}} className="title">Please use computer to access admin panel</div>
+  }
   return (
     <div className={styles.back}>
     <BusinessRegistration />

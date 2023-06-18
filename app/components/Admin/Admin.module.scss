@@ -19,6 +19,7 @@
     justify-content: space-between;
     gap: 20px;
     opacity: 0.65;
+    width:80vw;
     div{
         display: flex;
         flex-direction: row;
@@ -31,7 +32,7 @@
   }
 
   .custom_table {
-    width: 70vw;
+    width: 80vw;
     border-radius: 10px;
     overflow: hidden;
     border-collapse: collapse;
