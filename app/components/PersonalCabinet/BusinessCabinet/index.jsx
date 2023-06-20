@@ -416,14 +416,16 @@ export default function BusinessCabinetCom() {
                     className="a_input"
                   />
                       <p className="text">
-                    Business post price : {userInfo?.postPrice / 100}$
+                    Business post price : ${userInfo?.postPrice / 100}
                   </p>
-                  <input
-                    type="number"
-                    value={editPostPrice}
-                    onChange={(e) => setEditPostPrice(e.target.value)}
-                    className="a_input"
-                  />
+                  мені потрібно зробити так щоб інпут відображався в долларах і його можна було змнювати:                  <input
+  // type="number"
+  value={(editPostPrice / 100).toFixed(2)}
+  onChange={(e) => setEditPostPrice(parseFloat(e.target.value) * 100)}
+  // className="a_input"
+  className={`a_input ${styles.custom_input}`}
+/>
+
                   <p className="text">
                     Business physical location : {userInfo?.address}
                   </p>
@@ -503,7 +505,7 @@ export default function BusinessCabinetCom() {
                 <>
                   <p className="text">Your contact phone : {userInfo?.phone}</p>
                   <p className="text">
-                    Business post price : {userInfo?.postPrice / 100}$
+                    Business post price : ${userInfo?.postPrice / 100}
                   </p>
                   <p className="text">
                     Business physical location : {userInfo?.address}
