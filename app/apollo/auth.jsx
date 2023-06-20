@@ -6,51 +6,56 @@ export const LOGIN_USER = gql`
       token
       user {
         id
-        fullname
-        email
-        role
-        socialMedia {
-          instagram {
-            name
-            followers
-          }
-          facebook {
-            name
-            followers
-          }
-          tiktok {
-            name
-            followers
-          }
-          aproveScreenshots
-        }
-        reviewMedia {
-          google
-          yelp
-          tripadvisor
-        }
-        confirmedEmail
-        avatarUrl
-        phone
-        pendingPosts
-        completedPosts
-        balance
-        brandPendingPosts
-        brandCompletedPosts
-        postPrice
-        brandname
-        physicalLocation {
-          latitude
-          longitude
-        }
-        brandDirection
-        plan
-        hasTrial
-        endDate
-        websiteLink
-        address
-        brandDescription
-        image
+    fullname
+    email
+    role
+    socialMedia {
+      instagram {
+        name
+        followers
+      }
+      facebook {
+        name
+        followers
+      }
+      tiktok {
+        name
+        followers
+      }
+      twitter {
+        name
+        followers
+      }
+      aproveScreenshots
+    }
+    reviewMedia {
+      google
+      yelp
+      tripadvisor
+    }
+    confirmedEmail
+    avatarUrl
+    phone
+    pendingPosts
+    completedPosts
+    balance
+    brandPendingPosts
+    brandCompletedPosts
+    postPrice
+    brandname
+    physicalLocation {
+      latitude
+      longitude
+    }
+    brandDirection
+    plan
+    hasTrial
+    endDate
+    websiteLink
+    address
+    brandDescription
+    image
+    zipCode
       }
     }
   }
@@ -67,51 +72,56 @@ mutation RegisterUser($about: RegisterInput) {
   registerUser(about: $about) {
     user {
       id
-      fullname
-      email
-      role
-      reviewMedia {
-        google
-        yelp
-        tripadvisor
+    fullname
+    email
+    role
+    socialMedia {
+      instagram {
+        name
+        followers
       }
-      confirmedEmail
-      avatarUrl
-      phone
-      pendingPosts
-      completedPosts
-      balance
-      brandPendingPosts
-      brandCompletedPosts
-      postPrice
-      brandname
-      physicalLocation {
-        latitude
-        longitude
+      facebook {
+        name
+        followers
       }
-      brandDirection
-      plan
-      hasTrial
-      endDate
-      websiteLink
-      address
-      brandDescription
-      image
-      socialMedia {
-        instagram {
-          name
-          followers
-        }
-        tiktok {
-          name
-          followers
-        }
-        facebook {
-          name
-          followers
-        }
-        aproveScreenshots
+      tiktok {
+        name
+        followers
       }
+      twitter {
+        name
+        followers
+      }
+      aproveScreenshots
+    }
+    reviewMedia {
+      google
+      yelp
+      tripadvisor
+    }
+    confirmedEmail
+    avatarUrl
+    phone
+    pendingPosts
+    completedPosts
+    balance
+    brandPendingPosts
+    brandCompletedPosts
+    postPrice
+    brandname
+    physicalLocation {
+      latitude
+      longitude
+    }
+    brandDirection
+    plan
+    hasTrial
+    endDate
+    websiteLink
+    address
+    brandDescription
+    image
+    zipCode
     }
     token
   }
@@ -123,51 +133,56 @@ mutation Mutation($registerUserCompleteId: ID, $social: SocialMediaInput, $revie
   registerUserComplete(id: $registerUserCompleteId, social: $social, review: $review, images: $images) {
     user {
       id
-      fullname
-      email
-      role
-      socialMedia {
-        instagram {
-          name
-          followers
-        }
-        facebook {
-          name
-          followers
-        }
-        tiktok {
-          name
-          followers
-        }
-        aproveScreenshots
+    fullname
+    email
+    role
+    socialMedia {
+      instagram {
+        name
+        followers
       }
-      reviewMedia {
-        google
-        yelp
-        tripadvisor
+      facebook {
+        name
+        followers
       }
-      confirmedEmail
-      avatarUrl
-      phone
-      pendingPosts
-      completedPosts
-      balance
-      brandPendingPosts
-      brandCompletedPosts
-      postPrice
-      brandname
-      physicalLocation {
-        latitude
-        longitude
+      tiktok {
+        name
+        followers
       }
-      brandDirection
-      plan
-      hasTrial
-      endDate
-      websiteLink
-      address
-      brandDescription
-      image
+      twitter {
+        name
+        followers
+      }
+      aproveScreenshots
+    }
+    reviewMedia {
+      google
+      yelp
+      tripadvisor
+    }
+    confirmedEmail
+    avatarUrl
+    phone
+    pendingPosts
+    completedPosts
+    balance
+    brandPendingPosts
+    brandCompletedPosts
+    postPrice
+    brandname
+    physicalLocation {
+      latitude
+      longitude
+    }
+    brandDirection
+    plan
+    hasTrial
+    endDate
+    websiteLink
+    address
+    brandDescription
+    image
+    zipCode
     }
     token
   }

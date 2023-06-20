@@ -33,42 +33,33 @@ export default function BusinessPageCom({ queryId }) {
         <div className={styles.pricebox}>
           <div className={styles.left_child_box}>
             <p className="navtext">Create a post on Instagram with our brand</p>
-            <p className="text">{data?.postPrice/100}$</p>
+            <p className="text">${data?.postPrice/100}</p>
           </div>
-          <Link href="/poster"><div className={`b_button ${styles.right_child_post}`}>Start</div></Link>
+          <Link href="/personal/poster"><div className={`b_button ${styles.right_child_post}`}>Start</div></Link>
         </div>
 
         <div className={styles.social}>
           <p className="pretitle">Our Socials</p>
           <div className={styles.row_social}>
-            {data?.socialMedia?.instagram && (
-              <a
-                href={`https://www.instagram.com/${data?.socialMedia?.instagram?.name}/`}
-              >
-                <Image src="/instagram.svg" alt="." width={48} height={48} />
-              </a>
-            )}
-            {data?.socialMedia?.facebook && (
-              <a
-                href={`https://www.facebook.com/${data?.socialMedia?.facebook?.name}/`}
-              >
-                {" "}
-                <Image
-                  src="/facebook.svg"
-                  alt="."
-                  width={48}
-                  height={48}
-                />{" "}
-              </a>
-            )}
-            {data?.socialMedia?.tiktok && (
-              <a
-                href={`https://www.tiktok.com/@${data?.socialMedia?.tiktok?.name}/`}
-              >
-                {" "}
-                <Image src="/tiktok.svg" alt="." width={48} height={48} />{" "}
-              </a>
-            )}
+
+          {data?.socialMedia?.facebook !== "" && data?.socialMedia?.facebook !== null && (
+  <a href={`https://www.instagram.com/${data?.socialMedia?.instagram?.name}/`}>
+    <Image src="/instagram.svg" alt="." width={48} height={48} />
+  </a>
+)}
+
+{data?.socialMedia?.facebook !== "" && data?.socialMedia?.facebook !== null && (
+  <a href={`https://www.facebook.com/${data?.socialMedia?.facebook?.name}/`}>
+    <Image src="/facebook.svg" alt="." width={48} height={48} />
+  </a>
+)}
+{data?.socialMedia?.twitter !== "" && data?.socialMedia?.twitter !== null && (
+  <a href={`https://www.tiktok.com/@${data?.socialMedia?.twitter?.name}/`}>
+    <Image src="/tiktok.svg" alt="." width={48} height={48} />
+  </a>
+)}
+
+
           </div>
         </div>
       </div>

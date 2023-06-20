@@ -23,7 +23,6 @@ export default function Poster() {
     <PosterCabinetCom />
     </>)
   } else {
-    router.reload()
     return <NoAccess />
   }} else {
     return <UnAuth />

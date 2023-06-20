@@ -850,7 +850,11 @@ function BusinessWholeAdminPanel() {
                   <td className="text">{data.brandname}</td>
                   <td className="text">{data.address}</td>
                   <td className="text">{data.brandCompletedPosts.length}</td>
-                  <td className="text">{data.paidOut}</td>
+                  {data.paidOut ?
+                                    <td className="text">${data.paidOut}</td>
+                                    :
+                                    <td className="text">0</td>
+}
                   {/* <td className="text">{data.confirmed}</td> */}
                 </tr>
               ))}
@@ -1007,8 +1011,12 @@ function PosterWholeAdminPanel() {
                   <td className="text">{formatTimestamp(data.createdAt)}</td>
                   <td className="text">{data.fullname}</td>
                   <td className="text">{data.phone}</td>
-                  <td className="text">{data.balance}</td>
-                  <td className="text">{data.paidOut}</td>
+                  <td className="text">${data.balance/100}</td>
+                  {data.paidOut ?
+                                    <td className="text">${data.paidOut}</td>
+                                    :
+                                    <td className="text">$0</td>
+}
                   {/* <td className="text">{data.confirmed}</td> */}
                 </tr>
               ))}

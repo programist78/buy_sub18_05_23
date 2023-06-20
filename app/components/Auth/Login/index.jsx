@@ -41,8 +41,9 @@ function LoginCom() {
   const [data, setData] = useState();
 
   const onSubmit = (data) => {
-    setData(data);
-    setTimeout(() => loginUser(), 500);
+    // setData(data);
+    loginUser({variables: { about: data }})
+    // setTimeout(() => , 5);
   };
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, { data: { loginUser: userData } }) {
@@ -56,13 +57,6 @@ function LoginCom() {
       });
     },
     onCompleted: (data) => {
-      // Swal.fire({
-      //   icon: "success",
-      //   title: `Loading`,
-      //   showConfirmButton: false,
-      //   time: 1000
-      // });
-      dispatch(setUserInfo(data.loginUser.user));
       if (data.loginUser.user.role == "USER") {
         router.push("/personal/poster");
       } else if (data.loginUser.user.role == "BUSINESS") {
@@ -70,8 +64,9 @@ function LoginCom() {
       } else if (data.loginUser.user.role == "ADMIN") {
         router.push("/personal/admin");
       }
+      dispatch(setUserInfo(data.loginUser.user));
     },
-    variables: { about: data },
+    
   });
 
   return (

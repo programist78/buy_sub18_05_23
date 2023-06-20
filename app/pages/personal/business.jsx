@@ -20,7 +20,7 @@ export default function PersonalCabinetBusiness() {
     <CustomHead pageTitle={pageTitle} pageDescription={pageDescription} />
     return <BusinessCabinetCom />;
   } else {
-    router.reload()
+    // router.reload()
     return <NoAccess />
   }} else {
     return <UnAuth />

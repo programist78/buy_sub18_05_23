@@ -28,6 +28,7 @@ const typeDefs = `#graphql
     instagram: SocialMediaOne
     facebook: SocialMediaOne
     tiktok: SocialMediaOne
+    twitter: SocialMediaOne
     aproveScreenshots: [String]
   }
 

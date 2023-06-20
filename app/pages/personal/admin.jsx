@@ -17,7 +17,7 @@ export default function Admin() {
   if (userInfo?.role == "ADMIN") {
     return <AdminCom />;
   } else {
-    router.reload()
+    // router.reload()
     return <NoAccess />
   }} else {
     return <UnAuth />

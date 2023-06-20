@@ -173,7 +173,7 @@ export default function PosterCabinetCom() {
           </div>
           <div className={styles.row_part}>
             <p className="nav_text">Payment for the completed tasks</p>
-            <button className="a_button">{!businessPrice ? `Find business!` : `${businessPrice/100}$`}</button>
+            <button className="a_button">{!businessPrice ? `Find business!` : `$${businessPrice/100}`}</button>
             {/* <WithdrawCom /> */}
           </div>
         </div>

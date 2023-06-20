@@ -406,7 +406,7 @@ const resolvers = {
                 address: about?.address,
                 websiteLink: about?.websiteLink,
                 brandDescription: about?.brandDescription,
-                socialMedia: {instagram: about.instagram, facebook: about.facebook, twitter: about.twitter}
+                socialMedia: {instagram:{name: about.instagram}, facebook: {name: about.facebook}, twitter: {name: about.twitter}}
               },
               { new: true }
             );
