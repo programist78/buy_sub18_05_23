@@ -47,16 +47,7 @@ function LoginCom() {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, { data: { loginUser: userData } }) {
       context.login(userData);
-      dispatch(setUserInfo(userData));
-      if (userData.user.role == "USER") {
-        router.push("/personal/poster")
-       }
-       if (userData.user.role == "BUSINESS") {
-        router.push("/personal/business")
-       }
-       if (userData.user.role == "ADMIN") {
-        router.push("/personal/admin")
-       }
+
     },
     onError(error) {
       Swal.fire({
@@ -65,13 +56,20 @@ function LoginCom() {
       });
     },
     onCompleted: (data) => {
-      Swal.fire({
-        icon: "success",
-        title: `Loading`,
-      });
-      // router.push("/");
-      
-
+      // Swal.fire({
+      //   icon: "success",
+      //   title: `Loading`,
+      //   showConfirmButton: false,
+      //   time: 1000
+      // });
+      dispatch(setUserInfo(data.loginUser.user));
+      if (data.loginUser.user.role == "USER") {
+        router.push("/personal/poster");
+      } else if (data.loginUser.user.role == "BUSINESS") {
+        router.push("/personal/business");
+      } else if (data.loginUser.user.role == "ADMIN") {
+        router.push("/personal/admin");
+      }
     },
     variables: { about: data },
   });

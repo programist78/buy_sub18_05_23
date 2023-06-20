@@ -81,13 +81,60 @@ export default function SignUpBusiness() {
   });
 
   const [data, setData] = useState();
-
-  const onSubmit1 = (data) => {
+  async function sendDataToAPI(data) {
+    const url = '/api/create-connection';
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (response.ok) {
+        console.log('Data sent to API successfully');
+      } else {
+        throw new Error('Failed to send data to API');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+  
+  const onSubmit1 = async (data) => {
     if (isCaptcha){
       setMessageCaptcha(() => "Captcha is required!");
     } else{
       // event.preventDefault();
       setData(data);
+      //createlink
+    //   try {
+    //     const response = await fetch('/api/create-stripe-user', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({ id: "3131313131313131" }),
+    //     });
+    //     if (response.ok) {
+    //       const responseData = await response.json();
+    // console.log(responseData);
+    //       console.log("yes")
+    //     } else {
+    //       console.error('Request failed');
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // const data2 = {
+    //   email: 'test@example.com',
+    //   country: 'US',
+    // };
+    
+    // sendDataToAPI({data: data2});
+    
       setTimeout(() => registerUser(), 500);
       // setTimeout(() => console.log(data), 500)
     }
@@ -97,8 +144,6 @@ export default function SignUpBusiness() {
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, { data: { registerUser: userData } }) {
       context.login(userData);
-      dispatch(setUserInfo(userData));
-      router.push("/personal/business")
     },
     onError(error) {
       Swal.fire({
@@ -111,9 +156,12 @@ export default function SignUpBusiness() {
         icon: "success",
         title: `Loading`,
       });
+      dispatch(setUserInfo(data.registerUser.user));
+      router.push("/personal/business")
     },
     variables: { about: data },
   });
+
   return (
     <div className={styles.back}>
       <form onSubmit={handleSubmit(onSubmit1)} className={styles.back}>

@@ -128,8 +128,6 @@ export default function SignUpPosterCom() {
     
     update(proxy, { data: { registerUserComplete: userData } }) {
       context.login(userData);
-      dispatch(setUserInfo(userData));
-      router.push("/personal/poster")
     },
     onError(error) {
       Swal.fire({
@@ -142,7 +140,8 @@ export default function SignUpPosterCom() {
         icon: "success",
         title: `Success!`,
       });
-      setIsStart(!isStart);
+      dispatch(setUserInfo(data.registerUserComplete.user));
+      router.push("/personal/poster")
     },
     // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
     variables: { registerUserCompleteId: posterId,  social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}, review: {yelpReview, tripadvisorReview, googleReview}, images},

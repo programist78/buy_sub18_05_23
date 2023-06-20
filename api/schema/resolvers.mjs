@@ -164,7 +164,6 @@ const resolvers = {
                 role: "USER"
               };
               const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
-              console.log(users)
               return users
         },
         getPosterRegisterwSignup: async(_parent, {argument, page}, _context, _info) => {
@@ -175,7 +174,7 @@ const resolvers = {
                 socialMedia: { $exists: false },
               };
               const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
-              console.log(users)
+              
               return users
         },
         getPosterRegisterwDetails: async(_parent, {argument, page}, _context, _info) => {
@@ -186,7 +185,7 @@ const resolvers = {
                 socialMedia: { $exists: true },
               };
               const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
-              console.log(users)
+              
               return users
         },
         getBusinessInfoWPosts: async (_parent, {argument, page }, _context, _info) => {
@@ -321,7 +320,7 @@ const resolvers = {
               const limit = 6;
               const skip = (page - 1) * limit;
               const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
-              console.log(users)
+              
               return users
         },
         getPosterwWholeInfo: async(_parent, {argument, page}, _context, _info) => {
@@ -331,7 +330,7 @@ const resolvers = {
               const limit = 6;
               const skip = (page - 1) * limit;
               const users = await User.find(filter).skip(skip).limit(limit).sort({ [argument]: -1 });;
-              console.log(users)
+              
               return users
         },
     },
@@ -340,7 +339,7 @@ const resolvers = {
         registerUser: async(parent, args,social, context, _info) => {
             
                 const { fullname,websiteLink,address, brandname, email, password, confirm_password, phone, brandDirection,latitude, longitude  } = args.about
-        console.log(context)
+        
         let postPrice = 500
             const already_exsist = await User.findOne({ email });
             if (already_exsist) {
@@ -480,6 +479,9 @@ const resolvers = {
                 tiktokUserName, tiktokFollowers
             } = args.social
             const {googleReview, yelpReview, tripadvisorReview} = args.review
+            if (!googleReview && !yelpReview && !tripadvisorReview) {
+                throw new GraphQLError("Please select review service")
+            }
             const user = await User.findById(
                 args.id
                 );
@@ -573,7 +575,6 @@ const resolvers = {
             let mailOptions = { from: process.env.FROM_EMAIL, to: email, subject: 'Account Verification Link', text: 'Hello '+ user.fullname +',\n\n' + 'Please verify your account by clicking the link: \nhttp://localhost:3000/' + 'auth/confirmation/' + user.confirmationCode + "-" + user.id + '\n\nThank You!\n' };
             transporter.sendMail(mailOptions, function (err) {
                 if (err) { 
-                return console.log(err)
             }})
              //end trans
              return "Done"
@@ -660,7 +661,6 @@ const resolvers = {
             if (posterpost.brandPendingPosts == true) {
                 throw new GraphQLError("This post already accepted");
               }
-            console.log(posterpost.brandId)
             const brand = await User.findOne({_id: posterpost.brandId})
             if (!brand) {
                 throw new GraphQLError("Such brand is undefined")
@@ -699,7 +699,6 @@ const resolvers = {
             if (!posterpost) {
                 throw new GraphQLError("Post from poster is undefined")
             }
-            console.log(posterPostId)
             const brand = await User.findOne({_id: posterpost.brandId})
             if (!brand) {
                 throw new GraphQLError("Business is undefined")
