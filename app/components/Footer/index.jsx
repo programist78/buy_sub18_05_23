@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./Footer.module.scss";
 import Image from "next/image";
 
@@ -32,11 +33,11 @@ export default function Footer() {
           </div>
         </div>
         <div className={styles.part2}>
-          <p className="footer_text">Sign up</p>
-          <p className="footer_text">Log in</p>
-          <p className="footer_text">About us</p>
-          <p className="footer_text">Media</p>
-          <p className="footer_text">Contacts</p>
+          <Link href="/auth/business-sign-up"><p className="footer_text">Sign up Businesses</p></Link>
+          <Link href="/auth/poster-sign-up"><p className="footer_text">Sign up Posters</p></Link>
+          <Link href="/auth/login"><p className="footer_text">Log in</p></Link>
+          <Link href="/#contact_us"><p className="footer_text">Contact us</p></Link>
+          <Link href="/#about_us"><p className="footer_text">About us</p></Link>
           <p className="footer_text">Privacy</p>
         </div>
         <div className={styles.part3}>
@@ -44,13 +45,13 @@ export default function Footer() {
           {/* <p className="footer_text">12345 W.Ocean Street</p> */}
           {/* <p className="footer_text">Ste 1234W #20</p> */}
           {/* <p className="footer_text">California, CA OOO123</p> */}
-          <p className="footer_text">postfordollars@gmail.com</p>
+          <p className="footer_text">info@postfordollars.com</p>
           {/* <p>800 123 5555</p> */}
         </div>
       </div>
       <div className={`${styles.line} ${styles.second}`} />
       <p className={styles.small_info}>
-        © 2023 by Postfordollars Media Corporation
+        © 2023 by PFD LLC
       </p>
     </div>
   );

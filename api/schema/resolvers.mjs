@@ -479,8 +479,14 @@ const resolvers = {
                 tiktokUserName, tiktokFollowers
             } = args.social
             const {googleReview, yelpReview, tripadvisorReview} = args.review
+            if ((!instagramUserName && !facebookUserName && !tiktokUserName)) {
+                throw new GraphQLError("Please fill at least one social media")
+            }
             if (!googleReview && !yelpReview && !tripadvisorReview) {
                 throw new GraphQLError("Please select review service")
+            }
+            if (!args.images || args.images.length === 0) {
+                throw new GraphQLError("Please add images that confirm your account ownership");
             }
             const user = await User.findById(
                 args.id

@@ -18,7 +18,7 @@ export default function Part6() {
   };
 
   return (
-    <div className={styles.back}>
+    <div className={styles.back} id="contact_us">
       {/* <p className={`title ${styles.title}`}>Stay in touch with us!</p> */}
       {/* <p className={`text ${styles.text}`}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac volutpat erat. Proin fermentum cursus elit, in mollis urna semper quis. Aenean tristique tempor tempor.</p> */}
       <Image src="/custom_mail.svg" width={132} height={132} alt="mail" />

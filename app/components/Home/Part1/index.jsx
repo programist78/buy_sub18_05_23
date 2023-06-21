@@ -14,7 +14,7 @@ export default function Part1() {
     });
   }, [window]);
   return (
-    <div className={styles.back}>
+    <div className={styles.back} id="about_us">
       <p className="title" style={{ textTransform: "uppercase" }}>
         Your voice is always important!
       </p>

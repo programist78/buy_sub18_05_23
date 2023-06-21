@@ -9,32 +9,35 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER, POSTER_COMPLETE_REGISTER, REGISTER_USER } from "../../../apollo/auth";
+import {
+  LOGIN_USER,
+  POSTER_COMPLETE_REGISTER,
+  REGISTER_USER,
+} from "../../../apollo/auth";
 import Image from "next/image";
 import { Button, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
 import { setUserInfo } from "../../../redux/slices/userInfo";
 export default function SignUpPosterCom() {
-  const [images, setImage] = useState([])
+  const [images, setImage] = useState([]);
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isCaptcha, setIsCaptcha] = useState(false);
   const [messageError, setMessageError] = useState("");
   const [messageCaptcha, setMessageCaptcha] = useState("");
   const [isStart, setIsStart] = useState(true);
-  const [posterId, setPosterId] = useState("")
-  const dispatch = useDispatch()
-  const [tiktokUserName, setTiktokUserName] = useState("")
-  const [tiktokFollowers, setTiktokFollowers] = useState("")
-  const [instagramUserName, setInstagramUserName] = useState("")
-  const [instagramFollowers, setInstagramFollowers] = useState("")
-  const [facebookUserName, setFacebookUserName] = useState("")
-  const [facebookFollowers, setFacebookFollowers] = useState("")
-  const [yelpReview, setYelpReview] = useState("")
-  const [tripadvisorReview, setTripadvisorReview] = useState("")
-  const [googleReview, setGoogleReview] = useState("")
-
+  const [posterId, setPosterId] = useState("");
+  const dispatch = useDispatch();
+  const [tiktokUserName, setTiktokUserName] = useState("");
+  const [tiktokFollowers, setTiktokFollowers] = useState("");
+  const [instagramUserName, setInstagramUserName] = useState("");
+  const [instagramFollowers, setInstagramFollowers] = useState("");
+  const [facebookUserName, setFacebookUserName] = useState("");
+  const [facebookFollowers, setFacebookFollowers] = useState("");
+  const [yelpReview, setYelpReview] = useState("");
+  const [tripadvisorReview, setTripadvisorReview] = useState("");
+  const [googleReview, setGoogleReview] = useState("");
 
   useEffect(() => {
     if (!isChecked1 || !isChecked2) {
@@ -90,21 +93,21 @@ export default function SignUpPosterCom() {
   const [data, setData] = useState();
 
   const onSubmit1 = (data, event) => {
-      //TODO CHange     if (!isCaptcha) {
-      if (isCaptcha){
+    //TODO CHange     if (!isCaptcha) {
+    if (isCaptcha) {
       setMessageCaptcha(() => "Captcha is required!");
-    } else{
+    } else {
       event.preventDefault();
       setData(data);
-      
-      setTimeout(() => registerUser(), 500)
+
+      setTimeout(() => registerUser(), 500);
       // setTimeout(() => console.log(data), 500)
     }
   };
 
   const onSubmit2 = (data) => {
     event.preventDefault();
-    setTimeout(() => completeRegister(), 500)
+    setTimeout(() => completeRegister(), 500);
     // setTimeout(() => loginUser(), 500)
   };
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
@@ -120,12 +123,11 @@ export default function SignUpPosterCom() {
         title: `Success!`,
       });
       setIsStart(!isStart);
-      setPosterId(data.registerUser.user.id)
+      setPosterId(data.registerUser.user.id);
     },
     variables: { about: data },
   });
   const [completeRegister] = useMutation(POSTER_COMPLETE_REGISTER, {
-    
     update(proxy, { data: { registerUserComplete: userData } }) {
       context.login(userData);
     },
@@ -141,10 +143,22 @@ export default function SignUpPosterCom() {
         title: `Success!`,
       });
       dispatch(setUserInfo(data.registerUserComplete.user));
-      router.push("/personal/poster")
+      router.push("/personal/poster");
     },
     // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
-    variables: { registerUserCompleteId: posterId,  social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}, review: {yelpReview, tripadvisorReview, googleReview}, images},
+    variables: {
+      registerUserCompleteId: posterId,
+      social: {
+        tiktokUserName,
+        tiktokFollowers,
+        instagramUserName,
+        instagramFollowers,
+        facebookUserName,
+        facebookFollowers,
+      },
+      review: { yelpReview, tripadvisorReview, googleReview },
+      images,
+    },
   });
   const props = {
     name: "file",
@@ -164,13 +178,13 @@ export default function SignUpPosterCom() {
           <p className={`text ${styles.text}`}>
             {" "}
             Posters can explore various Businesses on the platform and choose
-            the ones that interest them to post about. Post authors then create a post on one of their approved
-            social media platforms and follow the instructions on the post page
-            to submit it for review. Once approved, then the Poster gets paid
-            into their account. These funds (minus our percentage) are available
-            for payment to the poster upon request. Payments are made via
-            Paypal/Stripe to your email address, see policy for more information
-            details.
+            the ones that interest them to post about. Post authors then create
+            a post on one of their approved social media platforms and follow
+            the instructions on the post page to submit it for review. Once
+            approved, then the Poster gets paid into their account. These funds
+            (minus our percentage) are available for payment to the poster upon
+            request. Payments are made via Paypal/Stripe to your email address,
+            see policy for more information details.
           </p>
           <form onSubmit={handleSubmit(onSubmit1)} className={styles.form}>
             <div>
@@ -198,7 +212,8 @@ export default function SignUpPosterCom() {
             <div>
               <input
                 name="phone"
-                type="tel" id="phone" 
+                type="tel"
+                id="phone"
                 // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                 required
                 {...register("phone")}
@@ -228,7 +243,9 @@ export default function SignUpPosterCom() {
                   errors.confirm_password ? "is-invalid" : ""
                 }`}
               />
-              <p className={styles.errors}>{errors.confirm_password?.message}</p>
+              <p className={styles.errors}>
+                {errors.confirm_password?.message}
+              </p>
             </div>
             <div className="a_instrusctions">
               <p>Privacy and Policy</p>
@@ -253,7 +270,7 @@ export default function SignUpPosterCom() {
               />
               <span className="checkmark"></span>
               {/* <Link href="/privacy" style={{ textDecoration: "underLine" }}> */}
-                You agree to all site policies and privacy rules
+              You agree to all site policies and privacy rules
               {/* </Link> */}
             </label>
             <p className={styles.errors}>{messageError}</p>
@@ -262,7 +279,7 @@ export default function SignUpPosterCom() {
               onChange={handleCaptchaChange}
               // aria-required
             /> */}
-                        <p className={styles.errors}>{messageCaptcha}</p>
+            <p className={styles.errors}>{messageCaptcha}</p>
             <button type="submit" className={`b_button ${styles.b_button}`}>
               Next
             </button>
@@ -316,16 +333,15 @@ export default function SignUpPosterCom() {
                 className={`b_button ${styles.custom_input}`}
                 type="file"
               /> */}
-                          <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
             </div>
             <div className={styles.social_input}>
               <Image
                 src="/instagram.svg"
                 width={40}
                 height={40}
-
                 alt="instagram"
               />
               <input
@@ -351,12 +367,18 @@ export default function SignUpPosterCom() {
                 className={`b_button ${styles.custom_input}`}
                 type="file"
               /> */}
-                          <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
             </div>
             <div className={styles.social_input}>
-              <Image src="/tiktok.svg" style={{borderRadius: "50%"}} width={40} height={40} alt="tiktok" />
+              <Image
+                src="/tiktok.svg"
+                style={{ borderRadius: "50%" }}
+                width={40}
+                height={40}
+                alt="tiktok"
+              />
               <input
                 type="text"
                 onChange={(e) => setTiktokUserName(e.target.value)}
@@ -380,9 +402,9 @@ export default function SignUpPosterCom() {
                 className={`b_button ${styles.custom_input}`}
                 type="file"
               /> */}
-               <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
             </div>
             <div className="a_instrusctions">
               <p>
@@ -400,14 +422,37 @@ export default function SignUpPosterCom() {
                 onChange={(e) => setGoogleReview(e.target.value)}
                 placeholder="Your Google"
               />
-              <a href="https://accounts.google.com/signup."><button className={`b_button`}>Sign up</button></a>
+              <a
+                href="https://accounts.google.com/signup."
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="navtext">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
             </div>
             <div className={styles.social_input}>
               <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
-              <input type="text" className="a_input"                 
-              onChange={(e) => setYelpReview(e.target.value)}
-                placeholder="Your Yelp" />
-             <a href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">  <button className={`b_button`}>Sign up</button></a>
+              <input
+                type="text"
+                className="a_input"
+                onChange={(e) => setYelpReview(e.target.value)}
+                placeholder="Your Yelp"
+              />
+              <a
+                href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="navtext">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
             </div>
             <div className={styles.social_input}>
               <Image
@@ -422,7 +467,17 @@ export default function SignUpPosterCom() {
                 onChange={(e) => setTripadvisorReview(e.target.value)}
                 placeholder="Your Tripadvisor"
               />
-            <a href="https://www.tripadvisor.com"> <button className={`b_button`}>Sign up</button></a>
+              <a
+                href="https://www.tripadvisor.com"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="navtext">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
             </div>
             <button
               type="submit"

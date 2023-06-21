@@ -90,20 +90,7 @@
     flex-direction: column;
     gap: 15px;
   }
-  .modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    flex-direction: column;
-  }
-  .modal_div {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    padding: 15px 0;
-    gap: 5px;
-  }
+
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
@@ -298,4 +285,19 @@
 
 .custom_input::before {
   content: "$";
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-direction: column;
+}
+.modal_div {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 15px 0;
+  gap: 5px;
 }

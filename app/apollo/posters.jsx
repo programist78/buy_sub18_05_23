@@ -102,13 +102,15 @@ export const GET_POPULAR_BUSINESSS = gql`
 export const GET_ALL_PENDING_POSTS = gql`
   query GetAllPendingPosterPosts($getAllPendingPosterPostsId: ID) {
     getAllPendingPosterPosts(id: $getAllPendingPosterPostsId) {
-      title
       id
+      title
       text
       authorId
       postId
       images
       confirmed
+      selectedReview
+      selectedSocial
     }
   }
 `;

@@ -393,3 +393,18 @@
     }
   }
 }
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-direction: column;
+}
+.modal_div {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 15px 0;
+  gap: 5px;
+}
