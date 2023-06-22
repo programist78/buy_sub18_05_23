@@ -161,7 +161,15 @@
     width: 78vw;
     justify-content: space-between;
   }
-
+  .back2{
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+  }
   .log_part {
     display: flex;
     flex-direction: row;
@@ -219,7 +227,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 30vw;
+    width: 30%;
     input {
       width: 30vw;
     }
@@ -258,6 +266,29 @@
     justify-content: space-between;
     width: 20vw;
   }
+
+    //new
+    .box {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 90vw;
+    }
+    .filters {
+      display: flex;
+      flex-direction: row;
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+  
+        padding: 0px 15px;
+      }
+    }
+    .active {
+      border-bottom: 2px solid #767575;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -276,6 +307,16 @@
     align-items: center;
     width: 90vw;
     justify-content: space-between;
+  }
+
+  .back2{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
   }
 
   .log_part {
@@ -392,6 +433,29 @@
       height: 20px;
     }
   }
+      //new
+      .box {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: space-between;
+        width: 100vw;
+        gap: 20px;
+      }
+      .filters {
+        display: flex;
+        flex-direction: row;
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+    
+          padding: 0px 15px;
+        }
+      }
+      .active {
+        border-bottom: 2px solid #767575;
+      }
 }
 
 .modal {

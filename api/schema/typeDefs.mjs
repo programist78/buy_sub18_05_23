@@ -277,6 +277,27 @@ input ChangeUserInput{
   twitter: String
 }
 
+input InfoStripeInput{
+  userId: ID,
+        bankAccountNumber: String,
+        routingNumber: String,
+        businessInformation: String,
+        ssnLast4: String,
+        industry: String,
+        businessWebsite: String,
+        ownerAddress: String,
+        dateOfBirthday: String,
+        dateOfBirthmonth: String,
+        dateOfBirthyear: String,
+        representativeName: String,
+        representativePhoneNumber: String,
+        termsOfServiceAcceptance: Boolean,
+        ownerAddressline1: String,
+        ownerAddresscity: String,
+        ownerAddressstate: String,
+        ownerAddresspostalCode: String,
+}
+
   type Mutation {
     loginUser(about: LoginInput): AuthPayload
     registerUser(about: RegisterInput): AuthPayload
@@ -305,6 +326,7 @@ input ChangeUserInput{
 
     topupBalance(email: String, money: String): User
     withdrawBalance(email: String, money: String): User
+    addStripeAccountInfo(info: InfoStripeInput): String
 
     updatetoSchema(newfield: String, value: String): [User]
 
