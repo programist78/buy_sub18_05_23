@@ -42,18 +42,18 @@ export default function BusinessPageCom({ queryId }) {
           <p className="pretitle">Our Socials</p>
           <div className={styles.row_social}>
 
-          {data?.socialMedia?.facebook.name !== "" && data?.socialMedia?.facebook !== null && (
+          {data?.socialMedia?.facebook?.name !== "" && data?.socialMedia?.facebook !== null && (
   <a href={`https://www.instagram.com/${data?.socialMedia?.instagram?.name}/`}>
     <Image src="/instagram.svg" alt="." width={48} height={48} />
   </a>
 )}
 
-{data?.socialMedia?.facebook.name !== "" && data?.socialMedia?.facebook !== null && (
+{data?.socialMedia?.facebook?.name !== "" && data?.socialMedia?.facebook !== null && (
   <a href={`https://www.facebook.com/${data?.socialMedia?.facebook?.name}/`}>
     <Image src="/facebook.svg" alt="." width={48} height={48} />
   </a>
 )}
-{data?.socialMedia?.twitter.name !== "" && data?.socialMedia?.twitter !== null && (
+{data?.socialMedia?.twitter?.name !== "" && data?.socialMedia?.twitter !== null && (
   <a href={`https://www.tiktok.com/@${data?.socialMedia?.twitter?.name}/`}>
     <Image src="/tiktok.svg" alt="." width={48} height={48} />
   </a>
