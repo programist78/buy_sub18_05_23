@@ -67,7 +67,8 @@ const User = new mongoose.Schema(
     endDate: { type: Date, default: null },
     brandDescription: {type: String},
     zipCode: {type: String},
-    paidOut: {type: Number}
+    paidOut: {type: Number},
+    stripeAccountId: { type: String}
   },
   {
     timestamps: true,

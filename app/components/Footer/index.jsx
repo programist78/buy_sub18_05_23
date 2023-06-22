@@ -41,7 +41,7 @@ export default function Footer() {
           <p className="footer_text">Privacy</p>
         </div>
         <div className={styles.part3}>
-          <p className="footer_text">Postfordollars Media Corporation</p>
+          <p className="footer_text">PFD LLC</p>
           {/* <p className="footer_text">12345 W.Ocean Street</p> */}
           {/* <p className="footer_text">Ste 1234W #20</p> */}
           {/* <p className="footer_text">California, CA OOO123</p> */}

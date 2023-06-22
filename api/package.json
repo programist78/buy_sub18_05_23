@@ -37,7 +37,8 @@
     "nodemailer": "^6.9.2",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "react-google-autocomplete": "^2.7.3",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "stripe": "^12.9.0"
   },
   "devDependencies": {
     "@types/koa": "^2.13.5",

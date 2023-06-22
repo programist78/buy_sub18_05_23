@@ -14,6 +14,10 @@ import sendgridTransport from 'nodemailer-sendgrid-transport';
 import validatePassword from '../helpers/validatePassword.js';
 // import BusinessPost from '../models/BusinessPost.js';
 import PosterPost from '../models/PosterPost.js';
+// const stripe = require('stripe')('sk_test_51NLjjVFZ6w63d2jlTnoBZbuFJWKEeRVFgc9cbXW0kOUMC6ILiHP11Z8kpJDhHT6Oau9MTgVgr2qnQtaRGpIp4UPa00N485uSnb');
+import stripePackage from "stripe";
+
+const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();
 dotenv.config()
 const s3 = new AWS.S3({
@@ -377,12 +381,25 @@ const resolvers = {
         }
         user = new User({ fullname,email, passwordHash,address, role: "BUSINESS",websiteLink, confirmedEmail: false, confirmationCode, avatarUrl, balance: 0, brandname, physicalLocation: {latitude, longitude}, brandDirection, phone, postPrice, paidOut: 0, brandDescription: "", socialMedia: {instagram: "", facebook: "", twitter: ""}})
         } else{
+            // const account = await stripe.accounts.create({
+            //     type: 'custom',
+            //     country: 'US',
+            //     email: email,
+            //     capabilities: {
+            //       card_payments: {requested: true},
+            //       transfers: {requested: true},
+            //     },
+            //   });
+            //   if (!account) {
+            //     throw new GraphQLError("Problem with Stripe Account")
+            //   }
             user = new User({ fullname,email, passwordHash, role: "USER",
             confirmedEmail: false, confirmationCode, avatarUrl, balance: 0,
             phone,
             reviewMedia: {}, 
             socialMedia: 
-            {} 
+            {} ,
+            stripeAccountId: ""
         })
         }
             
