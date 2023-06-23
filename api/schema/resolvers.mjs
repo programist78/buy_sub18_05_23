@@ -1089,8 +1089,33 @@ const resolvers = {
       }
       const { text, authorId, brandId, selectedReview, selectedSocial } = post;
       const brand = await User.findById(brandId);
+      const author = await User.findById(authorId);
       if (!brand) {
         throw new GraphQLError("There is no such brand");
+      }
+      if ( selectedSocial == "instagram" ) {
+        if (!author.socialMedia.instagram.name){
+        throw new GraphQLError("You have no confirmed instagram");}
+      }
+      if ( selectedSocial == "facebook" ) {
+        if (!author.socialMedia.facebook.name){
+        throw new GraphQLError("You have no confirmed facebook");}
+      }
+      if ( selectedSocial == "tiktok" ) {
+        if (!author.socialMedia.tiktok.name){
+        throw new GraphQLError("You have no confirmed tiktok");}
+      }
+      if ( selectedReview == "google" ) {
+        if (!author.reviewMedia.google){
+        throw new GraphQLError("You have no confirmed google");}
+      }
+      if ( selectedReview == "yelp" ) {
+        if (!author.reviewMedia.yelp){
+        throw new GraphQLError("You have no confirmed yelp");}
+      }
+      if ( selectedReview == "tripadvisor" ) {
+        if (!author.reviewMedia.tripadvisor){
+        throw new GraphQLError("You have no confirmed tripadvisor");}
       }
       const postcreate = new PosterPost({
         selectedReview,

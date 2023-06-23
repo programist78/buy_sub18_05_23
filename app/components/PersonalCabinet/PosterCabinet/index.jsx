@@ -25,6 +25,7 @@ import Modal from "react-modal";
 import { clearUserInfo } from "../../../redux/slices/userInfo";
 import Link from "next/link";
 import SmallLoader from "../../Loaders/SmallLoader";
+import ConnectStripeButton from "../../ConnectStripe";
 export default function PosterCabinetCom() {
   const router = useRouter();
   const [filter, setFilter] = useState("1");
@@ -166,6 +167,7 @@ export default function PosterCabinetCom() {
                 <p className="pretitle">Keep creating the post</p>
               }
       <div className={styles.inline_part}>
+        <div className={styles.select.brand_part}>
         <div className={styles.log_part}>
           <img src={userInfo?.avatarUrl} width={139} height={139} alt="logo" />
           <div className={styles.child_log_part}>
@@ -175,6 +177,8 @@ export default function PosterCabinetCom() {
               Sign Out
             </p>
           </div>
+        </div>
+        <ConnectStripeButton />
         </div>
         <div className={styles.select_brand_part}>
           <div className={styles.row_part}>
