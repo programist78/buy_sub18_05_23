@@ -67,6 +67,7 @@ function LoginCom() {
           router.push("/personal/poster").then(() => {
             resolve(); // Resolve the promise after the router navigation is complete
           }).catch(reject); // Reject the promise if there is an error during navigation
+          setTimeout(() => dispatch(setUserInfo(data.loginUser.user)), 100)
 
         } else if (data.loginUser.user.role == "BUSINESS") {
           Swal.fire({
