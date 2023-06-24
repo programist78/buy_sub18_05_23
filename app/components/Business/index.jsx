@@ -6,8 +6,11 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import MapComponent from "../MapComponent";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { setSelectBus } from "../../redux/slices/selectBus";
 export default function BusinessPageCom({ queryId }) {
   const [data, setData] = useState();
+  const dispatch = useDispatch()
   const { data: brandData } = useQuery(GET_BUSINESS_QUERY, {
     onError(error) {
       Swal.fire({
@@ -35,7 +38,7 @@ export default function BusinessPageCom({ queryId }) {
             <p className="navtext">Create a post on Instagram with our brand</p>
             <p className="text">${data?.postPrice/100}</p>
           </div>
-          <Link href="/personal/poster"><div className={`b_button ${styles.right_child_post}`}>Start</div></Link>
+          <Link onClick={() => dispatch(setSelectBus(data?.brandname))} href="/personal/poster"><div className={`b_button ${styles.right_child_post}`}>Start</div></Link>
         </div>
 
         <div className={styles.social}>

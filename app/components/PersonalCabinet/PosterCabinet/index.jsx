@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./PersonalCabinet.module.scss";
 import { useSelector } from "react-redux";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../hooks/AuthContext";
 import {
   CREATE_POSTER_POST,
@@ -31,11 +31,16 @@ export default function PosterCabinetCom() {
   const [filter, setFilter] = useState("1");
   const [businessPrice, setBusinessPrice] = useState("")
   const { userInfo } = useSelector((state) => state.userInfo);
+  const { selectBus } = useSelector((state) => state.selectBus);
   {
     !userInfo ? router.push("/") : "";
   }
   const { user, logout, authredux } = useContext(AuthContext);
   const [brandname, setBusinessname] = useState("");
+  useEffect(() => {
+    setBusinessname(selectBus)
+  }, [selectBus])
+  
   const [brandId, setBusinessId] = useState("");
   const [image, setImage] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -155,7 +160,7 @@ export default function PosterCabinetCom() {
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log(pendingdata?.getAllPendingPosterPosts)
+  console.log(selectBus)
   return (
     <div className={styles.back}>
       
@@ -310,7 +315,8 @@ export default function PosterCabinetCom() {
                             {(image.length >= 1) ? <p className="pretitle">Keep creating the post</p> : ""}
        <div className={styles.download_part}>
          <Image src="/file_download.svg" width={66} height={66} alt="." />
-         <p className="nav_text">Download your Review Screenshot </p>
+         <p className="nav_text">Download your Social Media Screenshot </p>
+         
          {/* <button className="b_button">Download</button> */}
          {/* <input type="file" required multiple onChange={onChangeCP} className="b_button"/> */}
          <Upload {...props}>
@@ -364,7 +370,7 @@ export default function PosterCabinetCom() {
 
        <div className={styles.download_part}>
          <Image src="/file_download.svg" width={66} height={66} alt="." />
-         <p className="nav_text">Download your Social Media Screenshot </p>
+         <p className="nav_text">Download your Review Screenshot </p>
          {/* <button className="b_button">Download</button> */}
          {/* <input type="file" required multiple onChange={onChangeCP} className="b_button"/> */}
          <Upload {...props}>

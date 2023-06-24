@@ -156,9 +156,13 @@ export default function SignUpBusiness() {
         icon: "success",
         title: `Loading`,
       });
-      dispatch(setUserInfo(data.registerUser.user));
-      router.push("/personal/business")
-    },
+      return new Promise((resolve, reject) => {
+        // 
+          router.push("/personal/business").then(() => {
+            resolve();
+            dispatch(setUserInfo(data.registerUser.user));         
+           });
+      })},  
     variables: { about: data },
   });
 

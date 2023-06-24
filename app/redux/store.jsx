@@ -15,6 +15,7 @@ import {
 } from "redux-persist";
 import { subadminReducer } from "./slices/roles/subadmin";
 import { userInfoReducer } from "./slices/userInfo";
+import { SelectBusReducer } from "./slices/selectBus";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -22,12 +23,13 @@ const rootReducer = combineReducers({
   subadmin: subadminReducer,
   people: peopleReducer,
   userInfo: userInfoReducer,
+  selectBus: SelectBusReducer
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["userInfo"], // Исключаем срез "userInfo" из сохранения
+  blacklist: ["userInfo", "selectBus"], // Исключаем срез "userInfo" из сохранения
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

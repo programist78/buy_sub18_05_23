@@ -10,7 +10,7 @@
     align-items: center;
     padding-top: 15px;
     position: absolute;
-    z-index: 20000;
+    z-index: 5;
   }
 
   .links {
@@ -38,7 +38,7 @@
     align-items: center;
     padding-top: 10px;
     position: absolute;
-    z-index: 20000;
+    z-index: 2;
   }
   .logo {
     img {
@@ -71,7 +71,7 @@
     align-items: center;
     padding-top: 10px;
     position: absolute;
-    z-index: 20000;
+    z-index: 2
   }
 
   .links {
@@ -126,3 +126,4 @@
     // margin-top: 100px;
   }
 }
+

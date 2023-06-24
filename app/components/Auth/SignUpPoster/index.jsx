@@ -142,9 +142,13 @@ export default function SignUpPosterCom() {
         icon: "success",
         title: `Success!`,
       });
-      dispatch(setUserInfo(data.registerUserComplete.user));
-      router.push("/personal/poster");
-    },
+      return new Promise((resolve, reject) => {
+        // 
+          router.push("/personal/poster").then(() => {
+            resolve();
+            dispatch(setUserInfo(data.registerUserComplete.user));
+          });
+      })},  
     // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
     variables: {
       registerUserCompleteId: posterId,
@@ -328,7 +332,7 @@ export default function SignUpPosterCom() {
                 height={40}
                 alt="file"
               />
-              <p className="text">Screenshot of your social</p>
+              <p className="navtext">Screenshot of your social</p>
               {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
@@ -362,7 +366,7 @@ export default function SignUpPosterCom() {
                 height={40}
                 alt="file"
               />
-              <p className="text">Screenshot of your social</p>
+              <p className="navtext">Screenshot of your social</p>
               {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
@@ -397,7 +401,7 @@ export default function SignUpPosterCom() {
                 height={40}
                 alt="file"
               />
-              <p className="text">Screenshot of your social</p>
+              <p className="navtext">Screenshot of your social</p>
               {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"

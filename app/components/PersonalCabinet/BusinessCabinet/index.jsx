@@ -218,6 +218,13 @@ export default function BusinessCabinetCom() {
     },
   };
 
+  const customStyles = {
+    content: {
+      zIndex: "5000",
+      position: "absolute"
+    },
+  };
+
   return (
     <div className={styles.back}>
       <p className="title">My account Page</p>
@@ -265,14 +272,19 @@ export default function BusinessCabinetCom() {
                   View
                 </button>
               </div>
+              <div styles={{zIndex: "20000"}}>
               <Modal
                 isOpen={isOpen}
                 onRequestClose={closeModal}
+                style={customStyles}
                 contentLabel="Кастомный попап"
               >
-                <div className={styles.modal}>
-                  <AiOutlineCloseCircle onClick={closeModal} />
+                {/* <div  className="b_button" styles={{zIndex: "20000", position: "absolute", top: "500px", opacity: "0"}} /> */}
+                {/* <div className="b_button" style={{zIndex: "20000", position: "absolute", top: "500px", opacity: "0"}}/> */}
+                <AiOutlineCloseCircle onClick={closeModal} className="b_button" style={{zIndex: "20000", position: "fixed", top: "300px"}}/>
 
+                <div className={styles.modal} styles={{zIndex: "20000"}}>
+                 
                   {pendingdata?.getAllPendingPosterPostsforBusiness?.map(
                     (obj, key) =>
                       pendingloading ? (
@@ -315,13 +327,16 @@ export default function BusinessCabinetCom() {
                   )}
                 </div>
               </Modal>
+              </div>
               <Modal
+              style={customStyles}
                 isOpen={isOpen2}
                 onRequestClose={closeModal2}
                 contentLabel="Кастомный попап"
               >
+                                <AiOutlineCloseCircle onClick={closeModal2} className="b_button" style={{zIndex: "20000", position: "fixed", top: "300px"}}/>
+
                 <div className={styles.modal}>
-                  <AiOutlineCloseCircle onClick={closeModal2} />
 
                   {completeddata?.getAllCompletedPosterPostsforBusiness.map(
                     (obj, key) =>

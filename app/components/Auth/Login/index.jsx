@@ -57,15 +57,43 @@ function LoginCom() {
       });
     },
     onCompleted: (data) => {
-      if (data.loginUser.user.role == "USER") {
-        router.push("/personal/poster");
-      } else if (data.loginUser.user.role == "BUSINESS") {
-        router.push("/personal/business");
-      } else if (data.loginUser.user.role == "ADMIN") {
-        router.push("/personal/admin");
-      }
-      dispatch(setUserInfo(data.loginUser.user));
-    },
+      return new Promise((resolve, reject) => {
+        if (data.loginUser.user.role == "USER") {
+          Swal.fire({
+            icon: "success",
+            title: `Redirecting...`,
+          });
+           // Dispatch the action to save user info
+          router.push("/personal/poster").then(() => {
+            resolve(); // Resolve the promise after the router navigation is complete
+          }).catch(reject); // Reject the promise if there is an error during navigation
+          setTimeout(() => dispatch(setUserInfo(data.loginUser.user)), 100)
+
+        } else if (data.loginUser.user.role == "BUSINESS") {
+          Swal.fire({
+            icon: "success",
+            title: `Redirecting...`,
+          });
+          dispatch(setUserInfo(data.loginUser.user)); // Dispatch the action to save user info
+          router.push("/personal/business").then(() => {
+            resolve(); // Resolve the promise after the router navigation is complete
+          }).catch(reject); // Reject the promise if there is an error during navigation
+        } else if (data.loginUser.user.role == "ADMIN") {
+          Swal.fire({
+            icon: "success",
+            title: `Redirecting...`,
+          });
+          dispatch(setUserInfo(data.loginUser.user)); // Dispatch the action to save user info
+          router.push("/personal/admin").then(() => {
+            resolve(); // Resolve the promise after the router navigation is complete
+          }).catch(reject); // Reject the promise if there is an error during navigation
+        } else {
+          reject(new Error("Invalid user role"));
+        }
+      });
+    }
+    
+    
     
   });
 
