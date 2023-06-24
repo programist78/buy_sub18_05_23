@@ -145,9 +145,9 @@ export default function SignUpPosterCom() {
       return new Promise((resolve, reject) => {
         // 
           router.push("/personal/poster").then(() => {
-            resolve();
-            dispatch(setUserInfo(data.registerUserComplete.user));
-          });
+            resolve(); // Resolve the promise after the router navigation is complete
+          }).catch(reject); // Reject the promise if there is an error during navigation
+          setTimeout(() => dispatch(setUserInfo(data.registerUserComplete.user)), 100)
       })},  
     // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
     variables: {

@@ -67,26 +67,25 @@ function LoginCom() {
           router.push("/personal/poster").then(() => {
             resolve(); // Resolve the promise after the router navigation is complete
           }).catch(reject); // Reject the promise if there is an error during navigation
-          setTimeout(() => dispatch(setUserInfo(data.loginUser.user)), 100)
 
         } else if (data.loginUser.user.role == "BUSINESS") {
           Swal.fire({
             icon: "success",
             title: `Redirecting...`,
           });
-          dispatch(setUserInfo(data.loginUser.user)); // Dispatch the action to save user info
           router.push("/personal/business").then(() => {
             resolve(); // Resolve the promise after the router navigation is complete
           }).catch(reject); // Reject the promise if there is an error during navigation
+          setTimeout(() => dispatch(setUserInfo(data.loginUser.user)), 100)
         } else if (data.loginUser.user.role == "ADMIN") {
           Swal.fire({
             icon: "success",
             title: `Redirecting...`,
           });
-          dispatch(setUserInfo(data.loginUser.user)); // Dispatch the action to save user info
           router.push("/personal/admin").then(() => {
             resolve(); // Resolve the promise after the router navigation is complete
           }).catch(reject); // Reject the promise if there is an error during navigation
+          setTimeout(() => dispatch(setUserInfo(data.loginUser.user)), 100)
         } else {
           reject(new Error("Invalid user role"));
         }

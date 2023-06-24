@@ -158,10 +158,10 @@ export default function SignUpBusiness() {
       });
       return new Promise((resolve, reject) => {
         // 
-          router.push("/personal/business").then(() => {
-            resolve();
-            dispatch(setUserInfo(data.registerUser.user));         
-           });
+           router.push("/personal/business").then(() => {
+            resolve(); // Resolve the promise after the router navigation is complete
+          }).catch(reject); // Reject the promise if there is an error during navigation
+          setTimeout(() => dispatch(setUserInfo(data.registerUser.user)), 100)
       })},  
     variables: { about: data },
   });
