@@ -151,18 +151,16 @@ export default function SignUpBusiness() {
         title: `${error}`,
       });
     },
-    onCompleted: (data) => {
-      Swal.fire({
-        icon: "success",
-        title: `Loading`,
-      });
-      return new Promise((resolve, reject) => {
-        // 
-           router.push("/personal/business").then(() => {
-            resolve(); // Resolve the promise after the router navigation is complete
-          }).catch(reject); // Reject the promise if there is an error during navigation
-          setTimeout(() => dispatch(setUserInfo(data.registerUser.user)), 100)
-      })},  
+
+      onCompleted: async (data) => {
+            Swal.fire({
+              icon: "success",
+              title: `Redirecting...`,
+            });
+            await router.push("/personal/business");
+          // Dispatch the action to save user info
+          await dispatch(setUserInfo(data.registerUser.user));
+      },
     variables: { about: data },
   });
 

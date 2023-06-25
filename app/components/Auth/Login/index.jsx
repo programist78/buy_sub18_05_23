@@ -56,42 +56,38 @@ function LoginCom() {
         title: `${error}`,
       });
     },
-    onCompleted: (data) => {
-      return new Promise((resolve, reject) => {
-        if (data.loginUser.user.role == "USER") {
-          Swal.fire({
-            icon: "success",
-            title: `Redirecting...`,
-          });
-           // Dispatch the action to save user info
-          router.push("/personal/poster").then(() => {
-            resolve(); // Resolve the promise after the router navigation is complete
-          }).catch(reject); // Reject the promise if there is an error during navigation
-          setTimeout(() => dispatch(setUserInfo(data.loginUser.user)), 100)
 
-        } else if (data.loginUser.user.role == "BUSINESS") {
+    onCompleted: async (data) => {
+      try {
+        if (data.loginUser.user.role === "USER") {
           Swal.fire({
             icon: "success",
             title: `Redirecting...`,
           });
-          router.push("/personal/business").then(() => {
-            resolve(); // Resolve the promise after the router navigation is complete
-          }).catch(reject); // Reject the promise if there is an error during navigation
-          setTimeout(() => dispatch(setUserInfo(data.loginUser.user)), 100)
-        } else if (data.loginUser.user.role == "ADMIN") {
+          await router.push("/personal/poster");
+        } else if (data.loginUser.user.role === "BUSINESS") {
           Swal.fire({
             icon: "success",
             title: `Redirecting...`,
           });
-          router.push("/personal/admin").then(() => {
-            resolve(); // Resolve the promise after the router navigation is complete
-          }).catch(reject); // Reject the promise if there is an error during navigation
-          setTimeout(() => dispatch(setUserInfo(data.loginUser.user)), 100)
+          await router.push("/personal/business");
+        } else if (data.loginUser.user.role === "ADMIN") {
+          Swal.fire({
+            icon: "success",
+            title: `Redirecting...`,
+          });
+          await router.push("/personal/admin");
         } else {
-          reject(new Error("Invalid user role"));
+          throw new Error("Invalid user role");
         }
-      });
+    
+        // Dispatch the action to save user info
+        await dispatch(setUserInfo(data.loginUser.user));
+      } catch (error) {
+        console.error(error);
+      }
     }
+    
     
     
     

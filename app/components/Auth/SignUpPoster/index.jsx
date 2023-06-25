@@ -137,18 +137,15 @@ export default function SignUpPosterCom() {
         title: `${error}`,
       });
     },
-    onCompleted: (data) => {
+    onCompleted: async (data) => {
       Swal.fire({
         icon: "success",
-        title: `Success!`,
+        title: `Redirecting...`,
       });
-      return new Promise((resolve, reject) => {
-        // 
-          router.push("/personal/poster").then(() => {
-            resolve(); // Resolve the promise after the router navigation is complete
-          }).catch(reject); // Reject the promise if there is an error during navigation
-          setTimeout(() => dispatch(setUserInfo(data.registerUserComplete.user)), 100)
-      })},  
+      await router.push("/personal/poster");
+    // Dispatch the action to save user info
+    await dispatch(setUserInfo(data.registerUserComplete.user));
+},
     // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
     variables: {
       registerUserCompleteId: posterId,
