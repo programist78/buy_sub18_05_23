@@ -558,6 +558,7 @@ const resolvers = {
           reviewMedia: {},
           socialMedia: {},
           stripeAccountId: "",
+          address: ""
         });
       }
 

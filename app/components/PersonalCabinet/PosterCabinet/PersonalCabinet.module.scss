@@ -14,7 +14,12 @@
     width: 90vw;
     justify-content: space-between;
   }
-
+  .info_part {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
   .log_part {
     display: flex;
     flex-direction: row;
@@ -154,7 +159,12 @@
     padding-top: 150px;
     gap: 80px;
   }
-
+  .info_part {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
   .inline_part {
     display: flex;
     flex-direction: column;
@@ -311,7 +321,12 @@
     width: 100vw;
     justify-content: space-between;
   }
-
+  .info_part {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
   .back2{
     display: flex;
     flex-direction: row;

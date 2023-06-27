@@ -3,7 +3,7 @@ import { GET_ACCEPTED_BUSINESS_INFO_POSTS, GET_ACCEPTED_POSTER_INFO_POSTS, GET_B
 import styles from "./Admin.module.scss";
 import { useQuery } from "@apollo/client";
 import { IoIosArrowDown, IoIosArrowBack, IoIosArrowForward, IoIosArrowUp } from "react-icons/io";
-
+import {AiFillEye} from "react-icons/ai"
 export default function AdminCom() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -415,9 +415,12 @@ function BusinessAdminPanel() {
     setIsOpen(!isOpen);
   };
 
+  const [openYey, setOpenYey] = useState(false)
+
   return (
       <div className={styles.part}>
         <p className="title">Businesses Admin Panel</p>
+        <AiFillEye className="b_button" onClick={() => setOpenYey(!openYey)}/>
         <div className={styles.filters}>
           <div onClick={() => setLeftFilter1("All Businesses")} className={`text ${(leftFilter1 == "All Businesses") ? styles.this : ""}`}>All Businesses</div>
           <div onClick={() => setLeftFilter1("Paid Posts")} className={`text ${(leftFilter1 == "Paid Posts") ? styles.this : ""}`}>Paid Posts</div>
@@ -495,37 +498,64 @@ function BusinessAdminPanel() {
  </tbody>
 </table>
         ) : (
+          <>
+          {openYey ?
           <table className={styles.custom_table}>
             <thead>
               <tr>
-              <th className="text">Date</th>
-                <th className="text">Zip Code</th>
-                <th className="text">Business</th>
-                <th className="text">Website</th>
-                <th className="text">Action</th>
+              <th className="text">Poster Username</th>
+                <th className="text">Poster Review Site</th>
+                <th className="text">Poster Social Site</th>
+                <th className="text">Cost</th>
               </tr>
             </thead>
             <tbody>
               {filterData()?.map((data, index) => (
                 <tr key={index}>
-                  <td className="text">{formatTimestamp(data.createdAt)}</td>
+                  //TODO
+                  <td className="text">{data.brandname}</td>
                   <td className="text">{data.zipCode}</td>
                   <td className="text">{data.brandname}</td>
                   <td className="text">{data.websiteLink}</td>
                   {/* <td className="text">{data.confirmed}</td> */}
-                  {(data.confirmed == "true") ? (
-                    <td className="text">
-                      <div className={styles.green}>Paid</div>
-                    </td>
-                  ) : (
-                    <td className="text">
-                      <div className={styles.yellow}>Awaiting</div>
-                    </td>
-                  )}
                 </tr>
               ))}
             </tbody>
           </table>
+          :
+          <table className={styles.custom_table}>
+          <thead>
+            <tr>
+            <th className="text">Date</th>
+              <th className="text">Zip Code</th>
+              <th className="text">Business</th>
+              <th className="text">Website</th>
+              <th className="text">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filterData()?.map((data, index) => (
+              <tr key={index}>
+                <td className="text">{formatTimestamp(data.createdAt)}</td>
+                <td className="text">{data.zipCode}</td>
+                <td className="text">{data.brandname}</td>
+                <td className="text">{data.websiteLink}</td>
+                {/* <td className="text">{data.confirmed}</td> */}
+                {(data.confirmed == "true") ? (
+                  <td className="text">
+                    <div className={styles.green}>Paid</div>
+                  </td>
+                ) : (
+                  <td className="text">
+                    <div className={styles.yellow}>Awaiting</div>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+          }
+          </>
         )}
         <div className={styles.foot}>
           <IoIosArrowBack className={styles.arrow} onClick={() => {

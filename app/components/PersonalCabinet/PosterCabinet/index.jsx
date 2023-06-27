@@ -24,12 +24,20 @@ import { clearToken } from "../../../redux/slices/auth";
 import Modal from "react-modal";
 import { clearUserInfo } from "../../../redux/slices/userInfo";
 import Link from "next/link";
+import { BiPencil } from "react-icons/bi";
+
 import SmallLoader from "../../Loaders/SmallLoader";
 import ConnectStripeButton from "../../ConnectStripe";
+import { CHANGE_USER } from "../../../apollo/auth";
 export default function PosterCabinetCom() {
   const router = useRouter();
+  const [isAccountingOpen, setIsAccountingOpen] = useState(false);
   const [filter, setFilter] = useState("1");
-  const [businessPrice, setBusinessPrice] = useState("")
+  const [edit, setEdit] = useState(false);
+  const [editPhone, setEditPhone] = useState("");
+  const [editAddress, setEditAddress] = useState("");
+
+  const [businessPrice, setBusinessPrice] = useState("");
   const { userInfo } = useSelector((state) => state.userInfo);
   const { selectBus } = useSelector((state) => state.selectBus);
   {
@@ -38,9 +46,9 @@ export default function PosterCabinetCom() {
   const { user, logout, authredux } = useContext(AuthContext);
   const [brandname, setBusinessname] = useState("");
   useEffect(() => {
-    setBusinessname(selectBus)
-  }, [selectBus])
-  
+    setBusinessname(selectBus);
+  }, [selectBus]);
+
   const [brandId, setBusinessId] = useState("");
   const [image, setImage] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +57,14 @@ export default function PosterCabinetCom() {
   const [text, setText] = useState(
     `Selected social network - ${selectedSocial}. Selected review site - ${selectedReview}`
   );
+
+  useEffect(() => {
+    setEditPhone(userInfo?.phone);
+  }, [userInfo?.phone]);
+
+  useEffect(() => {
+    setEditAddress(userInfo?.address);
+  }, [userInfo?.address]);
   const [searchText, setSearchText] = useState("");
   const [getBusiness] = useMutation(GET_BUSINESS, {
     onError(error) {
@@ -76,7 +92,7 @@ export default function PosterCabinetCom() {
       });
     },
     onCompleted: (data) => {
-      router.reload()
+      router.reload();
       Swal.fire({
         icon: "success",
         title: `Success! `,
@@ -94,7 +110,7 @@ export default function PosterCabinetCom() {
     },
   });
 
-  console.log(brandId)
+  console.log(brandId);
 
   const onLogout = () => {
     logout();
@@ -153,45 +169,68 @@ export default function PosterCabinetCom() {
     GET_ALL_PENDING_POSTS,
     { variables: { getAllPendingPosterPostsId: userInfo?.id } }
   );
-  console.log(userInfo)
+  console.log(userInfo);
   const openModal = () => {
     setIsOpen(true);
   };
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log(selectBus)
+  console.log(selectBus);
+
+  const [changeInfo] = useMutation(CHANGE_USER, {
+    onError(error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error}`,
+      });
+    },
+    onCompleted: (data) => {
+      Swal.fire({
+        icon: "success",
+        title: `Loading`,
+      });
+      setEdit(!edit);
+    },
+    variables: {
+      about: {address: editAddress, phone: editPhone},
+     changeUserId: userInfo?.id},
+  })
   return (
     <div className={styles.back}>
-      
       <p className="title">Let's get posting</p>
-      {(brandId == "") ?
-                <p className="pretitle"> First select a business to post about</p> 
-                :
-                // <p className="nav_text">Selected brand</p> 
-                <p className="pretitle">Keep creating the post</p>
-              }
+      {brandId == "" ? (
+        <p className="pretitle"> First select a business to post about</p>
+      ) : (
+        // <p className="nav_text">Selected brand</p>
+        <p className="pretitle">Keep creating the post</p>
+      )}
       <div className={styles.inline_part}>
         <div className={styles.select.brand_part}>
-        <div className={styles.log_part}>
-          <img src={userInfo?.avatarUrl} width={139} height={139} alt="logo" />
-          <div className={styles.child_log_part}>
-            <p className="text">{userInfo?.fullname}</p>
-            <div className={`text ${styles.addborders}`}>My account</div>
-            <p onClick={onLogout} className="text">
-              Sign Out
-            </p>
+          <div className={styles.log_part}>
+            <img
+              src={userInfo?.avatarUrl}
+              width={139}
+              height={139}
+              alt="logo"
+            />
+            <div className={styles.child_log_part}>
+              <p className="text">{userInfo?.fullname}</p>
+              <div className={`text ${styles.addborders}`}>My account</div>
+              <p onClick={onLogout} className="text">
+                Sign Out
+              </p>
+            </div>
           </div>
-        </div>
-        <br/>
-        <br/>
-        <ConnectStripeButton />
+          <br />
+          <br />
+          <ConnectStripeButton />
         </div>
         <div className={styles.select_brand_part}>
           <div className={styles.row_part}>
             <div className={styles.input_part}>
-                <p className="nav_text">Selected brand</p> 
-              
+              <p className="nav_text">Selected brand</p>
+
               <input
                 type="text"
                 className="a_input"
@@ -211,188 +250,325 @@ export default function PosterCabinetCom() {
           </div>
           <div className={styles.row_part}>
             <p className="nav_text">Payment for the completed tasks</p>
-            <button className="a_button">{!businessPrice ? `No business chosen` : `$${businessPrice/100}`}</button>
+            <button className="a_button">
+              {!businessPrice
+                ? `No business chosen`
+                : `$${businessPrice / 100}`}
+            </button>
             {/* <WithdrawCom /> */}
-           
           </div>
-          <p className="nav_text">You get 70% of this sum after successfully completing the post for your chosen business</p>
-          <div className={styles.row_part} >
-                <div className={`a_input ${styles.statistic_div}`} style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: "0 5%"}}>
-                  <p className="text">Posts awaiting approval</p>
-                  <p className="text">
-                    {pendingdata ? (
-                      pendingdata?.getAllPendingPosterPosts?.length
-                    ) : (
-                      <SmallLoader />
-                    )}
-                  </p>
-                </div>
-                <button onClick={openModal} className="b_button">
-                  View
-                </button>
-              </div>
-              <Modal
-                isOpen={isOpen}
-                onRequestClose={closeModal}
-                contentLabel="Кастомный попап"
-              >
-                <div className={styles.modal}>
-                  <AiOutlineCloseCircle onClick={closeModal} />
+          <p className="nav_text">
+            You get 70% of this sum after successfully completing the post for
+            your chosen business
+          </p>
+          <div className={styles.row_part}>
+            <div
+              className={`a_input ${styles.statistic_div}`}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "0 5%",
+              }}
+            >
+              <p className="text">Posts awaiting approval</p>
+              <p className="text">
+                {pendingdata ? (
+                  pendingdata?.getAllPendingPosterPosts?.length
+                ) : (
+                  <SmallLoader />
+                )}
+              </p>
+            </div>
+            <button onClick={openModal} className="b_button">
+              View
+            </button>
+          </div>
+          <Modal
+            isOpen={isOpen}
+            onRequestClose={closeModal}
+            contentLabel="Кастомный попап"
+          >
+            <div className={styles.modal}>
+              <AiOutlineCloseCircle onClick={closeModal} />
 
-                  {pendingdata?.getAllPendingPosterPosts?.map(
-                    (obj, key) =>
-                      pendingloading ? (
-                        <div
-                          className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
-                        >
-                          <p className="text">Loading...</p>
-                        </div>
-                      ) : (
-                        <div className={styles.row_part}>
-                          <div
-                            className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
-                          >
-                            <p className="text">
-                              Selected social - {obj.selectedSocial}
-                            </p>
-                            <p className="text">
-                              Selected review - {obj.selectedReview}
-                            </p>
-                            {obj.images.map((image) => (
-                              <img src={image} className={styles.modal_image} />
-                            ))}
-                          </div>
-                        </div>
-                      )
-                  )}
-                </div>
-              </Modal>
+              {pendingdata?.getAllPendingPosterPosts?.map((obj, key) =>
+                pendingloading ? (
+                  <div
+                    className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
+                  >
+                    <p className="text">Loading...</p>
+                  </div>
+                ) : (
+                  <div className={styles.row_part}>
+                    <div
+                      className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
+                    >
+                      <p className="text">
+                        Selected social - {obj.selectedSocial}
+                      </p>
+                      <p className="text">
+                        Selected review - {obj.selectedReview}
+                      </p>
+                      {obj.images.map((image) => (
+                        <img src={image} className={styles.modal_image} />
+                      ))}
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          </Modal>
         </div>
       </div>
-      {(selectedSocial == "" && brandId) ?
-                <p className="pretitle"> Next Select which of your social sites you posted on</p> 
-                :
-                ""
-                // <p className="nav_text">Selected brand</p> 
-                // 
-              }
-              {(selectedSocial) ? <p className="pretitle">Keep creating the post</p> : ""}
-      {(userInfo?.socialMedia?.instagram || userInfo?.socialMedia?.facebook || userInfo?.socialMedia?.tiktok) ?
-       <div className={styles.social_box}>
-       <p className="nav_text">Select a social</p>
-       <div className={styles.social_part}>
-         {/* {(selectedSocial == "") ?           <Image src="/instagram.svg" alt="instagram" className={styles.select} width={65} height={65} /> :} */}
-         <Image
-           src="/instagram.svg"
-           className={selectedSocial == "instagram" ? styles.select : ""}
-           onClick={() => setselectedSocial("instagram")}
-           alt="instagram"
-           width={65}
-           height={65}
-         />
-         <Image
-           src="/facebook.svg"
-           className={selectedSocial == "facebook" ? styles.select : ""}
-           alt="facebook"
-           width={65}
-           height={65}
-           onClick={() => setselectedSocial("facebook")}
-         />
-         <Image
-           src="/tiktok.svg"
-           className={selectedSocial == "tiktok" ? styles.select : ""}
-           alt="tik-tok"
-           width={65}
-           height={65}
-           style={{borderRadius: "50%"}}
-           onClick={() => setselectedSocial("tiktok")}
-         />
-       </div>
-       
-       {(image == "" && selectedSocial) ?
-                <p className="pretitle"> Now after you take a screenshot of your post please upload it here.</p> 
-                :
-                ""
-                // <p className="nav_text">Selected brand</p> 
-                // 
-              }
-                            {(image.length >= 1) ? <p className="pretitle">Keep creating the post</p> : ""}
-       <div className={styles.download_part}>
-         <Image src="/file_download.svg" width={66} height={66} alt="." />
-         <p className="nav_text">Download your Social Media Screenshot </p>
-         
-         {/* <button className="b_button">Download</button> */}
-         {/* <input type="file" required multiple onChange={onChangeCP} className="b_button"/> */}
-         <Upload {...props}>
-           <Button icon={<UploadOutlined />}>Click to Upload</Button>
-         </Upload>
-       </div>
-       {(selectedReview == "" && image.length >= 1) ?
-                <p className="pretitle">Now please select a review site</p> 
-                :
-                ""
-                // <p className="nav_text">Selected brand</p> 
-                // 
-              }
-                            {(selectedReview) ? <p className="pretitle">Keep creating the post</p> : ""}
-       
-       <p className="nav_text">Select a Review Site</p>
-       <div className={styles.review_part}>
-         <Image
-           className={selectedReview == "google" ? styles.select : ""}
-           onClick={() => setselectedReview("google")}
-           src="/google.svg"
-           alt="google"
-           width={40}
-           height={40}
-         />
-         <Image
-           className={selectedReview == "yelp" ? styles.select : ""}
-           onClick={() => setselectedReview("yelp")}
-           src="/yelp.svg"
-           alt="yelp"
-           width={40}
-           height={40}
-         />
-         <Image
-           className={selectedReview == "tripadvisor" ? styles.select : ""}
-           onClick={() => setselectedReview("tripadvisor")}
-           src="/tripadvisor.svg"
-           alt="tik-tok"
-           width={40}
-           height={40}
-         />
-       </div>
-       {(image?.length == 1 && selectedReview) ?
-                <p className="pretitle">Then after you take a screenshot of your review please upload it here.</p> 
-                :
-                ""
-                // <p className="nav_text">Selected brand</p> 
-                // 
-              }
-                            {(image?.length >= 2) ? <p className="pretitle">Now press the complete button once all the above has been done.</p> : ""}
-
-       <div className={styles.download_part}>
-         <Image src="/file_download.svg" width={66} height={66} alt="." />
-         <p className="nav_text">Download your Review Screenshot </p>
-         {/* <button className="b_button">Download</button> */}
-         {/* <input type="file" required multiple onChange={onChangeCP} className="b_button"/> */}
-         <Upload {...props}>
-           <Button icon={<UploadOutlined />}>Click to Upload</Button>
-         </Upload>
-       </div>
-       <button className="b_button" onClick={() => createPost()}>
-         Complete
-       </button>
-     </div>
-      :
-      <div className={styles.social_box}>
-        <p className="pretitle">Please add social media and review websites to create posts</p>
-        <Link href="/auth/add-info"><button className="b_button">Click to add</button></Link>
-      </div>
+      {
+        selectedSocial == "" && brandId ? (
+          <p className="pretitle">
+            {" "}
+            Next Select which of your social sites you posted on
+          </p>
+        ) : (
+          ""
+        )
+        // <p className="nav_text">Selected brand</p>
+        //
       }
+      {selectedSocial ? <p className="pretitle">Keep creating the post</p> : ""}
+      {userInfo?.socialMedia?.instagram ||
+      userInfo?.socialMedia?.facebook ||
+      userInfo?.socialMedia?.tiktok ? (
+        <div className={styles.social_box}>
+          <p className="nav_text">Select a social</p>
+          <div className={styles.social_part}>
+            {/* {(selectedSocial == "") ?           <Image src="/instagram.svg" alt="instagram" className={styles.select} width={65} height={65} /> :} */}
+            <Image
+              src="/instagram.svg"
+              className={selectedSocial == "instagram" ? styles.select : ""}
+              onClick={() => setselectedSocial("instagram")}
+              alt="instagram"
+              width={65}
+              height={65}
+            />
+            <Image
+              src="/facebook.svg"
+              className={selectedSocial == "facebook" ? styles.select : ""}
+              alt="facebook"
+              width={65}
+              height={65}
+              onClick={() => setselectedSocial("facebook")}
+            />
+            <Image
+              src="/tiktok.svg"
+              className={selectedSocial == "tiktok" ? styles.select : ""}
+              alt="tik-tok"
+              width={65}
+              height={65}
+              style={{ borderRadius: "50%" }}
+              onClick={() => setselectedSocial("tiktok")}
+            />
+          </div>
 
-     
+          {
+            image == "" && selectedSocial ? (
+              <p className="pretitle">
+                {" "}
+                Now after you take a screenshot of your post please upload it
+                here.
+              </p>
+            ) : (
+              ""
+            )
+            // <p className="nav_text">Selected brand</p>
+            //
+          }
+          {image.length >= 1 ? (
+            <p className="pretitle">Keep creating the post</p>
+          ) : (
+            ""
+          )}
+          <div className={styles.download_part}>
+            <Image src="/file_download.svg" width={66} height={66} alt="." />
+            <p className="nav_text">Download your Social Media Screenshot </p>
+
+            {/* <button className="b_button">Download</button> */}
+            {/* <input type="file" required multiple onChange={onChangeCP} className="b_button"/> */}
+            <Upload {...props}>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
+          </div>
+          {
+            selectedReview == "" && image.length >= 1 ? (
+              <p className="pretitle">Now please select a review site</p>
+            ) : (
+              ""
+            )
+            // <p className="nav_text">Selected brand</p>
+            //
+          }
+          {selectedReview ? (
+            <p className="pretitle">Keep creating the post</p>
+          ) : (
+            ""
+          )}
+
+          <p className="nav_text">Select a Review Site</p>
+          <div className={styles.review_part}>
+            <Image
+              className={selectedReview == "google" ? styles.select : ""}
+              onClick={() => setselectedReview("google")}
+              src="/google.svg"
+              alt="google"
+              width={40}
+              height={40}
+            />
+            <Image
+              className={selectedReview == "yelp" ? styles.select : ""}
+              onClick={() => setselectedReview("yelp")}
+              src="/yelp.svg"
+              alt="yelp"
+              width={40}
+              height={40}
+            />
+            <Image
+              className={selectedReview == "tripadvisor" ? styles.select : ""}
+              onClick={() => setselectedReview("tripadvisor")}
+              src="/tripadvisor.svg"
+              alt="tik-tok"
+              width={40}
+              height={40}
+            />
+          </div>
+          {
+            image?.length == 1 && selectedReview ? (
+              <p className="pretitle">
+                Then after you take a screenshot of your review please upload it
+                here.
+              </p>
+            ) : (
+              ""
+            )
+            // <p className="nav_text">Selected brand</p>
+            //
+          }
+          {image?.length >= 2 ? (
+            <p className="pretitle">
+              Now press the complete button once all the above has been done.
+            </p>
+          ) : (
+            ""
+          )}
+
+          <div className={styles.download_part}>
+            <Image src="/file_download.svg" width={66} height={66} alt="." />
+            <p className="nav_text">Download your Review Screenshot </p>
+            {/* <button className="b_button">Download</button> */}
+            {/* <input type="file" required multiple onChange={onChangeCP} className="b_button"/> */}
+            <Upload {...props}>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
+          </div>
+          <button className="b_button" onClick={() => createPost()}>
+            Complete
+          </button>
+        </div>
+      ) : (
+        <div className={styles.social_box}>
+          <p className="pretitle">
+            Please add social media and review websites to create posts
+          </p>
+          <Link href="/auth/add-info">
+            <button className="b_button">Click to add</button>
+          </Link>
+        </div>
+      )}
+
+
+      {isAccountingOpen ? (
+        <div className={styles.info_part}>
+          {edit ? (
+            <>
+              <button onClick={() => changeInfo()} className="b_button">
+                Save information
+              </button>
+              <button
+                onClick={() => setIsAccountingOpen(!isAccountingOpen)}
+                className="b_button"
+              >
+                Close
+                <span>
+                  <AiOutlineCloseCircle />
+                </span>
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => setEdit(!edit)} className="b_button">
+                Edit -
+                <span>
+                  <BiPencil />
+                </span>
+              </button>
+              <button
+                onClick={() => setIsAccountingOpen(!isAccountingOpen)}
+                className="b_button"
+              >
+                Close
+                <span>
+                  <AiOutlineCloseCircle />
+                </span>
+              </button>
+            </>
+          )}
+          {edit ? (
+            <>
+              <p className="text">Your contact phone :</p>
+              <input
+                type="text"
+                value={editPhone}
+                onChange={(e) => setEditPhone(e.target.value)}
+                // className={`${styles.changeinfo_input} text`}
+                className="a_input"
+              />
+
+              <p className="text">
+                Address : {userInfo?.address}
+              </p>
+              <input
+                type="text"
+                value={editAddress}
+                onChange={(e) => setEditAddress(e.target.value)}
+                className="a_input"
+              />
+              {/* <p className="text">Your social media : </p> */}
+            </>
+          ) : (
+            <>
+              <p className="text">Your contact phone : {userInfo?.phone}</p>
+              <p className="text">
+                Your address : {userInfo?.address}
+              </p>
+              {/* <p className="text">
+                    Instagram : {userInfo?.socialMedia?.instagram}
+                  </p>
+                  <p className="text">
+                    Facebook : {userInfo?.socialMedia?.facebook}
+                  </p>
+                  <p className="text">
+                    Twitter : {userInfo?.socialMedia?.twitter}
+                  </p> */}
+              {/* <p className="text">Your social media : </p> */}
+            </>
+          )}
+        </div>
+      ) : (
+        <button
+          onClick={() => setIsAccountingOpen(!isAccountingOpen)}
+          className="b_button"
+        >
+          Accounting information
+        </button>
+      )}
       <p className="title">Businesses</p>
       <div className={styles.box}>
         <div className={styles.filters}>

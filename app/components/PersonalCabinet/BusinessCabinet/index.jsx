@@ -139,9 +139,6 @@ export default function BusinessCabinetCom() {
   }
 
 
-  function Save() {
-    changeInfo();
-  }
 
   const [changeInfo] = useMutation(CHANGE_USER, {
     onError(error) {
@@ -409,16 +406,38 @@ export default function BusinessCabinetCom() {
           {isAccountingOpen ? (
             <div className={styles.info_part}>
               {edit ? (
-                <button onClick={() => Save()} className="b_button">
+                <>
+                <button onClick={() => changeInfo()} className="b_button">
                   Save information
                 </button>
+                              <button
+                              onClick={() => setIsAccountingOpen(!isAccountingOpen)}
+                              className="b_button"
+                            >
+                              Close
+                              <span>
+                    <AiOutlineCloseCircle />
+                  </span>
+                            </button>
+                            </>
               ) : (
+                <>
                 <button onClick={() => setEdit(!edit)} className="b_button">
                   Edit -
                   <span>
                     <BiPencil />
                   </span>
                 </button>
+                <button
+                onClick={() => setIsAccountingOpen(!isAccountingOpen)}
+                className="b_button"
+              >
+                Close 
+                <span>
+                    <AiOutlineCloseCircle />
+                  </span>
+              </button>
+              </>
               )}
               {edit ? (
                 <>
@@ -550,12 +569,7 @@ export default function BusinessCabinetCom() {
                 </>
               )}
 
-              <button
-                onClick={() => setIsAccountingOpen(!isAccountingOpen)}
-                className="b_button"
-              >
-                Close
-              </button>
+
             </div>
           ) : (
             <button
