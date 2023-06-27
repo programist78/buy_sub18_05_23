@@ -183,6 +183,8 @@ export default function PosterCabinetCom() {
             </p>
           </div>
         </div>
+        <br/>
+        <br/>
         <ConnectStripeButton />
         </div>
         <div className={styles.select_brand_part}>
@@ -213,7 +215,8 @@ export default function PosterCabinetCom() {
             {/* <WithdrawCom /> */}
            
           </div>
-          <div className={styles.row_part} style={{display:"flex", flexDirection:"row", alignItems: "center"}}>
+          <p className="nav_text">You get 70% of this sum after successfully completing the post for your chosen business</p>
+          <div className={styles.row_part} >
                 <div className={`a_input ${styles.statistic_div}`} style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: "0 5%"}}>
                   <p className="text">Posts awaiting approval</p>
                   <p className="text">
@@ -224,7 +227,7 @@ export default function PosterCabinetCom() {
                     )}
                   </p>
                 </div>
-                <button style={{marginBottom: "3%"}} onClick={openModal} className="b_button">
+                <button onClick={openModal} className="b_button">
                   View
                 </button>
               </div>
@@ -301,6 +304,7 @@ export default function PosterCabinetCom() {
            alt="tik-tok"
            width={65}
            height={65}
+           style={{borderRadius: "50%"}}
            onClick={() => setselectedSocial("tiktok")}
          />
        </div>

@@ -35,7 +35,7 @@ export default function BusinessPageCom({ queryId }) {
         {/* <p className='pretitle'>Fresh Harvest</p> */}
         <div className={styles.pricebox}>
           <div className={styles.left_child_box}>
-            <p className="navtext">Create a post on Instagram with our brand</p>
+            <p className="nav_text">Create a post on Instagram with our brand</p>
             <p className="text">${data?.postPrice/100}</p>
           </div>
           <Link onClick={() => dispatch(setSelectBus(data?.brandname))} href="/personal/poster"><div className={`b_button ${styles.right_child_post}`}>Start</div></Link>

@@ -150,7 +150,7 @@ export default function AddPosterSocialCom() {
             placeholder="Number of your friends"
           />
           <Image src="/file_download.svg" width={40} height={40} alt="file" />
-          <p className="navtext">Screenshot of your social</p>
+          <p className="nav_text">Screenshot of your social</p>
           {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
@@ -174,7 +174,7 @@ export default function AddPosterSocialCom() {
             placeholder="Number of your followers"
           />
           <Image src="/file_download.svg" width={40} height={40} alt="file" />
-          <p className="navtext">Screenshot of your social</p>
+          <p className="nav_text">Screenshot of your social</p>
           {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
@@ -204,7 +204,7 @@ export default function AddPosterSocialCom() {
             placeholder="Number of your followers"
           />
           <Image src="/file_download.svg" width={40} height={40} alt="file" />
-          <p className="navtext">Screenshot of your social</p>
+          <p className="nav_text">Screenshot of your social</p>
           {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
@@ -237,7 +237,7 @@ export default function AddPosterSocialCom() {
               alignItems: "center",
             }}
           >
-            <p className="navtext">Don't have an account?</p>
+            <p className="nav_text">Don't have an account?</p>
             <button className={`b_button`}>Sign up</button>
           </a>
         </div>
@@ -257,7 +257,7 @@ export default function AddPosterSocialCom() {
               alignItems: "center",
             }}
           >
-            <p className="navtext">Don't have an account?</p>
+            <p className="nav_text">Don't have an account?</p>
             <button className={`b_button`}>Sign up</button>
           </a>
         </div>
@@ -282,7 +282,7 @@ export default function AddPosterSocialCom() {
               alignItems: "center",
             }}
           >
-            <p className="navtext">Don't have an account?</p>
+            <p className="nav_text">Don't have an account?</p>
             <button className={`b_button`}>Sign up</button>
           </a>
         </div>

@@ -246,10 +246,10 @@ export default function BusinessCabinetCom() {
                                 <Upload {...props2}>
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload>
-                <p className={`navtext ${styles.navtext}`} onClick={(() => changeLogo())}>Save</p>
+                <p className={`nav_text ${styles.nav_text}`} onClick={(() => changeLogo())}>Save</p>
               </div>
               :
-              <p onClick={() => setEditDetails(!editDetails)} className={`navtext ${styles.navtext}`}>
+              <p onClick={() => setEditDetails(!editDetails)} className={`nav_text ${styles.nav_text}`}>
               Edit Business Details
             </p>
               }
@@ -387,7 +387,7 @@ export default function BusinessCabinetCom() {
           </div>
           <div className={styles.payment_part}>
             <div className={styles.pay_box}>
-              <p className={`navtext ${styles.navtext}`}>
+              <p className={`nav_text ${styles.nav_text}`}>
                 If you use paypal and or others, you must first register in
                 these payment systems and then proceed to payment.
               </p>
@@ -433,7 +433,9 @@ export default function BusinessCabinetCom() {
                       <p className="text">
                     Business post price : ${userInfo?.postPrice / 100}
                   </p>
-                  мені потрібно зробити так щоб інпут відображався в долларах і його можна було змнювати:                  <input
+                  <p className="nav_text"> Poster gets 70% of this sum after successfully creating a post for your business
+                 </p>
+                  <input
   // type="number"
   value={(editPostPrice / 100).toFixed(2)}
   onChange={(e) => setEditPostPrice(parseFloat(e.target.value) * 100)}
@@ -450,7 +452,7 @@ export default function BusinessCabinetCom() {
                     onChange={(e) => setEditAddress(e.target.value)}
                     className="a_input"
                   />
-                  <h1>Here image</h1>
+                  <p className="text">Here image</p>
                   {newImage ?
                   <div>
                   <Upload {...props}>
@@ -522,9 +524,12 @@ export default function BusinessCabinetCom() {
                   <p className="text">
                     Business post price : ${userInfo?.postPrice / 100}
                   </p>
+                 <p className="nav_text"> Poster gets 70% of this sum after successfully creating a post for your business
+                 </p>
                   <p className="text">
                     Business physical location : {userInfo?.address}
                   </p>
+                  <p className="text">Here image:</p>
                   <img src={userInfo?.image} className={styles.brandimage} />
                   <p className="text">
                     Business website link : {userInfo?.websiteLink}

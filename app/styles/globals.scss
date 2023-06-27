@@ -197,6 +197,7 @@ html::-webkit-scrollbar-thumb {
     border-radius: 15px;
     width: 440px;
     min-height: 148px;
+    max-height: 250px;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -393,6 +394,7 @@ html::-webkit-scrollbar-thumb {
     border-radius: 15px;
     width: 452px;
     min-height: 148px;
+    max-height: 200px;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -591,6 +593,7 @@ html::-webkit-scrollbar-thumb {
     border-radius: 7.5px;
     width: 81vw;
     min-height: 148px;
+    max-height: 150px;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
