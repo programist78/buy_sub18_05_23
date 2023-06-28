@@ -121,7 +121,7 @@ export default function SignUpPosterCom() {
       Swal.fire({
         icon: "success",
         title: `Success!`,
-      });l
+      });
       setIsStart(!isStart);
       setPosterId(data.registerUser.user.id);
     },
@@ -138,13 +138,40 @@ export default function SignUpPosterCom() {
       });
     },
     onCompleted: async (data) => {
-      Swal.fire({
-        icon: "success",
-        title: `Redirecting...`,
-      });
-      await router.push("/personal/poster");
+      try {
+        if (data.registerUserComplete.reviewMedia.google) {
+          Swal.fire({
+            icon: "success",
+            title: `Redirecting...`,
+          });
+          // window.location.href = "https://accounts.google.com";
+          await router.push("/personal/poster");
+        } else if (data.registerUserComplete.reviewMedia.yelp) {
+          Swal.fire({
+            icon: "success",
+            title: `Redirecting...`,
+          });
+          // window.location.href = "https://www.yelp.com";
+          await router.push("/personal/business");
+        } else if (data.registerUserComplete.reviewMedia.tripadvisor) {
+          Swal.fire({
+            icon: "success",
+            title: `Redirecting...`,
+          });
+          // window.location.href = "https://www.tripadvisor.com";
+          await router.push("/personal/admin");
+        } else {
+          throw new Error("Invalid review website");
+        }
+        await dispatch(setUserInfo(data.registerUserComplete.user));
+        await router.push("/personal/poster");
+      } catch (error) {
+        console.error(error);
+      }
+      
     // Dispatch the action to save user info
-    await dispatch(setUserInfo(data.registerUserComplete.user));
+    
+    
 },
     // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
     variables: {
@@ -251,8 +278,9 @@ export default function SignUpPosterCom() {
             <div className="a_instrusctions">
               <p style={{textAlign: "center", fontWeight: "600"}}>Terms and Conditions - Posters</p>
               <p>
+          
 <br />
-Welcome to POSTFORDOLLARS.COM! These Terms and Conditions govern your use of our website as a poster engaging in services provided by PFD LLC. Please read them carefully before using our website or engaging in any activities on it.
+              Welcome to POSTFORDOLLARS.COM! These Terms and Conditions govern your use of our website as a poster engaging in services provided by PFD LLC. Please read them carefully before using our website or engaging in any activities on it.
 <br />
 <br />
 1. Acceptance of Terms
@@ -279,13 +307,13 @@ As a Poster, you may be compensated or rebated for the social media posts you cr
 6. Prohibited Conduct
 When using our website, you agree not to:
 <br />
-a. Violate any applicable laws, regulations, or third-party rights.
-b. Use our website for any unauthorized or illegal purpose.
-c. Engage in any activity that could damage, disable, or impair the operation or security of our website.
-d. Use any automated system or software to access or interact with our website without our express written permission.
-e. Share any content that is infringing, defamatory, obscene, sexually explicit or harmful.
+a. Violate any applicable laws, regulations, or third-party rights.<br />
+b. Use our website for any unauthorized or illegal purpose.<br />
+c. Engage in any activity that could damage, disable, or impair the operation or security of our website.<br />
+d. Use any automated system or software to access or interact with our website without our express written permission.<br />
+e. Share any content that is infringing, defamatory, obscene, sexually explicit or harmful.<br />
 <br />
-<br />
+
 7. Limited License to Use the Website
 Subject to your compliance with these Terms and Conditions, PFD LLC grants you a limited, non-exclusive, non-transferable, and revocable license to access and use the website for its intended purposes. This license does not include any right to download, copy, modify, or distribute the content on the website, except as expressly authorized by PFD LLC.
 <br />
@@ -293,10 +321,11 @@ Subject to your compliance with these Terms and Conditions, PFD LLC grants you a
 8. Unauthorized Uses of the Site
 You agree not to engage in any unauthorized use of the website, including but not limited to:
 <br />
-a. Accessing or attempting to access areas of the website that are not intended for public access.
-b. Circumventing or disabling any security or authentication measures on the website.
-c. Interfering with or disrupting the operation of the website or the servers hosting it.
-d. Engaging in any activity that could impose an unreasonable burden on the infrastructure of the website.
+a. Accessing or attempting to access areas of the website that are not intended for public access.<br />
+b. Circumventing or disabling any security or authentication measures on the website.<br />
+c. Interfering with or disrupting the operation of the website or the servers hosting it.<br />
+d. Engaging in any activity that could impose an unreasonable burden on the infrastructure of the website.<br />
+<br />
 
 9. Identity Verification
 PFD LLC may require you to verify your identity in order to access certain features or services on the website. You agree to provide accurate and up-to-date information for identity verification purposes, and you acknowledge that PFD LLC may suspend or terminate your access if you fail to comply with these requirements.
@@ -358,15 +387,22 @@ These Terms and Conditions shall be governed by and construed in accordance with
 If any provision of these Terms and Conditions is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
 <br />
 <br />
-24. Entire Agreement
+24. Privacy policy
+By using this website you agree to it privacy policy which is on the website
+<br />
+<br />
+25. Entire Agreement
 These Terms and Conditions constitute the entire agreement between you and PFD LLC regarding your use of our website and supersede any prior agreements or understandings, whether written or oral.
 <br />
 <br />
-25. Contact Information
+26. Contact Information
 If you have any questions or concerns about these Terms and Conditions, please contact us at tandc@postfordollars.com.
+
 <br />
 <br />
-Effective date: 6-1-23</p>
+
+Effective date: 6-1-23
+</p>
             </div>
             <label className="checkbox">
               <input
@@ -376,7 +412,7 @@ Effective date: 6-1-23</p>
                 onChange={handleCheckboxChange1}
               />
               <span className="checkmark"></span>
-              You confirm that you are at least 18 years old
+              You agree to all our sites privacy rules as well as our sites terms and conditions.
             </label>
             <label className="checkbox">
               <input
@@ -539,17 +575,18 @@ Effective date: 6-1-23</p>
                 onChange={(e) => setGoogleReview(e.target.value)}
                 placeholder="Your Google"
               />
-              <a
-                href="https://accounts.google.com/signup."
+              <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                 }}
               >
+                <>
                 <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
-              </a>
+                <button className={`b_button`}><Link href="https://accounts.google.com/signup." >Sign up</Link></button>
+                </>
+              </div>
             </div>
             <div className={styles.social_input}>
               <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
@@ -560,7 +597,7 @@ Effective date: 6-1-23</p>
                 placeholder="Your Yelp"
               />
               <a
-                href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F"
+                href=""
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -568,7 +605,8 @@ Effective date: 6-1-23</p>
                 }}
               >
                 <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
+                <button className={`b_button`}><Link href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">Sign up</Link></button>
+                {/* <button className={`b_button`}>Sign up</button> */}
               </a>
             </div>
             <div className={styles.social_input}>
@@ -593,7 +631,7 @@ Effective date: 6-1-23</p>
                 }}
               >
                 <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
+                <button className={`b_button`}><Link href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">Sign up</Link></button>
               </a>
             </div>
             <button

@@ -10,7 +10,7 @@ export const issueAuthToken = (id, email) => {
       },
       process.env.SECRET_KEY,
       {
-        expiresIn: '30m'
+        expiresIn: '30d'
       }
     );
     return `Bearer ${token}`;
