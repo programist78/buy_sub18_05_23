@@ -48,7 +48,8 @@ export default function Footer() {
           <Link href="/#about_us">
             <p className="footer_text">About us</p>
           </Link>
-          <p className="footer_text">Privacy</p>
+          <Link href="/privacy"><p className="footer_text">Privacy</p>
+          </Link>
         </div>
         <div className={styles.part3}>
           <p className="footer_text">PFD LLC</p>
