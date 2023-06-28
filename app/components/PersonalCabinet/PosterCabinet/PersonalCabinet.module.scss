@@ -7,7 +7,22 @@
     padding-top: 200px;
     gap: 100px;
   }
-
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw !important;
+    gap: 22px;
+    button {
+      margin-top: 22px;
+    }
+  }
+  .social_input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
   .inline_part {
     display: flex;
     flex-direction: row;
@@ -158,6 +173,24 @@
     width: 100vw;
     padding-top: 150px;
     gap: 80px;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw !important;
+    gap: 20px;
+    button {
+      margin-top: 20px;
+    }
+  }
+  .social_input {
+    display: flex;
+    width: 90vw;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
   }
   .info_part {
     display: flex;
@@ -313,7 +346,28 @@
     padding-top: 120px;
     gap: 60px;
   }
-
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw !important;
+    gap: 10px;
+    button {
+      margin-top: 10px;
+    }
+  }
+  .social_input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    width: 98vw;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
   .inline_part {
     display: flex;
     flex-direction: column;

@@ -1207,6 +1207,40 @@ const resolvers = {
       const user = await User.updateMany({}, { $set: { [newfield]: value } });
       return user;
     },
+    banUser: async (parent, { email, text }, args) => {
+      const user = await User.findOne({email});
+      if (!user) {
+        throw new GraphQLError("Invalid email given- changestatus");
+      }
+      const newuser = await User.findByIdAndDelete(user.id)
+      if (!newuser) {
+        throw new GraphQLError("Something went wrong!");
+      }
+      const transporter = nodemailer.createTransport(
+        sendgridTransport({
+          auth: {
+            api_key: process.env.SENDGRID_APIKEY,
+          },
+        })
+      );
+      let mailOptions = {
+        from: process.env.FROM_EMAIL,
+        to: user.email,
+        subject: "ban",
+        text:
+          "Hello " +
+          user.fullname +
+          ",\n\n" +
+          "Ban" +
+          text,
+      };
+      transporter.sendMail(mailOptions, function (err) {
+        if (err) {
+        throw new GraphQLError("Seomething went wrong with nodemailer")
+        }
+      });
+      return "Send!";
+    },
   },
 };
 

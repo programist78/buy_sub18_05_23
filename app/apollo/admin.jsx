@@ -165,18 +165,55 @@ query GetBusinesswWholeInfo($argument: String, $page: String) {
     address
     brandCompletedPosts
     paidOut
+    email
+    phone
+    postPrice
+    websiteLink
   }
 }
 `
 
 export const GET_POSTER_WHOLE_INFO = gql`
-query GetPosterwWholeInfo($argument: String, $page: String) {
-  getPosterwWholeInfo(argument: $argument, page: $page) {
+query GetPosterwWholeInfo($page: String, $argument: String) {
+  getPosterwWholeInfo(page: $page, argument: $argument) {
     createdAt
     fullname
     phone
     balance
     paidOut
+    email
+    completedPosts
+    pendingPosts
+    socialMedia {
+      instagram {
+        name
+        followers
+      }
+      facebook {
+        name
+        followers
+      }
+      tiktok {
+        name
+        followers
+      }
+      twitter {
+        name
+        followers
+      }
+      aproveScreenshots
+    }
+    reviewMedia {
+      google
+      yelp
+      tripadvisor
+    }
   }
+}
+`
+
+export const BAN_USER = gql`
+mutation Mutation($email: String, $text: String) {
+  banUser(email: $email, text: $text)
 }
 `

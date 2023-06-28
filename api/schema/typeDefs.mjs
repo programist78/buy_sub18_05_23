@@ -141,6 +141,12 @@ const typeDefs = `#graphql
     address: String
     brandCompletedPosts: [String]
     paidOut: String
+
+    email: String
+    phone: String
+    postPrice: String
+    websiteLink: String
+    brandPendingPosts: [String]
   }
 
   type PosterWholeInfo {
@@ -149,6 +155,12 @@ const typeDefs = `#graphql
     phone: String
     balance: String
     paidOut: String
+
+    email: String
+    completedPosts: [String]
+    pendingPosts: [String]
+    socialMedia: SocialMedia
+    reviewMedia: ReviewMedia
   }
 
   type BusinessIdAndPrice {
@@ -275,6 +287,13 @@ input ChangeUserInput{
   instagram: String
   facebook: String
   twitter: String
+
+  
+}
+
+input ChangePosterInput{
+  phone: String
+  address: String 
 }
 
 input InfoStripeInput{
@@ -308,6 +327,7 @@ input InfoStripeInput{
     forgotPasswordSend(email: String): String
     addAdmin(email: String): String
     changeUser(about: ChangeUserInput, id: ID): String
+    changePoster(about: ChangePosterInput, id: ID): String
     changeImage(image: [Upload], id: ID): String
     changeLogo(image: [Upload], id: ID): String
 
@@ -329,6 +349,7 @@ input InfoStripeInput{
     addStripeAccountInfo(info: InfoStripeInput): String
 
     updatetoSchema(newfield: String, value: String): [User]
+    banUser(email: String, text: String): String
 
     getBusiness(brandname: String): BusinessIdAndPrice
   }

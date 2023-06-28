@@ -28,15 +28,24 @@ import { BiPencil } from "react-icons/bi";
 
 import SmallLoader from "../../Loaders/SmallLoader";
 import ConnectStripeButton from "../../ConnectStripe";
-import { CHANGE_USER } from "../../../apollo/auth";
+import { CHANGE_USER, POSTER_COMPLETE_REGISTER } from "../../../apollo/auth";
 export default function PosterCabinetCom() {
   const router = useRouter();
+  const [images, setImageChange] = useState([]);
   const [isAccountingOpen, setIsAccountingOpen] = useState(false);
   const [filter, setFilter] = useState("1");
   const [edit, setEdit] = useState(false);
   const [editPhone, setEditPhone] = useState("");
   const [editAddress, setEditAddress] = useState("");
-
+  const [tiktokUserName, setTiktokUserName] = useState("");
+  const [tiktokFollowers, setTiktokFollowers] = useState("");
+  const [instagramUserName, setInstagramUserName] = useState("");
+  const [instagramFollowers, setInstagramFollowers] = useState("");
+  const [facebookUserName, setFacebookUserName] = useState("");
+  const [facebookFollowers, setFacebookFollowers] = useState("");
+  const [yelpReview, setYelpReview] = useState("");
+  const [tripadvisorReview, setTripadvisorReview] = useState("");
+  const [googleReview, setGoogleReview] = useState("");
   const [businessPrice, setBusinessPrice] = useState("");
   const { userInfo } = useSelector((state) => state.userInfo);
   const { selectBus } = useSelector((state) => state.selectBus);
@@ -196,6 +205,60 @@ export default function PosterCabinetCom() {
       about: {address: editAddress, phone: editPhone},
      changeUserId: userInfo?.id},
   })
+
+  const [changeSocial, setChangeSocial] = useState(false)
+
+
+  const [changeSocialMedia] = useMutation(POSTER_COMPLETE_REGISTER, {
+    update(proxy, { data: { registerUserComplete: userData } }) {
+      context.login(userData);
+    },
+    onError(error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error}`,
+      });
+    },
+    onCompleted: async (data) => {
+      Swal.fire({
+        icon: "success",
+        title: `Redirecting...`,
+      });
+      setChangeSocial(!changeSocial)
+    // Dispatch the action to save user info
+    await dispatch(setUserInfo(data.registerUserComplete.user));
+},
+    // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
+    variables: {
+      registerUserCompleteId: userInfo.id,
+      social: {
+        tiktokUserName,
+        tiktokFollowers,
+        instagramUserName,
+        instagramFollowers,
+        facebookUserName,
+        facebookFollowers,
+      },
+      review: { yelpReview, tripadvisorReview, googleReview },
+      images
+    },
+  });
+
+  const props2 = {
+    name: "file",
+    onChange({ file, fileList }) {
+      if (file.status !== "uploading") {
+        setImageChange((prevImage) => [...prevImage, file.originFileObj]); // Добавляем новые файлы к существующему состоянию image
+      }
+    },
+  };
+
+  function SaveAll() {
+    changeInfo()
+    if (facebookUserName || instagramUserName || tiktokUserName) {
+      changeSocialMedia()
+    }
+  }
   return (
     <div className={styles.back}>
       <p className="title">Let's get posting</p>
@@ -540,13 +603,222 @@ export default function PosterCabinetCom() {
                 onChange={(e) => setEditAddress(e.target.value)}
                 className="a_input"
               />
-              {/* <p className="text">Your social media : </p> */}
+              {changeSocial ?
+              <>
+              <form onSubmit={() => changeSocialMedia()} className={styles.form}>
+            <div className={styles.social_input}>
+              <Image
+                src="/facebook.svg"
+                width={40}
+                height={40}
+                alt="facebook"
+              />
+              <input
+                className={`a_input ${styles.nick_input}`}
+                type="text"
+                onChange={(e) => setFacebookUserName(e.target.value)}
+                placeholder="Your Facebook Username"
+              />
+              <input
+                type="number"
+                className={`a_input ${styles.number_input}`}
+                onChange={(e) => setFacebookFollowers(e.target.value)}
+                placeholder="Number of your friends"
+              />
+              <Image
+                src="/file_download.svg"
+                width={40}
+                height={40}
+                alt="file"
+              />
+              <p className="nav_text">Screenshot of your social</p>
+              {/* <input
+                className={`b_button ${styles.custom_input}`}
+                type="file"
+              /> */}
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
+            </div>
+            <div className={styles.social_input}>
+              <Image
+                src="/instagram.svg"
+                width={40}
+                height={40}
+                alt="instagram"
+              />
+              <input
+                type="text"
+                className={`a_input ${styles.nick_input}`}
+                onChange={(e) => setInstagramUserName(e.target.value)}
+                placeholder="Your Instagram Username"
+              />
+              <input
+                type="number"
+                className={`a_input ${styles.number_input}`}
+                onChange={(e) => setInstagramFollowers(e.target.value)}
+                placeholder="Number of your followers"
+              />
+              <Image
+                src="/file_download.svg"
+                width={40}
+                height={40}
+                alt="file"
+              />
+              <p className="nav_text">Screenshot of your social</p>
+              {/* <input
+                className={`b_button ${styles.custom_input}`}
+                type="file"
+              /> */}
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
+            </div>
+            <div className={styles.social_input}>
+              <Image
+                src="/tiktok.svg"
+                style={{ borderRadius: "50%" }}
+                width={40}
+                height={40}
+                alt="tiktok"
+              />
+              <input
+                type="text"
+                onChange={(e) => setTiktokUserName(e.target.value)}
+                className={`a_input ${styles.nick_input}`}
+                placeholder="Your TikTok Username"
+              />
+              <input
+                type="number"
+                className={`a_input ${styles.number_input}`}
+                onChange={(e) => setTiktokFollowers(e.target.value)}
+                placeholder="Number of your followers"
+              />
+              <Image
+                src="/file_download.svg"
+                width={40}
+                height={40}
+                alt="file"
+              />
+              <p className="nav_text">Screenshot of your social</p>
+              {/* <input
+                className={`b_button ${styles.custom_input}`}
+                type="file"
+              /> */}
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
+            </div>
+            <div className="a_instrusctions">
+              <p>
+                • Please select which review sites you are signed for and enter
+                your review sites username.
+                <br />• If you have a Gmail account you can automatically leave
+                a google review. Please enter your google account name.
+              </p>
+            </div>
+            <div className={styles.social_input}>
+              <Image src="/google.svg" width={40} height={40} alt="google" />
+              <input
+                type="text"
+                className="a_input"
+                onChange={(e) => setGoogleReview(e.target.value)}
+                placeholder="Your Google"
+              />
+              <a
+                href="https://accounts.google.com/signup."
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="nav_text">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
+            </div>
+            <div className={styles.social_input}>
+              <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
+              <input
+                type="text"
+                className="a_input"
+                onChange={(e) => setYelpReview(e.target.value)}
+                placeholder="Your Yelp"
+              />
+              <a
+                href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="nav_text">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
+            </div>
+            <div className={styles.social_input}>
+              <Image
+                src="/tripadvisor.svg"
+                width={40}
+                height={40}
+                alt="tripadvisor"
+              />
+              <input
+                type="text"
+                className="a_input"
+                onChange={(e) => setTripadvisorReview(e.target.value)}
+                placeholder="Your Tripadvisor"
+              />
+              <a
+                href="https://www.tripadvisor.com"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="nav_text">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
+            </div>
+            {/* <button
+              type="submit"
+              // disabled={messageError == "" ? false : true}
+              className={`b_button ${styles.b_button}`}
+            >
+              Save Information
+            </button> */}
+          </form>
+              </>
+              :  
+              <button onClick={() => setChangeSocial(!changeSocial)} className="b_button">Change Social Media and Review</button>
+                }  {/* <p className="text">Your social media : </p> */}
             </>
           ) : (
             <>
               <p className="text">Your contact phone : {userInfo?.phone}</p>
               <p className="text">
                 Your address : {userInfo?.address}
+              </p>
+              <p className="text">
+                Your Social Media :
+                <br />
+                {userInfo?.socialMedia?.instagram?.name ? `Instagram nick: ${userInfo?.socialMedia?.instagram?.name}, followers: ${userInfo?.socialMedia?.instagram?.followers}` : ""}
+                <br />
+                {userInfo?.socialMedia?.tiktok?.name ? `Tiktok nick: ${userInfo?.socialMedia?.tiktok?.name}, followers: ${userInfo?.socialMedia?.tiktok?.followers}` : ""}
+                <br />
+                {userInfo?.socialMedia?.facebook?.name ? `Facebook nick: ${userInfo?.socialMedia?.facebook?.name}, followers: ${userInfo?.socialMedia?.facebook?.followers}` : ""}
+              </p>
+              <p className="text">
+                Your review website : 
+                <br />
+                {userInfo?.reviewMedia?.tripadvisor ? `Tripadvisor: ${userInfo?.reviewMedia?.tripadvisor}` : ""}
+                <br />
+                {userInfo?.reviewMedia?.yelp ? `Yelp: ${userInfo?.reviewMedia?.yelp}` : ""}
+                <br />
+                {userInfo?.reviewMedia?.google ? `Google: ${userInfo?.reviewMedia?.google}` : ""}
+                <br />
               </p>
               {/* <p className="text">
                     Instagram : {userInfo?.socialMedia?.instagram}

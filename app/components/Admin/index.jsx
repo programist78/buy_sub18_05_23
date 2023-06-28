@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { GET_ACCEPTED_BUSINESS_INFO_POSTS, GET_ACCEPTED_POSTER_INFO_POSTS, GET_BUSINESS_INFO_POSTS, GET_BUSINESS_REGISTER, GET_BUSINESS_REGISTER_ADDINFO, GET_BUSINESS_REGISTER_NEED_ADDINFO, GET_BUSINESS_WHOLE_INFO, GET_POSTER_INFO_POSTS, GET_POSTER_REGISTER, GET_POSTER_REGISTER_DETAILS, GET_POSTER_REGISTER_SIGNUP, GET_POSTER_WHOLE_INFO, GET_UNACCEPTED_BUSINESS_INFO_POSTS, GET_UNACCEPTED_POSTER_INFO_POSTS } from "../../apollo/admin";
+import { BAN_USER, GET_ACCEPTED_BUSINESS_INFO_POSTS, GET_ACCEPTED_POSTER_INFO_POSTS, GET_BUSINESS_INFO_POSTS, GET_BUSINESS_REGISTER, GET_BUSINESS_REGISTER_ADDINFO, GET_BUSINESS_REGISTER_NEED_ADDINFO, GET_BUSINESS_WHOLE_INFO, GET_POSTER_INFO_POSTS, GET_POSTER_REGISTER, GET_POSTER_REGISTER_DETAILS, GET_POSTER_REGISTER_SIGNUP, GET_POSTER_WHOLE_INFO, GET_UNACCEPTED_BUSINESS_INFO_POSTS, GET_UNACCEPTED_POSTER_INFO_POSTS } from "../../apollo/admin";
 import styles from "./Admin.module.scss";
 import { useQuery } from "@apollo/client";
 import { IoIosArrowDown, IoIosArrowBack, IoIosArrowForward, IoIosArrowUp } from "react-icons/io";
 import {AiFillEye} from "react-icons/ai"
+import { useMutation } from "@apollo/client";
+import Swal from "sweetalert2";
 export default function AdminCom() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -25,6 +27,7 @@ export default function AdminCom() {
   }
   return (
     <div className={styles.back}>
+      <BanComponent />
     <BusinessRegistration />
     <PosterRegistration />
     <BusinessAdminPanel />
@@ -420,7 +423,6 @@ function BusinessAdminPanel() {
   return (
       <div className={styles.part}>
         <p className="title">Businesses Admin Panel</p>
-        <AiFillEye className="b_button" onClick={() => setOpenYey(!openYey)}/>
         <div className={styles.filters}>
           <div onClick={() => setLeftFilter1("All Businesses")} className={`text ${(leftFilter1 == "All Businesses") ? styles.this : ""}`}>All Businesses</div>
           <div onClick={() => setLeftFilter1("Paid Posts")} className={`text ${(leftFilter1 == "Paid Posts") ? styles.this : ""}`}>Paid Posts</div>
@@ -499,30 +501,6 @@ function BusinessAdminPanel() {
 </table>
         ) : (
           <>
-          {openYey ?
-          <table className={styles.custom_table}>
-            <thead>
-              <tr>
-              <th className="text">Poster Username</th>
-                <th className="text">Poster Review Site</th>
-                <th className="text">Poster Social Site</th>
-                <th className="text">Cost</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filterData()?.map((data, index) => (
-                <tr key={index}>
-                  //TODO
-                  <td className="text">{data.brandname}</td>
-                  <td className="text">{data.zipCode}</td>
-                  <td className="text">{data.brandname}</td>
-                  <td className="text">{data.websiteLink}</td>
-                  {/* <td className="text">{data.confirmed}</td> */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          :
           <table className={styles.custom_table}>
           <thead>
             <tr>
@@ -554,7 +532,7 @@ function BusinessAdminPanel() {
             ))}
           </tbody>
         </table>
-          }
+          
           </>
         )}
         <div className={styles.foot}>
@@ -620,6 +598,7 @@ function PosterAdminPanel() {
   return (
       <div className={styles.part}>
         <p className="title">Posters Admin Panel</p>
+        
         <div className={styles.filters}>
           <div onClick={() => setLeftFilter1("All Posters")} className={`text ${(leftFilter1 == "All Businesses") ? styles.this : ""}`}>All Posters</div>
           <div onClick={() => setLeftFilter1("Paid Posts")} className={`text ${(leftFilter1 == "Paid Posts") ? styles.this : ""}`}>Paid Posts</div>
@@ -786,9 +765,15 @@ function BusinessWholeAdminPanel() {
     setIsOpen(!isOpen);
   };
 
+  const [openYey, setOpenYey] = useState(false)
+
+
   return (
       <div className={styles.part}>
         <p className="title">Business Details Admin Panel</p>
+        
+        <AiFillEye className="b_button" onClick={() => setOpenYey(!openYey)}/>
+
         <div className={styles.filters}>
           <div className={styles.sortby}>
       <div className={`text ${styles.button}`} onClick={toggleMenu}>
@@ -863,6 +848,32 @@ function BusinessWholeAdminPanel() {
  </tbody>
 </table>
         ) : (
+          <>
+          {openYey ?
+          <table className={styles.custom_table}>
+            <thead>
+              <tr>
+              <th className="text">Email</th>
+                <th className="text">Contact phone</th>
+                <th className="text">Post Price</th>
+                <th className="text">Website Link</th>
+                <th className="text">Pending Posts</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filterData()?.map((data, index) => (
+                <tr key={index}>
+                  <td className="text">{data.email}</td>
+                  <td className="text">{data.phone}</td>
+                  <td className="text">{data.postPrice}</td>
+                  <td className="text">{data.websiteLink}</td>
+                  <td className="text">{data.brandPendingPosts?.length}</td>
+                  {/* <td className="text">{data.confirmed}</td> */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          :
           <table className={styles.custom_table}>
             <thead>
               <tr>
@@ -890,6 +901,7 @@ function BusinessWholeAdminPanel() {
               ))}
             </tbody>
           </table>
+}</>
         )}
         <div className={styles.foot}>
           <IoIosArrowBack className={styles.arrow} onClick={() => {
@@ -948,9 +960,13 @@ function PosterWholeAdminPanel() {
     setIsOpen(!isOpen);
   };
 
+  const [openYey, setOpenYey] = useState(false)
+
   return (
       <div className={styles.part}>
         <p className="title">Poster Details Admin Panel</p>
+        <AiFillEye className="b_button" onClick={() => setOpenYey(!openYey)}/>
+
         <div className={styles.filters}>
           <div className={styles.sortby}>
       <div className={`text ${styles.button}`} onClick={toggleMenu}>
@@ -1025,33 +1041,69 @@ function PosterWholeAdminPanel() {
  </tbody>
 </table>
         ) : (
+          <>
+          {openYey ?
           <table className={styles.custom_table}>
             <thead>
               <tr>
-              <th className="text">Date Signed Up</th>
-                <th className="text">Username</th>
-                <th className="text">Contact Info</th>
-                <th className="text">Balance</th>
-                <th className="text">Total Paid Out to Date</th>
+              <th className="text">Email</th>
+                <th className="text">Completed Posts</th>
+                <th className="text">Pending posts</th>
+                <th className="text">Social Media</th>
+                <th className="text">Review Media</th>
               </tr>
             </thead>
             <tbody>
               {filterData()?.map((data, index) => (
                 <tr key={index}>
-                  <td className="text">{formatTimestamp(data.createdAt)}</td>
-                  <td className="text">{data.fullname}</td>
-                  <td className="text">{data.phone}</td>
-                  <td className="text">${data.balance/100}</td>
-                  {data.paidOut ?
-                                    <td className="text">${data.paidOut}</td>
-                                    :
-                                    <td className="text">$0</td>
-}
+                  <td className="text">{data.email}</td>
+                  <td className="text">{data.completedPosts?.length}</td>
+                  <td className="text">{data.pendingPosts?.length}</td>
+                  <td className="text">{(data.socialMedia?.instagram.name) ? `Instagram: ${data.socialMedia?.instagram.name}. ` : ""}
+                  {(data.socialMedia?.tiktok.name) ? `Tiktok: ${data.socialMedia?.tiktok.name}. ` : ""}
+                  {(data.socialMedia?.facebook.name) ? `Facebook: ${data.socialMedia?.facebook.name}. ` : ""}
+                  </td>
+                  <td className="text">{(data.reviewMedia?.google) ? `Google: ${data.reviewMedia?.google}. ` : ""}
+                  {(data.reviewMedia?.yelp) ? `Yelp: ${data.reviewMedia?.yelp}. ` : ""}
+                  {(data.reviewMedia?.tripadvisor) ? `Tripadvisor: ${data.reviewMedia?.tripadvisor}. ` : ""}
+                  </td>``
+                  {/* <td className="text">{data.socialMedia?.instagram}, {data.socialMedia?.tiktok}, {data.socialMedia?.facebook}</td> */}
+                  {/* <td className="text">{data.reviewMedia?.tripadvisor}, {data.reviewMedia?.yelp}, {data.reviewMedia?.facebook}</td> */}
                   {/* <td className="text">{data.confirmed}</td> */}
                 </tr>
               ))}
             </tbody>
           </table>
+        :
+        <table className={styles.custom_table}>
+        <thead>
+          <tr>
+          <th className="text">Date Signed Up</th>
+            <th className="text">Username</th>
+            <th className="text">Contact Info</th>
+            <th className="text">Balance</th>
+            <th className="text">Total Paid Out to Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filterData()?.map((data, index) => (
+            <tr key={index}>
+              <td className="text">{formatTimestamp(data.createdAt)}</td>
+              <td className="text">{data.fullname}</td>
+              <td className="text">{data.phone}</td>
+              <td className="text">${data.balance/100}</td>
+              {data.paidOut ?
+                                <td className="text">${data.paidOut}</td>
+                                :
+                                <td className="text">$0</td>
+}
+              {/* <td className="text">{data.confirmed}</td> */}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+        }
+          </>
         )}
         <div className={styles.foot}>
           <IoIosArrowBack className={styles.arrow} onClick={() => {
@@ -1066,4 +1118,36 @@ function PosterWholeAdminPanel() {
       </div>
   
   );
+}
+
+function BanComponent() {
+  const [text, setText] = useState("")
+  const [email, setEmail] = useState("")
+  const [ban] = useMutation(BAN_USER, {
+    onError(error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error}`,
+      });
+    },
+    onCompleted: (data) => {
+      Swal.fire({
+        icon: "success",
+        title: `Success!`,
+      });
+    },
+        variables: {
+          email, text
+        },
+  });
+  return (
+    <div className={styles.inline_form}>
+      <p className="pretitle">Ban user</p>
+      <p className="nav_text">Email</p>
+      <input type="text" className="a_input" onChange={(e) => setEmail(e.target.value)} />
+      <p className="nav_text">Description</p>
+      <input type="text" className="a_input" onChange={(e) => setText(e.target.value)} />
+      <button className="b_button" onClick={() => ban()}>Block user</button>
+    </div>
+  )  
 }
