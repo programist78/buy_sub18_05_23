@@ -38,14 +38,14 @@ export default function AddPosterSocialCom() {
   const context = useContext(AuthContext) || "";
   const router = useRouter();
   const { userInfo } = useSelector((state) => state.userInfo);
-//   (!userInfo) && return <NoAccess />
+  //   (!userInfo) && return <NoAccess />
 
-//   useEffect(() => {
-//     if (!userInfo) {
-//         return <NoAccess />
-//       }
-//   }, [])
-  
+  //   useEffect(() => {
+  //     if (!userInfo) {
+  //         return <NoAccess />
+  //       }
+  //   }, [])
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
     fullname: Yup.string().required("Fullname is required"),
@@ -93,19 +93,19 @@ export default function AddPosterSocialCom() {
       dispatch(setUserInfo(data.registerUserComplete.user));
       router.push("/personal/poster");
     },
-        variables: {
-          registerUserCompleteId: userInfo?.id,
-          social: {
-            tiktokUserName,
-            tiktokFollowers,
-            instagramUserName,
-            instagramFollowers,
-            facebookUserName,
-            facebookFollowers,
-          },
-          review: { yelpReview, tripadvisorReview, googleReview },
-          images,
-        },
+    variables: {
+      registerUserCompleteId: userInfo?.id,
+      social: {
+        tiktokUserName,
+        tiktokFollowers,
+        instagramUserName,
+        instagramFollowers,
+        facebookUserName,
+        facebookFollowers,
+      },
+      review: { yelpReview, tripadvisorReview, googleReview },
+      images,
+    },
   });
   const props = {
     name: "file",
@@ -117,187 +117,212 @@ export default function AddPosterSocialCom() {
   };
   return (
     <>
-    {userInfo 
-        ?
-    <div className={styles.back}>
-      <p className={`pretitle ${styles.pretitle}`}>
-        Poster Social Details Page
-      </p>
-      <div className="a_instrusctions">
-        <p>
-          • Kindly confirm the social media platforms on which you intend to
-          make your posts.
-          <br />
-          • Then add your username or handle, number of has been followers and a
-          screenshot of your homepage.
-          <br />• For your convenience, a check box has been provided for each
-          platform, enabling you to select the social sites you wish to post on.{" "}
-        </p>
-      </div>
-      <form onSubmit={(onSubmit2)} className={styles.form}>
-        <div className={styles.social_input}>
-          <Image src="/facebook.svg" width={40} height={40} alt="facebook" />
-          <input
-            className={`a_input ${styles.nick_input}`}
-            type="text"
-            onChange={(e) => setFacebookUserName(e.target.value)}
-            placeholder="Your Facebook Username"
-          />
-          <input
-            type="number"
-            className={`a_input ${styles.number_input}`}
-            onChange={(e) => setFacebookFollowers(e.target.value)}
-            placeholder="Number of your friends"
-          />
-          <Image src="/file_download.svg" width={40} height={40} alt="file" />
-          <p className="nav_text">Screenshot of your social</p>
-          {/* <input
-                className={`b_button ${styles.custom_input}`}
-                type="file"
-              /> */}
-          <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
-        </div>
-        <div className={styles.social_input}>
-          <Image src="/instagram.svg" width={40} height={40} alt="instagram" />
-          <input
-            type="text"
-            className={`a_input ${styles.nick_input}`}
-            onChange={(e) => setInstagramUserName(e.target.value)}
-            placeholder="Your Instagram Username"
-          />
-          <input
-            type="number"
-            className={`a_input ${styles.number_input}`}
-            onChange={(e) => setInstagramFollowers(e.target.value)}
-            placeholder="Number of your followers"
-          />
-          <Image src="/file_download.svg" width={40} height={40} alt="file" />
-          <p className="nav_text">Screenshot of your social</p>
-          {/* <input
-                className={`b_button ${styles.custom_input}`}
-                type="file"
-              /> */}
-          <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
-        </div>
-        <div className={styles.social_input}>
-          <Image
-            src="/tiktok.svg"
-            style={{ borderRadius: "50%" }}
-            width={40}
-            height={40}
-            alt="tiktok"
-          />
-          <input
-            type="text"
-            onChange={(e) => setTiktokUserName(e.target.value)}
-            className={`a_input ${styles.nick_input}`}
-            placeholder="Your TikTok Username"
-          />
-          <input
-            type="number"
-            className={`a_input ${styles.number_input}`}
-            onChange={(e) => setTiktokFollowers(e.target.value)}
-            placeholder="Number of your followers"
-          />
-          <Image src="/file_download.svg" width={40} height={40} alt="file" />
-          <p className="nav_text">Screenshot of your social</p>
-          {/* <input
-                className={`b_button ${styles.custom_input}`}
-                type="file"
-              /> */}
-          <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
-        </div>
-        <div className="a_instrusctions">
-          <p>
-            • Please select which review sites you are signed for and enter your
-            review sites username.
-            <br />• If you have a Gmail account you can automatically leave a
-            google review. Please enter your google account name.
+      {userInfo ? (
+        <div className={styles.back}>
+          <p className={`pretitle ${styles.pretitle}`}>
+            Poster Social Details Page
           </p>
+          <div className="a_instrusctions">
+            <p>
+              • Kindly confirm the social media platforms on which you intend to
+              make your posts.
+              <br />
+              • Then add your username or handle, number of has been followers
+              and a screenshot of your homepage.
+              <br />• For your convenience, a check box has been provided for
+              each platform, enabling you to select the social sites you wish to
+              post on.{" "}
+            </p>
+          </div>
+          <form onSubmit={onSubmit2} className={styles.form}>
+            <div className={styles.social_input}>
+              <Image
+                src="/facebook.svg"
+                width={40}
+                height={40}
+                alt="facebook"
+              />
+              <input
+                className={`a_input ${styles.nick_input}`}
+                type="text"
+                onChange={(e) => setFacebookUserName(e.target.value)}
+                placeholder="Your Facebook Username"
+              />
+              <input
+                type="number"
+                className={`a_input ${styles.number_input}`}
+                onChange={(e) => setFacebookFollowers(e.target.value)}
+                placeholder="Number of your friends"
+              />
+              <Image
+                src="/file_download.svg"
+                width={40}
+                height={40}
+                alt="file"
+              />
+              <p className="nav_text">Screenshot of your social</p>
+              {/* <input
+                className={`b_button ${styles.custom_input}`}
+                type="file"
+              /> */}
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
+            </div>
+            <div className={styles.social_input}>
+              <Image
+                src="/instagram.svg"
+                width={40}
+                height={40}
+                alt="instagram"
+              />
+              <input
+                type="text"
+                className={`a_input ${styles.nick_input}`}
+                onChange={(e) => setInstagramUserName(e.target.value)}
+                placeholder="Your Instagram Username"
+              />
+              <input
+                type="number"
+                className={`a_input ${styles.number_input}`}
+                onChange={(e) => setInstagramFollowers(e.target.value)}
+                placeholder="Number of your followers"
+              />
+              <Image
+                src="/file_download.svg"
+                width={40}
+                height={40}
+                alt="file"
+              />
+              <p className="nav_text">Screenshot of your social</p>
+              {/* <input
+                className={`b_button ${styles.custom_input}`}
+                type="file"
+              /> */}
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
+            </div>
+            <div className={styles.social_input}>
+              <Image
+                src="/tiktok.svg"
+                style={{ borderRadius: "50%" }}
+                width={40}
+                height={40}
+                alt="tiktok"
+              />
+              <input
+                type="text"
+                onChange={(e) => setTiktokUserName(e.target.value)}
+                className={`a_input ${styles.nick_input}`}
+                placeholder="Your TikTok Username"
+              />
+              <input
+                type="number"
+                className={`a_input ${styles.number_input}`}
+                onChange={(e) => setTiktokFollowers(e.target.value)}
+                placeholder="Number of your followers"
+              />
+              <Image
+                src="/file_download.svg"
+                width={40}
+                height={40}
+                alt="file"
+              />
+              <p className="nav_text">Screenshot of your social</p>
+              {/* <input
+                className={`b_button ${styles.custom_input}`}
+                type="file"
+              /> */}
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
+            </div>
+            <div className="a_instrusctions">
+              <p>
+                • Please select which review sites you are signed for and enter
+                your review sites username.
+                <br />• If you have a Gmail account you can automatically leave
+                a google review. Please enter your google account name.
+              </p>
+            </div>
+            <div className={styles.social_input}>
+              <Image src="/google.svg" width={40} height={40} alt="google" />
+              <input
+                type="text"
+                className="a_input"
+                onChange={(e) => setGoogleReview(e.target.value)}
+                placeholder="Your Google"
+              />
+              <a
+                href="https://accounts.google.com/signup."
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="nav_text">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
+            </div>
+            <div className={styles.social_input}>
+              <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
+              <input
+                type="text"
+                className="a_input"
+                onChange={(e) => setYelpReview(e.target.value)}
+                placeholder="Your Yelp"
+              />
+              <a
+                href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="nav_text">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
+            </div>
+            <div className={styles.social_input}>
+              <Image
+                src="/tripadvisor.svg"
+                width={40}
+                height={40}
+                alt="tripadvisor"
+              />
+              <input
+                type="text"
+                className="a_input"
+                onChange={(e) => setTripadvisorReview(e.target.value)}
+                placeholder="Your Tripadvisor"
+              />
+              <a
+                href="https://www.tripadvisor.com"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="nav_text">Don't have an account?</p>
+                <button className={`b_button`}>Sign up</button>
+              </a>
+            </div>
+            <button
+              type="submit"
+              // disabled={messageError == "" ? false : true}
+              className={`b_button ${styles.b_button}`}
+            >
+              Register
+            </button>
+          </form>
         </div>
-        <div className={styles.social_input}>
-          <Image src="/google.svg" width={40} height={40} alt="google" />
-          <input
-            type="text"
-            className="a_input"
-            onChange={(e) => setGoogleReview(e.target.value)}
-            placeholder="Your Google"
-          />
-          <a
-            href="https://accounts.google.com/signup."
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <p className="nav_text">Don't have an account?</p>
-            <button className={`b_button`}>Sign up</button>
-          </a>
-        </div>
-        <div className={styles.social_input}>
-          <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
-          <input
-            type="text"
-            className="a_input"
-            onChange={(e) => setYelpReview(e.target.value)}
-            placeholder="Your Yelp"
-          />
-          <a
-            href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <p className="nav_text">Don't have an account?</p>
-            <button className={`b_button`}>Sign up</button>
-          </a>
-        </div>
-        <div className={styles.social_input}>
-          <Image
-            src="/tripadvisor.svg"
-            width={40}
-            height={40}
-            alt="tripadvisor"
-          />
-          <input
-            type="text"
-            className="a_input"
-            onChange={(e) => setTripadvisorReview(e.target.value)}
-            placeholder="Your Tripadvisor"
-          />
-          <a
-            href="https://www.tripadvisor.com"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <p className="nav_text">Don't have an account?</p>
-            <button className={`b_button`}>Sign up</button>
-          </a>
-        </div>
-        <button
-          type="submit"
-          // disabled={messageError == "" ? false : true}
-          className={`b_button ${styles.b_button}`}
-        >
-          Register
-        </button>
-      </form>
-    </div>
-    :
-    <NoAccess />
-        }
-        </>
+      ) : (
+        <NoAccess />
+      )}
+    </>
   );
 }

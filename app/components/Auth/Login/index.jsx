@@ -42,13 +42,12 @@ function LoginCom() {
 
   const onSubmit = (data) => {
     // setData(data);
-    loginUser({variables: { about: data }})
+    loginUser({ variables: { about: data } });
     // setTimeout(() => , 5);
   };
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, { data: { loginUser: userData } }) {
       context.login(userData);
-
     },
     onError(error) {
       Swal.fire({
@@ -80,17 +79,13 @@ function LoginCom() {
         } else {
           throw new Error("Invalid user role");
         }
-    
+
         // Dispatch the action to save user info
         await dispatch(setUserInfo(data.loginUser.user));
       } catch (error) {
         console.error(error);
       }
-    }
-    
-    
-    
-    
+    },
   });
 
   return (
@@ -129,11 +124,17 @@ function LoginCom() {
       </Link>
       <p className={`text ${styles.text}`}>
         Dont have an account?{" "}
-        <Link href="/auth/poster-sign-up" style={{ textDecoration: "underline" }}>
+        <Link
+          href="/auth/poster-sign-up"
+          style={{ textDecoration: "underline" }}
+        >
           Sign up Poster
         </Link>
         <br />{" "}
-        <Link href="/auth/business-sign-up" style={{ textDecoration: "underline" }}>
+        <Link
+          href="/auth/business-sign-up"
+          style={{ textDecoration: "underline" }}
+        >
           Sign up Business
         </Link>
       </p>

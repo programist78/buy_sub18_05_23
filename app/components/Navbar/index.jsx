@@ -132,9 +132,24 @@ export default function Navbar() {
         <div className={styles.links}>
           {/* <Link href="/auth/poster-sign-up"> <button className='a_button'>Sign Up Posters</button></Link>
      <Link href="/auth/business-sign-up"> <button className='a_button'>Sign Up Businesses</button></Link> */}
-          {(userInfo.role == "BUSINESS") && <Link href="/personal/business"> <button className='a_button'>Personal panel</button></Link>  }
-     {(userInfo.role == "USER") && <Link href="/personal/poster"> <button className='a_button'>Personal panel</button></Link>  }
-     {(userInfo.role == "ADMIN") && <Link href="/personal/admin"> <button className='a_button'>Personal panel</button></Link>  }
+          {userInfo.role == "BUSINESS" && (
+            <Link href="/personal/business">
+              {" "}
+              <button className="a_button">Personal panel</button>
+            </Link>
+          )}
+          {userInfo.role == "USER" && (
+            <Link href="/personal/poster">
+              {" "}
+              <button className="a_button">Personal panel</button>
+            </Link>
+          )}
+          {userInfo.role == "ADMIN" && (
+            <Link href="/personal/admin">
+              {" "}
+              <button className="a_button">Personal panel</button>
+            </Link>
+          )}
           <button className="b_button" onClick={onLogout}>
             Log out
           </button>

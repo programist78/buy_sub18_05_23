@@ -6,188 +6,198 @@ export const LOGIN_USER = gql`
       token
       user {
         id
-    fullname
-    email
-    role
-    socialMedia {
-      instagram {
-        name
-        followers
-      }
-      facebook {
-        name
-        followers
-      }
-      tiktok {
-        name
-        followers
-      }
-      twitter {
-        name
-        followers
-      }
-      aproveScreenshots
-    }
-    reviewMedia {
-      google
-      yelp
-      tripadvisor
-    }
-    confirmedEmail
-    avatarUrl
-    phone
-    pendingPosts
-    completedPosts
-    balance
-    brandPendingPosts
-    brandCompletedPosts
-    postPrice
-    brandname
-    physicalLocation {
-      latitude
-      longitude
-    }
-    brandDirection
-    plan
-    hasTrial
-    endDate
-    websiteLink
-    address
-    brandDescription
-    image
-    zipCode
+        fullname
+        email
+        role
+        socialMedia {
+          instagram {
+            name
+            followers
+          }
+          facebook {
+            name
+            followers
+          }
+          tiktok {
+            name
+            followers
+          }
+          twitter {
+            name
+            followers
+          }
+          aproveScreenshots
+        }
+        reviewMedia {
+          google
+          yelp
+          tripadvisor
+        }
+        confirmedEmail
+        avatarUrl
+        phone
+        pendingPosts
+        completedPosts
+        balance
+        brandPendingPosts
+        brandCompletedPosts
+        postPrice
+        brandname
+        physicalLocation {
+          latitude
+          longitude
+        }
+        brandDirection
+        plan
+        hasTrial
+        endDate
+        websiteLink
+        address
+        brandDescription
+        image
+        zipCode
       }
     }
   }
 `;
 
 export const CHANGE_USER = gql`
-mutation ChangeUser($about: ChangeUserInput, $changeUserId: ID) {
-  changeUser(about: $about, id: $changeUserId)
-}
-`
+  mutation ChangeUser($about: ChangeUserInput, $changeUserId: ID) {
+    changeUser(about: $about, id: $changeUserId)
+  }
+`;
 
 export const REGISTER_USER = gql`
-mutation RegisterUser($about: RegisterInput) {
-  registerUser(about: $about) {
-    user {
-      id
-    fullname
-    email
-    role
-    socialMedia {
-      instagram {
-        name
-        followers
+  mutation RegisterUser($about: RegisterInput) {
+    registerUser(about: $about) {
+      user {
+        id
+        fullname
+        email
+        role
+        socialMedia {
+          instagram {
+            name
+            followers
+          }
+          facebook {
+            name
+            followers
+          }
+          tiktok {
+            name
+            followers
+          }
+          twitter {
+            name
+            followers
+          }
+          aproveScreenshots
+        }
+        reviewMedia {
+          google
+          yelp
+          tripadvisor
+        }
+        confirmedEmail
+        avatarUrl
+        phone
+        pendingPosts
+        completedPosts
+        balance
+        brandPendingPosts
+        brandCompletedPosts
+        postPrice
+        brandname
+        physicalLocation {
+          latitude
+          longitude
+        }
+        brandDirection
+        plan
+        hasTrial
+        endDate
+        websiteLink
+        address
+        brandDescription
+        image
+        zipCode
       }
-      facebook {
-        name
-        followers
-      }
-      tiktok {
-        name
-        followers
-      }
-      twitter {
-        name
-        followers
-      }
-      aproveScreenshots
+      token
     }
-    reviewMedia {
-      google
-      yelp
-      tripadvisor
-    }
-    confirmedEmail
-    avatarUrl
-    phone
-    pendingPosts
-    completedPosts
-    balance
-    brandPendingPosts
-    brandCompletedPosts
-    postPrice
-    brandname
-    physicalLocation {
-      latitude
-      longitude
-    }
-    brandDirection
-    plan
-    hasTrial
-    endDate
-    websiteLink
-    address
-    brandDescription
-    image
-    zipCode
-    }
-    token
   }
-}
 `;
 
 export const POSTER_COMPLETE_REGISTER = gql`
-mutation Mutation($registerUserCompleteId: ID, $social: SocialMediaInput, $review: ReviewMediaInput, $images: [Upload]) {
-  registerUserComplete(id: $registerUserCompleteId, social: $social, review: $review, images: $images) {
-    user {
-      id
-    fullname
-    email
-    role
-    socialMedia {
-      instagram {
-        name
-        followers
+  mutation Mutation(
+    $registerUserCompleteId: ID
+    $social: SocialMediaInput
+    $review: ReviewMediaInput
+    $images: [Upload]
+  ) {
+    registerUserComplete(
+      id: $registerUserCompleteId
+      social: $social
+      review: $review
+      images: $images
+    ) {
+      user {
+        id
+        fullname
+        email
+        role
+        socialMedia {
+          instagram {
+            name
+            followers
+          }
+          facebook {
+            name
+            followers
+          }
+          tiktok {
+            name
+            followers
+          }
+          twitter {
+            name
+            followers
+          }
+          aproveScreenshots
+        }
+        reviewMedia {
+          google
+          yelp
+          tripadvisor
+        }
+        confirmedEmail
+        avatarUrl
+        phone
+        pendingPosts
+        completedPosts
+        balance
+        brandPendingPosts
+        brandCompletedPosts
+        postPrice
+        brandname
+        physicalLocation {
+          latitude
+          longitude
+        }
+        brandDirection
+        plan
+        hasTrial
+        endDate
+        websiteLink
+        address
+        brandDescription
+        image
+        zipCode
       }
-      facebook {
-        name
-        followers
-      }
-      tiktok {
-        name
-        followers
-      }
-      twitter {
-        name
-        followers
-      }
-      aproveScreenshots
+      token
     }
-    reviewMedia {
-      google
-      yelp
-      tripadvisor
-    }
-    confirmedEmail
-    avatarUrl
-    phone
-    pendingPosts
-    completedPosts
-    balance
-    brandPendingPosts
-    brandCompletedPosts
-    postPrice
-    brandname
-    physicalLocation {
-      latitude
-      longitude
-    }
-    brandDirection
-    plan
-    hasTrial
-    endDate
-    websiteLink
-    address
-    brandDescription
-    image
-    zipCode
-    }
-    token
   }
-}
-`
+`;
 
 export const GETUSER_BYTOKEN = gql`
   query GetUserbyToken($token: String) {

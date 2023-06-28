@@ -1,5 +1,5 @@
-import CustomHead from '../CustomHead'
-import styles from './NoAccess.module.scss'
+import CustomHead from "../CustomHead";
+import styles from "./NoAccess.module.scss";
 
 export default function NoAccess() {
   const pageTitle = "Postfordollars - Achieve more with us!";
@@ -8,10 +8,10 @@ export default function NoAccess() {
 
   return (
     <>
-          <CustomHead title={pageTitle} description={pageDescription} />
-    <div className={styles.back}>
-        <p className='title'>You don’t have access to this page</p>
-    </div>
+      <CustomHead title={pageTitle} description={pageDescription} />
+      <div className={styles.back}>
+        <p className="title">You don’t have access to this page</p>
+      </div>
     </>
-  )
+  );
 }

@@ -355,5 +355,4 @@ input InfoStripeInput{
   }
 `;
 
-
-export default typeDefs
+export default typeDefs;

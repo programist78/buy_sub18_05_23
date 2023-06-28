@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const User = new mongoose.Schema(
   {
     fullname: {
-      type: String
+      type: String,
     },
     email: {
       type: String,
@@ -14,65 +14,62 @@ const User = new mongoose.Schema(
       type: String,
       required: true,
     },
-    role: 
-      {type: String,
-      required: true
-    },
+    role: { type: String, required: true },
     socialMedia: {
-      type: Object
+      type: Object,
     },
     reviewMedia: {
-      type: Object
+      type: Object,
     },
-    confirmedEmail: {type: Boolean},
-    confirmationCode: { type: String }, 
+    confirmedEmail: { type: Boolean },
+    confirmationCode: { type: String },
     avatarUrl: { type: String },
     token: { type: String },
-    phone: {type: String},
+    phone: { type: String },
     //for posters
     pendingPosts: {
-      type: Array
+      type: Array,
     },
     completedPosts: {
-      type: Array
+      type: Array,
     },
     balance: {
-      type: Number
+      type: Number,
     },
     //for Business
     brandPendingPosts: {
-      type: Array
+      type: Array,
     },
     brandCompletedPosts: {
-      type: Array
+      type: Array,
     },
     postPrice: {
-      type: Number
+      type: Number,
     },
     brandname: {
       type: String,
-      unique: true
+      unique: true,
     },
     physicalLocation: {
-      type: Object
+      type: Object,
     },
     brandDirection: {
-      type: String
+      type: String,
     },
-    image: {type: String},
-    address: {type: String},
-    websiteLink:{type: String},
-    plan: { type: String, enum: ['none', 'month'], default: 'none' },
+    image: { type: String },
+    address: { type: String },
+    websiteLink: { type: String },
+    plan: { type: String, enum: ["none", "month"], default: "none" },
     hasTrial: { type: Boolean, default: false },
     endDate: { type: Date, default: null },
-    brandDescription: {type: String},
-    zipCode: {type: String},
-    paidOut: {type: Number},
-    stripeAccountId: { type: String}
+    brandDescription: { type: String },
+    zipCode: { type: String },
+    paidOut: { type: Number },
+    stripeAccountId: { type: String },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-export default mongoose.model('User', User);
+export default mongoose.model("User", User);

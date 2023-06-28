@@ -22,12 +22,12 @@ export const createUploadStream = (key) => {
   return {
     writeStream: pass,
     promise: new Upload({
-        client: s3,
-        params: {
-          Bucket: bucket,
-          Key: key,
-          Body: pass,
-        }
-      }),
+      client: s3,
+      params: {
+        Bucket: bucket,
+        Key: key,
+        Body: pass,
+      },
+    }),
   };
 };

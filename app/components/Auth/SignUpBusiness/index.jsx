@@ -249,21 +249,18 @@ export default function SignUpBusiness() {
                 7. Prohibited Conduct When using our website, you agree not to:
                 <br />
                 a. Violate any applicable laws, regulations, or third-party
-                rights. 
+                rights.
                 <br />
-                b. Use our website for any unauthorized or illegal
-                purpose. 
+                b. Use our website for any unauthorized or illegal purpose.
                 <br />
-                c. Engage in any activity that could damage, disable,
-                or impair the operation or security of our website. 
+                c. Engage in any activity that could damage, disable, or impair
+                the operation or security of our website.
                 <br />
-                d. Use any
-                automated system or software to access or interact with our
-                website without our express written permission. 
+                d. Use any automated system or software to access or interact
+                with our website without our express written permission.
                 <br />
-                e. Share any
-                content that is infringing, defamatory, obscene, sexually
-                explicit or harmful.
+                e. Share any content that is infringing, defamatory, obscene,
+                sexually explicit or harmful.
                 <br />
                 <br />
                 8. Intellectual Property All content on our website, including
@@ -295,18 +292,16 @@ export default function SignUpBusiness() {
                 <br />
                 <br />
                 a. Accessing or attempting to access areas of the website that
-                are not intended for public access. 
+                are not intended for public access.
                 <br />
-                b. Circumventing or
-                disabling any security or authentication measures on the
-                website. 
+                b. Circumventing or disabling any security or authentication
+                measures on the website.
                 <br />
-                c. Interfering with or disrupting the operation of the
-                website or the servers hosting it. 
+                c. Interfering with or disrupting the operation of the website
+                or the servers hosting it.
                 <br />
-                d. Engaging in any activity
-                that could impose an unreasonable burden on the infrastructure
-                of the website.
+                d. Engaging in any activity that could impose an unreasonable
+                burden on the infrastructure of the website.
                 <br />
                 <br />
                 12. Identity Verification PFD LLC may require you to verify your

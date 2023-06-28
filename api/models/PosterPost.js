@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const PosterPost = new mongoose.Schema(
   {
@@ -7,32 +7,32 @@ const PosterPost = new mongoose.Schema(
     },
     text: {
       type: String,
-      required: true
+      required: true,
     },
     authorId: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     brandId: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    selectedSocial:{
-      type: String, 
-      required: true
+    selectedSocial: {
+      type: String,
+      required: true,
     },
-    selectedReview:{
-      type: String, 
-      required: true
+    selectedReview: {
+      type: String,
+      required: true,
     },
     images: {
-        type: Array
+      type: Array,
     },
-    confirmed: {type: Boolean}
+    confirmed: { type: Boolean },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-export default mongoose.model('PosterPost', PosterPost);
+export default mongoose.model("PosterPost", PosterPost);

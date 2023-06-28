@@ -558,7 +558,7 @@ const resolvers = {
           reviewMedia: {},
           socialMedia: {},
           stripeAccountId: "",
-          address: ""
+          address: "",
         });
       }
 
@@ -726,7 +726,8 @@ const resolvers = {
       return { token, user: newuser };
     },
     addStripeAccountInfo: async (parent, args, social, context, _info) => {
-      const {     userId,
+      const {
+        userId,
         bankAccountNumber,
         routingNumber,
         businessInformation,
@@ -742,7 +743,8 @@ const resolvers = {
         dateOfBirthyear,
         representativeName,
         representativePhoneNumber,
-        termsOfServiceAcceptance, } = args.info;
+        termsOfServiceAcceptance,
+      } = args.info;
 
       // Проверка, что пользователь с заданным userId существует
       const user = await User.findById(userId);
@@ -1094,29 +1096,35 @@ const resolvers = {
       if (!brand) {
         throw new GraphQLError("There is no such brand");
       }
-      if ( selectedSocial == "instagram" ) {
-        if (!author.socialMedia.instagram.name){
-        throw new GraphQLError("You have no confirmed instagram");}
+      if (selectedSocial == "instagram") {
+        if (!author.socialMedia.instagram.name) {
+          throw new GraphQLError("You have no confirmed instagram");
+        }
       }
-      if ( selectedSocial == "facebook" ) {
-        if (!author.socialMedia.facebook.name){
-        throw new GraphQLError("You have no confirmed facebook");}
+      if (selectedSocial == "facebook") {
+        if (!author.socialMedia.facebook.name) {
+          throw new GraphQLError("You have no confirmed facebook");
+        }
       }
-      if ( selectedSocial == "tiktok" ) {
-        if (!author.socialMedia.tiktok.name){
-        throw new GraphQLError("You have no confirmed tiktok");}
+      if (selectedSocial == "tiktok") {
+        if (!author.socialMedia.tiktok.name) {
+          throw new GraphQLError("You have no confirmed tiktok");
+        }
       }
-      if ( selectedReview == "google" ) {
-        if (!author.reviewMedia.google){
-        throw new GraphQLError("You have no confirmed google");}
+      if (selectedReview == "google") {
+        if (!author.reviewMedia.google) {
+          throw new GraphQLError("You have no confirmed google");
+        }
       }
-      if ( selectedReview == "yelp" ) {
-        if (!author.reviewMedia.yelp){
-        throw new GraphQLError("You have no confirmed yelp");}
+      if (selectedReview == "yelp") {
+        if (!author.reviewMedia.yelp) {
+          throw new GraphQLError("You have no confirmed yelp");
+        }
       }
-      if ( selectedReview == "tripadvisor" ) {
-        if (!author.reviewMedia.tripadvisor){
-        throw new GraphQLError("You have no confirmed tripadvisor");}
+      if (selectedReview == "tripadvisor") {
+        if (!author.reviewMedia.tripadvisor) {
+          throw new GraphQLError("You have no confirmed tripadvisor");
+        }
       }
       const postcreate = new PosterPost({
         selectedReview,
@@ -1208,11 +1216,11 @@ const resolvers = {
       return user;
     },
     banUser: async (parent, { email, text }, args) => {
-      const user = await User.findOne({email});
+      const user = await User.findOne({ email });
       if (!user) {
         throw new GraphQLError("Invalid email given- changestatus");
       }
-      const newuser = await User.findByIdAndDelete(user.id)
+      const newuser = await User.findByIdAndDelete(user.id);
       if (!newuser) {
         throw new GraphQLError("Something went wrong!");
       }
@@ -1227,16 +1235,11 @@ const resolvers = {
         from: process.env.FROM_EMAIL,
         to: user.email,
         subject: "ban",
-        text:
-          "Hello " +
-          user.fullname +
-          ",\n\n" +
-          "Ban" +
-          text,
+        text: "Hello " + user.fullname + ",\n\n" + "Ban" + text,
       };
       transporter.sendMail(mailOptions, function (err) {
         if (err) {
-        throw new GraphQLError("Seomething went wrong with nodemailer")
+          throw new GraphQLError("Seomething went wrong with nodemailer");
         }
       });
       return "Send!";

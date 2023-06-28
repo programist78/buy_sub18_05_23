@@ -1,7 +1,7 @@
-import typeDefs from './typeDefs.mjs';
-import resolvers from './resolvers.mjs';
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import typeDefs from "./typeDefs.mjs";
+import resolvers from "./resolvers.mjs";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 
-const schema = makeExecutableSchema({ typeDefs, resolvers});
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 
-export default schema
+export default schema;

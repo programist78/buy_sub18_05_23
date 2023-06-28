@@ -10,7 +10,7 @@ export default function Part2() {
         </p>
         <p className={`text ${styles.text}`}>
           Your customers will constantly want to post information about your
-          business on social media! 
+          business on social media!
         </p>
         <div className={styles.media}>
           <Image src="/facebook.svg" alt="." width={88} height={88} />

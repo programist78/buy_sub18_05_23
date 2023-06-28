@@ -18,28 +18,27 @@ import SmallLoader from "../../Loaders/SmallLoader";
 import { BiPencil } from "react-icons/bi";
 import { CHANGE_USER } from "../../../apollo/auth";
 import { Button, Modal as ModalAntd, Upload } from "antd";
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from "@ant-design/icons";
 
 import { UploadOutlined } from "@ant-design/icons";
 export default function BusinessCabinetCom() {
   //edit Information
   const [edit, setEdit] = useState(false);
-  const [editDetails, setEditDetails] = useState(false)
+  const [editDetails, setEditDetails] = useState(false);
   const [newImage, setNewImage] = useState(false);
   const [editPhone, setEditPhone] = useState("");
   const [editAddress, setEditAddress] = useState("");
   const [editPostPrice, setEditPostPrice] = useState("");
   const [editWebsiteLink, setEditWebsiteLink] = useState("");
   const [editBrandDescription, setEditBrandDescription] = useState("");
-  const [image, setImage] = useState()
-  const [imageLogo, setImageLogo] = useState()
-  const [editInstagramLink, setEditInstagramLink] = useState("")
-  const [editFacebookLink, setEditFacebookLink] = useState("")
-  const [editTwitterLink, setEditTwitterLink] = useState("")
+  const [image, setImage] = useState();
+  const [imageLogo, setImageLogo] = useState();
+  const [editInstagramLink, setEditInstagramLink] = useState("");
+  const [editFacebookLink, setEditFacebookLink] = useState("");
+  const [editTwitterLink, setEditTwitterLink] = useState("");
   //user Info
   const { userInfo } = useSelector((state) => state.userInfo);
 
-  
   //open modules
   const [isAccountingOpen, setIsAccountingOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -138,8 +137,6 @@ export default function BusinessCabinetCom() {
     acceptPost({ variables: { posterPostId } });
   }
 
-
-
   const [changeInfo] = useMutation(CHANGE_USER, {
     onError(error) {
       Swal.fire({
@@ -155,9 +152,19 @@ export default function BusinessCabinetCom() {
       setEdit(!edit);
     },
     variables: {
-      about: {websiteLink: editWebsiteLink, postPrice: editPostPrice?.toString(), phone: editPhone, brandDescription: editBrandDescription, address: editAddress, instagram: editInstagramLink, twitter: editTwitterLink, facebook: editFacebookLink},
-     changeUserId: userInfo?.id},
-  })
+      about: {
+        websiteLink: editWebsiteLink,
+        postPrice: editPostPrice?.toString(),
+        phone: editPhone,
+        brandDescription: editBrandDescription,
+        address: editAddress,
+        instagram: editInstagramLink,
+        twitter: editTwitterLink,
+        facebook: editFacebookLink,
+      },
+      changeUserId: userInfo?.id,
+    },
+  });
 
   const [changeImage] = useMutation(CHANGE_IMAGE, {
     onError(error) {
@@ -175,8 +182,9 @@ export default function BusinessCabinetCom() {
     },
     variables: {
       image,
-      changeImageId: userInfo?.id},
-  })
+      changeImageId: userInfo?.id,
+    },
+  });
 
   const [changeLogo] = useMutation(CHANGE_LOGO, {
     onError(error) {
@@ -194,8 +202,9 @@ export default function BusinessCabinetCom() {
     },
     variables: {
       image: imageLogo,
-      changeLogoId: userInfo?.id},
-  })
+      changeLogoId: userInfo?.id,
+    },
+  });
 
   const props = {
     name: "file",
@@ -218,7 +227,7 @@ export default function BusinessCabinetCom() {
   const customStyles = {
     content: {
       zIndex: "5000",
-      position: "absolute"
+      position: "absolute",
     },
   };
 
@@ -234,23 +243,29 @@ export default function BusinessCabinetCom() {
                 src={userInfo?.avatarUrl}
                 alt="logo"
                 width={139}
-                style={{borderRadius: "50%", objectFit: "cover"}}
+                style={{ borderRadius: "50%", objectFit: "cover" }}
                 height={139}
               />
-              {editDetails
-              ?
-              <div>
-                                <Upload {...props2}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
-                <p className={`nav_text ${styles.nav_text}`} onClick={(() => changeLogo())}>Save</p>
-              </div>
-              :
-              <p onClick={() => setEditDetails(!editDetails)} className={`nav_text ${styles.nav_text}`}>
-              Edit Business Details
-            </p>
-              }
-
+              {editDetails ? (
+                <div>
+                  <Upload {...props2}>
+                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                  </Upload>
+                  <p
+                    className={`nav_text ${styles.nav_text}`}
+                    onClick={() => changeLogo()}
+                  >
+                    Save
+                  </p>
+                </div>
+              ) : (
+                <p
+                  onClick={() => setEditDetails(!editDetails)}
+                  className={`nav_text ${styles.nav_text}`}
+                >
+                  Edit Business Details
+                </p>
+              )}
             </div>
             <div className={styles.info_part}>
               <p className="pretitle">Posts Status</p>
@@ -269,72 +284,81 @@ export default function BusinessCabinetCom() {
                   View
                 </button>
               </div>
-              <div styles={{zIndex: "20000"}}>
-              <Modal
-                isOpen={isOpen}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Кастомный попап"
-              >
-                {/* <div  className="b_button" styles={{zIndex: "20000", position: "absolute", top: "500px", opacity: "0"}} /> */}
-                {/* <div className="b_button" style={{zIndex: "20000", position: "absolute", top: "500px", opacity: "0"}}/> */}
-                <AiOutlineCloseCircle onClick={closeModal} className="b_button" style={{zIndex: "20000", position: "fixed", top: "300px"}}/>
+              <div styles={{ zIndex: "20000" }}>
+                <Modal
+                  isOpen={isOpen}
+                  onRequestClose={closeModal}
+                  style={customStyles}
+                  contentLabel="Кастомный попап"
+                >
+                  {/* <div  className="b_button" styles={{zIndex: "20000", position: "absolute", top: "500px", opacity: "0"}} /> */}
+                  {/* <div className="b_button" style={{zIndex: "20000", position: "absolute", top: "500px", opacity: "0"}}/> */}
+                  <AiOutlineCloseCircle
+                    onClick={closeModal}
+                    className="b_button"
+                    style={{ zIndex: "20000", position: "fixed", top: "300px" }}
+                  />
 
-                <div className={styles.modal} styles={{zIndex: "20000"}}>
-                 
-                  {pendingdata?.getAllPendingPosterPostsforBusiness?.map(
-                    (obj, key) =>
-                      pendingloading ? (
-                        <div
-                          className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
-                        >
-                          <p className="text">Loading...</p>
-                        </div>
-                      ) : (
-                        <div className={styles.row_part}>
+                  <div className={styles.modal} styles={{ zIndex: "20000" }}>
+                    {pendingdata?.getAllPendingPosterPostsforBusiness?.map(
+                      (obj, key) =>
+                        pendingloading ? (
                           <div
                             className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
                           >
-                            <p className="text">
-                              Selected social - {obj.selectedSocial}
-                            </p>
-                            <p className="text">
-                              Selected review - {obj.selectedReview}
-                            </p>
-                            {obj.images.map((image) => (
-                              <img src={image} className={styles.modal_image} />
-                            ))}
+                            <p className="text">Loading...</p>
                           </div>
-                          <div className={styles.modal_div}>
-                            <button
-                              onClick={() => onClickAccept(obj.id)}
-                              className="b_button"
+                        ) : (
+                          <div className={styles.row_part}>
+                            <div
+                              className={`a_input ${styles.statistic_div} ${styles.modal_div}`}
                             >
-                              Accept
-                            </button>
-                            <button
-                              onClick={() => onClickDecline(obj.id)}
-                              className="b_button"
-                            >
-                              Decline
-                            </button>
+                              <p className="text">
+                                Selected social - {obj.selectedSocial}
+                              </p>
+                              <p className="text">
+                                Selected review - {obj.selectedReview}
+                              </p>
+                              {obj.images.map((image) => (
+                                <img
+                                  src={image}
+                                  className={styles.modal_image}
+                                />
+                              ))}
+                            </div>
+                            <div className={styles.modal_div}>
+                              <button
+                                onClick={() => onClickAccept(obj.id)}
+                                className="b_button"
+                              >
+                                Accept
+                              </button>
+                              <button
+                                onClick={() => onClickDecline(obj.id)}
+                                className="b_button"
+                              >
+                                Decline
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      )
-                  )}
-                </div>
-              </Modal>
+                        )
+                    )}
+                  </div>
+                </Modal>
               </div>
               <Modal
-              style={customStyles}
+                style={customStyles}
                 isOpen={isOpen2}
                 onRequestClose={closeModal2}
                 contentLabel="Кастомный попап"
               >
-                                <AiOutlineCloseCircle onClick={closeModal2} className="b_button" style={{zIndex: "20000", position: "fixed", top: "300px"}}/>
+                <AiOutlineCloseCircle
+                  onClick={closeModal2}
+                  className="b_button"
+                  style={{ zIndex: "20000", position: "fixed", top: "300px" }}
+                />
 
                 <div className={styles.modal}>
-
                   {completeddata?.getAllCompletedPosterPostsforBusiness.map(
                     (obj, key) =>
                       completedLoading ? (
@@ -407,41 +431,41 @@ export default function BusinessCabinetCom() {
             <div className={styles.info_part}>
               {edit ? (
                 <>
-                <button onClick={() => changeInfo()} className="b_button">
-                  Save information
-                </button>
-                              <button
-                              onClick={() => setIsAccountingOpen(!isAccountingOpen)}
-                              className="b_button"
-                            >
-                              Close
-                              <span>
-                    <AiOutlineCloseCircle />
-                  </span>
-                            </button>
-                            </>
+                  <button onClick={() => changeInfo()} className="b_button">
+                    Save information
+                  </button>
+                  <button
+                    onClick={() => setIsAccountingOpen(!isAccountingOpen)}
+                    className="b_button"
+                  >
+                    Close
+                    <span>
+                      <AiOutlineCloseCircle />
+                    </span>
+                  </button>
+                </>
               ) : (
                 <>
-                <button onClick={() => setEdit(!edit)} className="b_button">
-                  Edit -
-                  <span>
-                    <BiPencil />
-                  </span>
-                </button>
-                <button
-                onClick={() => setIsAccountingOpen(!isAccountingOpen)}
-                className="b_button"
-              >
-                Close 
-                <span>
-                    <AiOutlineCloseCircle />
-                  </span>
-              </button>
-              </>
+                  <button onClick={() => setEdit(!edit)} className="b_button">
+                    Edit -
+                    <span>
+                      <BiPencil />
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => setIsAccountingOpen(!isAccountingOpen)}
+                    className="b_button"
+                  >
+                    Close
+                    <span>
+                      <AiOutlineCloseCircle />
+                    </span>
+                  </button>
+                </>
               )}
               {edit ? (
                 <>
-                                  <p className="text">Your contact phone :</p>
+                  <p className="text">Your contact phone :</p>
                   <input
                     type="text"
                     value={editPhone}
@@ -449,18 +473,23 @@ export default function BusinessCabinetCom() {
                     // className={`${styles.changeinfo_input} text`}
                     className="a_input"
                   />
-                      <p className="text">
+                  <p className="text">
                     Business post price : ${userInfo?.postPrice / 100}
                   </p>
-                  <p className="nav_text"> Poster gets 70% of this sum after successfully creating a post for your business
-                 </p>
+                  <p className="nav_text">
+                    {" "}
+                    Poster gets 70% of this sum after successfully creating a
+                    post for your business
+                  </p>
                   <input
-  // type="number"
-  value={(editPostPrice / 100).toFixed(2)}
-  onChange={(e) => setEditPostPrice(parseFloat(e.target.value) * 100)}
-  // className="a_input"
-  className={`a_input ${styles.custom_input}`}
-/>
+                    // type="number"
+                    value={(editPostPrice / 100).toFixed(2)}
+                    onChange={(e) =>
+                      setEditPostPrice(parseFloat(e.target.value) * 100)
+                    }
+                    // className="a_input"
+                    className={`a_input ${styles.custom_input}`}
+                  />
 
                   <p className="text">
                     Business physical location : {userInfo?.address}
@@ -472,20 +501,29 @@ export default function BusinessCabinetCom() {
                     className="a_input"
                   />
                   <p className="text">Here image</p>
-                  {newImage ?
-                  <div>
-                  <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
-                  <button className="b_button" onClick={() => changeImage()}>Click here for change</button>  
-                  </div>
-                  :
-                  <button onClick={() => setNewImage(!newImage)} className="b_button">
-                  Add another Image 
-                  <span>
-                  </span>
-                </button>
-                }
+                  {newImage ? (
+                    <div>
+                      <Upload {...props}>
+                        <Button icon={<UploadOutlined />}>
+                          Click to Upload
+                        </Button>
+                      </Upload>
+                      <button
+                        className="b_button"
+                        onClick={() => changeImage()}
+                      >
+                        Click here for change
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setNewImage(!newImage)}
+                      className="b_button"
+                    >
+                      Add another Image
+                      <span></span>
+                    </button>
+                  )}
                   <img src={userInfo?.image} className={styles.brandimage} />
                   <p className="text">
                     Business website link : {userInfo?.websiteLink}
@@ -496,7 +534,7 @@ export default function BusinessCabinetCom() {
                     onChange={(e) => setEditWebsiteLink(e.target.value)}
                     className="a_input"
                   />
-                                <p className="text">
+                  <p className="text">
                     Business brand description : {userInfo?.brandDescription}
                   </p>
                   <input
@@ -505,30 +543,22 @@ export default function BusinessCabinetCom() {
                     onChange={(e) => setEditBrandDescription(e.target.value)}
                     className="a_input"
                   />
-                    <p className="text">
-                    Brand Social Media:
-                  </p>
-                  <p className="text">
-                    Instagram:  
-                  </p>
+                  <p className="text">Brand Social Media:</p>
+                  <p className="text">Instagram:</p>
                   <input
                     type="text"
                     value={editInstagramLink}
                     onChange={(e) => setEditInstagramLink(e.target.value)}
                     className="a_input"
                   />
-                   <p className="text">
-                    Facebook: 
-                  </p>
+                  <p className="text">Facebook:</p>
                   <input
                     type="text"
                     value={editFacebookLink}
                     onChange={(e) => setEditFacebookLink(e.target.value)}
                     className="a_input"
                   />
-                                     <p className="text">
-                    Twitter:  
-                  </p>
+                  <p className="text">Twitter:</p>
                   <input
                     type="text"
                     value={editTwitterLink}
@@ -543,8 +573,11 @@ export default function BusinessCabinetCom() {
                   <p className="text">
                     Business post price : ${userInfo?.postPrice / 100}
                   </p>
-                 <p className="nav_text"> Poster gets 70% of this sum after successfully creating a post for your business
-                 </p>
+                  <p className="nav_text">
+                    {" "}
+                    Poster gets 70% of this sum after successfully creating a
+                    post for your business
+                  </p>
                   <p className="text">
                     Business physical location : {userInfo?.address}
                   </p>
@@ -568,8 +601,6 @@ export default function BusinessCabinetCom() {
                   {/* <p className="text">Your social media : </p> */}
                 </>
               )}
-
-
             </div>
           ) : (
             <button

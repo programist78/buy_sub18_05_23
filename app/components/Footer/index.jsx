@@ -33,11 +33,21 @@ export default function Footer() {
           </div>
         </div>
         <div className={styles.part2}>
-          <Link href="/auth/business-sign-up"><p className="footer_text">Sign up Businesses</p></Link>
-          <Link href="/auth/poster-sign-up"><p className="footer_text">Sign up Posters</p></Link>
-          <Link href="/auth/login"><p className="footer_text">Log in</p></Link>
-          <Link href="/#contact_us"><p className="footer_text">Contact us</p></Link>
-          <Link href="/#about_us"><p className="footer_text">About us</p></Link>
+          <Link href="/auth/business-sign-up">
+            <p className="footer_text">Sign up Businesses</p>
+          </Link>
+          <Link href="/auth/poster-sign-up">
+            <p className="footer_text">Sign up Posters</p>
+          </Link>
+          <Link href="/auth/login">
+            <p className="footer_text">Log in</p>
+          </Link>
+          <Link href="/#contact_us">
+            <p className="footer_text">Contact us</p>
+          </Link>
+          <Link href="/#about_us">
+            <p className="footer_text">About us</p>
+          </Link>
           <p className="footer_text">Privacy</p>
         </div>
         <div className={styles.part3}>
@@ -50,9 +60,7 @@ export default function Footer() {
         </div>
       </div>
       <div className={`${styles.line} ${styles.second}`} />
-      <p className={styles.small_info}>
-        © 2023 by PFD LLC
-      </p>
+      <p className={styles.small_info}>© 2023 by PFD LLC</p>
     </div>
   );
 }

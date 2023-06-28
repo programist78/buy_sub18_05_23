@@ -3,14 +3,14 @@
 import { ApolloServer } from "apollo-server-koa";
 import graphqlUploadKoa from "graphql-upload/graphqlUploadKoa.mjs";
 import Koa from "koa";
-import chalk from 'chalk'
+import chalk from "chalk";
 import makeDir from "make-dir";
 import { fileURLToPath } from "node:url";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import UPLOAD_DIRECTORY_URL from "./config/UPLOAD_DIRECTORY_URL.mjs";
 import schema from "./schema/index.mjs";
 import serve from "koa-static";
-import path from 'path'
+import path from "path";
 import cors from "@koa/cors";
 const __dirname = path.resolve();
 /** Starts the API server. */
@@ -23,9 +23,9 @@ async function startServer() {
     origin: process.env.CLIENT,
     // 'http://localhost:3001', 'http://localhost:4000/graphql'],
     credentials: true,
-    }
+  };
 
-  const app = new Koa()
+  const app = new Koa();
   const apolloServer = new ApolloServer({ schema });
 
   await apolloServer.start();
@@ -41,11 +41,9 @@ async function startServer() {
         maxFiles: 20,
       })
     )
-    .use(serve(path.join(__dirname, '/uploads')))
+    .use(serve(path.join(__dirname, "/uploads")))
     // @ts-ignore
-    .use(cors(
-      corsOptions
-      ))
+    .use(cors(corsOptions))
     .use(apolloServer.getMiddleware({ app, path: "/graphql", cors: false }))
     // use(
     //   koaMiddleware(apolloServer, {
@@ -53,19 +51,21 @@ async function startServer() {
     //   })
     // )
     .listen(process.env.PORT, () => {
-      console.info(successMsg(
-        `Serving http://localhost:${process.env.PORT} for ${process.env.NODE_ENV}.`
-      ));
+      console.info(
+        successMsg(
+          `Serving http://localhost:${process.env.PORT} for ${process.env.NODE_ENV}.`
+        )
+      );
     });
 }
 
 mongoose
-  .set('strictQuery', false)
+  .set("strictQuery", false)
   .connect(process.env.MONGO_DB, {
     useUnifiedTopology: true,
-    useNewUrlParser: true
-  }).then(() => console.log(successMsg(('💖Db ok'))))
-  .catch((err) => console.log(errorMsg('DB error ❌', err)))
-
+    useNewUrlParser: true,
+  })
+  .then(() => console.log(successMsg("💖Db ok")))
+  .catch((err) => console.log(errorMsg("DB error ❌", err)));
 
 startServer();

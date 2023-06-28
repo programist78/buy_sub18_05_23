@@ -8,4 +8,4 @@ class UnauthorizedError extends ApolloError {
   }
 }
 
-export default UnauthorizedError
+export default UnauthorizedError;

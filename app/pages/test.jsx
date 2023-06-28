@@ -1,20 +1,22 @@
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 // Инициализация клиентского Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
 export default function CheckoutPage() {
   const handleCheckout = async () => {
     try {
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          priceId: 'price_1NGiVoBD1PAMw3USqVMWCWQo',
-          connectedAccountId: 'acct_1NGj3sB0h13I84qB',
+          priceId: "price_1NGiVoBD1PAMw3USqVMWCWQo",
+          connectedAccountId: "acct_1NGj3sB0h13I84qB",
         }),
       });
 
@@ -25,7 +27,7 @@ export default function CheckoutPage() {
         const stripe = await stripePromise;
         stripe.redirectToCheckout({ sessionId });
       } else {
-        console.error('Request failed');
+        console.error("Request failed");
       }
     } catch (error) {
       console.error(error);
@@ -33,7 +35,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div style={{padding: "250px"}}>
+    <div style={{ padding: "250px" }}>
       <h1>Checkout</h1>
       <button onClick={handleCheckout}>Checkout</button>
     </div>

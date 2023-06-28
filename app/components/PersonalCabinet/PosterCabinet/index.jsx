@@ -202,12 +202,12 @@ export default function PosterCabinetCom() {
       setEdit(!edit);
     },
     variables: {
-      about: {address: editAddress, phone: editPhone},
-     changeUserId: userInfo?.id},
-  })
+      about: { address: editAddress, phone: editPhone },
+      changeUserId: userInfo?.id,
+    },
+  });
 
-  const [changeSocial, setChangeSocial] = useState(false)
-
+  const [changeSocial, setChangeSocial] = useState(false);
 
   const [changeSocialMedia] = useMutation(POSTER_COMPLETE_REGISTER, {
     update(proxy, { data: { registerUserComplete: userData } }) {
@@ -224,10 +224,10 @@ export default function PosterCabinetCom() {
         icon: "success",
         title: `Redirecting...`,
       });
-      setChangeSocial(!changeSocial)
-    // Dispatch the action to save user info
-    await dispatch(setUserInfo(data.registerUserComplete.user));
-},
+      setChangeSocial(!changeSocial);
+      // Dispatch the action to save user info
+      await dispatch(setUserInfo(data.registerUserComplete.user));
+    },
     // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
     variables: {
       registerUserCompleteId: userInfo.id,
@@ -240,7 +240,7 @@ export default function PosterCabinetCom() {
         facebookFollowers,
       },
       review: { yelpReview, tripadvisorReview, googleReview },
-      images
+      images,
     },
   });
 
@@ -254,9 +254,9 @@ export default function PosterCabinetCom() {
   };
 
   function SaveAll() {
-    changeInfo()
+    changeInfo();
     if (facebookUserName || instagramUserName || tiktokUserName) {
-      changeSocialMedia()
+      changeSocialMedia();
     }
   }
   return (
@@ -546,7 +546,6 @@ export default function PosterCabinetCom() {
         </div>
       )}
 
-
       {isAccountingOpen ? (
         <div className={styles.info_part}>
           {edit ? (
@@ -593,231 +592,264 @@ export default function PosterCabinetCom() {
                 // className={`${styles.changeinfo_input} text`}
                 className="a_input"
               />
-
-              <p className="text">
-                Address : {userInfo?.address}
-              </p>
+              <p className="text">Address : {userInfo?.address}</p>
               <input
                 type="text"
                 value={editAddress}
                 onChange={(e) => setEditAddress(e.target.value)}
                 className="a_input"
               />
-              {changeSocial ?
-              <>
-              <form onSubmit={() => changeSocialMedia()} className={styles.form}>
-            <div className={styles.social_input}>
-              <Image
-                src="/facebook.svg"
-                width={40}
-                height={40}
-                alt="facebook"
-              />
-              <input
-                className={`a_input ${styles.nick_input}`}
-                type="text"
-                onChange={(e) => setFacebookUserName(e.target.value)}
-                placeholder="Your Facebook Username"
-              />
-              <input
-                type="number"
-                className={`a_input ${styles.number_input}`}
-                onChange={(e) => setFacebookFollowers(e.target.value)}
-                placeholder="Number of your friends"
-              />
-              <Image
-                src="/file_download.svg"
-                width={40}
-                height={40}
-                alt="file"
-              />
-              <p className="nav_text">Screenshot of your social</p>
-              {/* <input
+              {changeSocial ? (
+                <>
+                  <form
+                    onSubmit={() => changeSocialMedia()}
+                    className={styles.form}
+                  >
+                    <div className={styles.social_input}>
+                      <Image
+                        src="/facebook.svg"
+                        width={40}
+                        height={40}
+                        alt="facebook"
+                      />
+                      <input
+                        className={`a_input ${styles.nick_input}`}
+                        type="text"
+                        onChange={(e) => setFacebookUserName(e.target.value)}
+                        placeholder="Your Facebook Username"
+                      />
+                      <input
+                        type="number"
+                        className={`a_input ${styles.number_input}`}
+                        onChange={(e) => setFacebookFollowers(e.target.value)}
+                        placeholder="Number of your friends"
+                      />
+                      <Image
+                        src="/file_download.svg"
+                        width={40}
+                        height={40}
+                        alt="file"
+                      />
+                      <p className="nav_text">Screenshot of your social</p>
+                      {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
               /> */}
-              <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </div>
-            <div className={styles.social_input}>
-              <Image
-                src="/instagram.svg"
-                width={40}
-                height={40}
-                alt="instagram"
-              />
-              <input
-                type="text"
-                className={`a_input ${styles.nick_input}`}
-                onChange={(e) => setInstagramUserName(e.target.value)}
-                placeholder="Your Instagram Username"
-              />
-              <input
-                type="number"
-                className={`a_input ${styles.number_input}`}
-                onChange={(e) => setInstagramFollowers(e.target.value)}
-                placeholder="Number of your followers"
-              />
-              <Image
-                src="/file_download.svg"
-                width={40}
-                height={40}
-                alt="file"
-              />
-              <p className="nav_text">Screenshot of your social</p>
-              {/* <input
+                      <Upload {...props}>
+                        <Button icon={<UploadOutlined />}>
+                          Click to Upload
+                        </Button>
+                      </Upload>
+                    </div>
+                    <div className={styles.social_input}>
+                      <Image
+                        src="/instagram.svg"
+                        width={40}
+                        height={40}
+                        alt="instagram"
+                      />
+                      <input
+                        type="text"
+                        className={`a_input ${styles.nick_input}`}
+                        onChange={(e) => setInstagramUserName(e.target.value)}
+                        placeholder="Your Instagram Username"
+                      />
+                      <input
+                        type="number"
+                        className={`a_input ${styles.number_input}`}
+                        onChange={(e) => setInstagramFollowers(e.target.value)}
+                        placeholder="Number of your followers"
+                      />
+                      <Image
+                        src="/file_download.svg"
+                        width={40}
+                        height={40}
+                        alt="file"
+                      />
+                      <p className="nav_text">Screenshot of your social</p>
+                      {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
               /> */}
-              <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </div>
-            <div className={styles.social_input}>
-              <Image
-                src="/tiktok.svg"
-                style={{ borderRadius: "50%" }}
-                width={40}
-                height={40}
-                alt="tiktok"
-              />
-              <input
-                type="text"
-                onChange={(e) => setTiktokUserName(e.target.value)}
-                className={`a_input ${styles.nick_input}`}
-                placeholder="Your TikTok Username"
-              />
-              <input
-                type="number"
-                className={`a_input ${styles.number_input}`}
-                onChange={(e) => setTiktokFollowers(e.target.value)}
-                placeholder="Number of your followers"
-              />
-              <Image
-                src="/file_download.svg"
-                width={40}
-                height={40}
-                alt="file"
-              />
-              <p className="nav_text">Screenshot of your social</p>
-              {/* <input
+                      <Upload {...props}>
+                        <Button icon={<UploadOutlined />}>
+                          Click to Upload
+                        </Button>
+                      </Upload>
+                    </div>
+                    <div className={styles.social_input}>
+                      <Image
+                        src="/tiktok.svg"
+                        style={{ borderRadius: "50%" }}
+                        width={40}
+                        height={40}
+                        alt="tiktok"
+                      />
+                      <input
+                        type="text"
+                        onChange={(e) => setTiktokUserName(e.target.value)}
+                        className={`a_input ${styles.nick_input}`}
+                        placeholder="Your TikTok Username"
+                      />
+                      <input
+                        type="number"
+                        className={`a_input ${styles.number_input}`}
+                        onChange={(e) => setTiktokFollowers(e.target.value)}
+                        placeholder="Number of your followers"
+                      />
+                      <Image
+                        src="/file_download.svg"
+                        width={40}
+                        height={40}
+                        alt="file"
+                      />
+                      <p className="nav_text">Screenshot of your social</p>
+                      {/* <input
                 className={`b_button ${styles.custom_input}`}
                 type="file"
               /> */}
-              <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </div>
-            <div className="a_instrusctions">
-              <p>
-                • Please select which review sites you are signed for and enter
-                your review sites username.
-                <br />• If you have a Gmail account you can automatically leave
-                a google review. Please enter your google account name.
-              </p>
-            </div>
-            <div className={styles.social_input}>
-              <Image src="/google.svg" width={40} height={40} alt="google" />
-              <input
-                type="text"
-                className="a_input"
-                onChange={(e) => setGoogleReview(e.target.value)}
-                placeholder="Your Google"
-              />
-              <a
-                href="https://accounts.google.com/signup."
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
-              </a>
-            </div>
-            <div className={styles.social_input}>
-              <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
-              <input
-                type="text"
-                className="a_input"
-                onChange={(e) => setYelpReview(e.target.value)}
-                placeholder="Your Yelp"
-              />
-              <a
-                href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
-              </a>
-            </div>
-            <div className={styles.social_input}>
-              <Image
-                src="/tripadvisor.svg"
-                width={40}
-                height={40}
-                alt="tripadvisor"
-              />
-              <input
-                type="text"
-                className="a_input"
-                onChange={(e) => setTripadvisorReview(e.target.value)}
-                placeholder="Your Tripadvisor"
-              />
-              <a
-                href="https://www.tripadvisor.com"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
-              </a>
-            </div>
-            {/* <button
+                      <Upload {...props}>
+                        <Button icon={<UploadOutlined />}>
+                          Click to Upload
+                        </Button>
+                      </Upload>
+                    </div>
+                    <div className="a_instrusctions">
+                      <p>
+                        • Please select which review sites you are signed for
+                        and enter your review sites username.
+                        <br />• If you have a Gmail account you can
+                        automatically leave a google review. Please enter your
+                        google account name.
+                      </p>
+                    </div>
+                    <div className={styles.social_input}>
+                      <Image
+                        src="/google.svg"
+                        width={40}
+                        height={40}
+                        alt="google"
+                      />
+                      <input
+                        type="text"
+                        className="a_input"
+                        onChange={(e) => setGoogleReview(e.target.value)}
+                        placeholder="Your Google"
+                      />
+                      <a
+                        href="https://accounts.google.com/signup."
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <p className="nav_text">Don't have an account?</p>
+                        <button className={`b_button`}>Sign up</button>
+                      </a>
+                    </div>
+                    <div className={styles.social_input}>
+                      <Image
+                        src="/yelp.svg"
+                        width={40}
+                        height={40}
+                        alt="yelp"
+                      />
+                      <input
+                        type="text"
+                        className="a_input"
+                        onChange={(e) => setYelpReview(e.target.value)}
+                        placeholder="Your Yelp"
+                      />
+                      <a
+                        href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <p className="nav_text">Don't have an account?</p>
+                        <button className={`b_button`}>Sign up</button>
+                      </a>
+                    </div>
+                    <div className={styles.social_input}>
+                      <Image
+                        src="/tripadvisor.svg"
+                        width={40}
+                        height={40}
+                        alt="tripadvisor"
+                      />
+                      <input
+                        type="text"
+                        className="a_input"
+                        onChange={(e) => setTripadvisorReview(e.target.value)}
+                        placeholder="Your Tripadvisor"
+                      />
+                      <a
+                        href="https://www.tripadvisor.com"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <p className="nav_text">Don't have an account?</p>
+                        <button className={`b_button`}>Sign up</button>
+                      </a>
+                    </div>
+                    {/* <button
               type="submit"
               // disabled={messageError == "" ? false : true}
               className={`b_button ${styles.b_button}`}
             >
               Save Information
             </button> */}
-          </form>
-              </>
-              :  
-              <button onClick={() => setChangeSocial(!changeSocial)} className="b_button">Change Social Media and Review</button>
-                }  {/* <p className="text">Your social media : </p> */}
+                  </form>
+                </>
+              ) : (
+                <button
+                  onClick={() => setChangeSocial(!changeSocial)}
+                  className="b_button"
+                >
+                  Change Social Media and Review
+                </button>
+              )}{" "}
+              {/* <p className="text">Your social media : </p> */}
             </>
           ) : (
             <>
               <p className="text">Your contact phone : {userInfo?.phone}</p>
-              <p className="text">
-                Your address : {userInfo?.address}
-              </p>
+              <p className="text">Your address : {userInfo?.address}</p>
               <p className="text">
                 Your Social Media :
                 <br />
-                {userInfo?.socialMedia?.instagram?.name ? `Instagram nick: ${userInfo?.socialMedia?.instagram?.name}, followers: ${userInfo?.socialMedia?.instagram?.followers}` : ""}
+                {userInfo?.socialMedia?.instagram?.name
+                  ? `Instagram nick: ${userInfo?.socialMedia?.instagram?.name}, followers: ${userInfo?.socialMedia?.instagram?.followers}`
+                  : ""}
                 <br />
-                {userInfo?.socialMedia?.tiktok?.name ? `Tiktok nick: ${userInfo?.socialMedia?.tiktok?.name}, followers: ${userInfo?.socialMedia?.tiktok?.followers}` : ""}
+                {userInfo?.socialMedia?.tiktok?.name
+                  ? `Tiktok nick: ${userInfo?.socialMedia?.tiktok?.name}, followers: ${userInfo?.socialMedia?.tiktok?.followers}`
+                  : ""}
                 <br />
-                {userInfo?.socialMedia?.facebook?.name ? `Facebook nick: ${userInfo?.socialMedia?.facebook?.name}, followers: ${userInfo?.socialMedia?.facebook?.followers}` : ""}
+                {userInfo?.socialMedia?.facebook?.name
+                  ? `Facebook nick: ${userInfo?.socialMedia?.facebook?.name}, followers: ${userInfo?.socialMedia?.facebook?.followers}`
+                  : ""}
               </p>
               <p className="text">
-                Your review website : 
+                Your review website :
                 <br />
-                {userInfo?.reviewMedia?.tripadvisor ? `Tripadvisor: ${userInfo?.reviewMedia?.tripadvisor}` : ""}
+                {userInfo?.reviewMedia?.tripadvisor
+                  ? `Tripadvisor: ${userInfo?.reviewMedia?.tripadvisor}`
+                  : ""}
                 <br />
-                {userInfo?.reviewMedia?.yelp ? `Yelp: ${userInfo?.reviewMedia?.yelp}` : ""}
+                {userInfo?.reviewMedia?.yelp
+                  ? `Yelp: ${userInfo?.reviewMedia?.yelp}`
+                  : ""}
                 <br />
-                {userInfo?.reviewMedia?.google ? `Google: ${userInfo?.reviewMedia?.google}` : ""}
+                {userInfo?.reviewMedia?.google
+                  ? `Google: ${userInfo?.reviewMedia?.google}`
+                  : ""}
                 <br />
               </p>
               {/* <p className="text">

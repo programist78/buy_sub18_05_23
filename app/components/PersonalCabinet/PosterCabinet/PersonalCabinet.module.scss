@@ -94,7 +94,7 @@
     align-items: center;
     padding: 100px;
   }
-  .back2{
+  .back2 {
     display: flex;
     flex-direction: row;
     gap: 80px;
@@ -205,7 +205,7 @@
     align-items: center;
     justify-content: center;
   }
-  .back2{
+  .back2 {
     display: flex;
     flex-direction: row;
     gap: 60px;
@@ -313,28 +313,28 @@
     width: 20vw;
   }
 
-    //new
-    .box {
+  //new
+  .box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 90vw;
+  }
+  .filters {
+    display: flex;
+    flex-direction: row;
+    div {
       display: flex;
-      flex-direction: row;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
-      width: 90vw;
+
+      padding: 0px 15px;
     }
-    .filters {
-      display: flex;
-      flex-direction: row;
-      div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-  
-        padding: 0px 15px;
-      }
-    }
-    .active {
-      border-bottom: 2px solid #767575;
-    }
+  }
+  .active {
+    border-bottom: 2px solid #767575;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -381,7 +381,7 @@
     gap: 20px;
     align-items: center;
   }
-  .back2{
+  .back2 {
     display: flex;
     flex-direction: row;
     gap: 40px;
@@ -507,29 +507,29 @@
       height: 20px;
     }
   }
-      //new
-      .box {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        justify-content: space-between;
-        width: 100vw;
-        gap: 20px;
-      }
-      .filters {
-        display: flex;
-        flex-direction: row;
-        div {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-    
-          padding: 0px 15px;
-        }
-      }
-      .active {
-        border-bottom: 2px solid #767575;
-      }
+  //new
+  .box {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    gap: 20px;
+  }
+  .filters {
+    display: flex;
+    flex-direction: row;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 0px 15px;
+    }
+  }
+  .active {
+    border-bottom: 2px solid #767575;
+  }
 }
 
 .modal {

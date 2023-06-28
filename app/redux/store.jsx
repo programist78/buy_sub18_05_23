@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
   subadmin: subadminReducer,
   people: peopleReducer,
   userInfo: userInfoReducer,
-  selectBus: SelectBusReducer
+  selectBus: SelectBusReducer,
 });
 
 const persistConfig = {

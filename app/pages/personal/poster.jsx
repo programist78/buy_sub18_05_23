@@ -10,21 +10,23 @@ export default function Poster() {
   const pageDescription =
     "Welcome to PostForDollars - the ultimate platform that connects posters and businesses for mutually beneficial collaborations! Whether you're a business looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help.";
 
-  const { userInfo, loading  } = useSelector((state) => state.userInfo);
-  const router = useRouter()
+  const { userInfo, loading } = useSelector((state) => state.userInfo);
+  const router = useRouter();
   if (loading) {
     return <BigLoader />;
   }
   if (userInfo) {
-  if (userInfo?.role == "USER") {
-    return (
-    <>
-    <CustomHead pageTitle={pageTitle} pageDescription={pageDescription} />
-    <PosterCabinetCom />
-    </>)
+    if (userInfo?.role == "USER") {
+      return (
+        <>
+          <CustomHead pageTitle={pageTitle} pageDescription={pageDescription} />
+          <PosterCabinetCom />
+        </>
+      );
+    } else {
+      return <NoAccess />;
+    }
   } else {
-    return <NoAccess />
-  }} else {
-    return <UnAuth />
+    return <UnAuth />;
   }
 }
