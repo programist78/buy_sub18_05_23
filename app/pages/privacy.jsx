@@ -253,7 +253,7 @@ export default function Privacy() {
                 <br />
                 Effective date: 6-1-23
         </p>
-        <p className="title">Terms and conditions for businesses</p>
+        {/* <p className="title">Terms and conditions for businesses</p>
         <p className='text' style={{textAlign: "start"}}>
            <br />
                 Welcome to POSTFORDOLLARS.COM! These Terms and Conditions govern
@@ -501,7 +501,7 @@ export default function Privacy() {
                 <br />
                 <br />
                 Effective date: 6-1-23
-        </p>
+        </p> */}
       </div>
     </div>
   );
