@@ -15,6 +15,7 @@ import {
   GET_POSTER_WHOLE_INFO,
   GET_UNACCEPTED_BUSINESS_INFO_POSTS,
   GET_UNACCEPTED_POSTER_INFO_POSTS,
+  UN_BAN_USER,
 } from "../../apollo/admin";
 import styles from "./Admin.module.scss";
 import { useQuery } from "@apollo/client";
@@ -62,6 +63,7 @@ export default function AdminCom() {
   return (
     <div className={styles.back}>
       <BanComponent />
+      <UnBanComponent />
       <BusinessRegistration />
       <PosterRegistration />
       <BusinessAdminPanel />
@@ -1461,6 +1463,49 @@ function BanComponent() {
       />
       <button className="b_button" onClick={() => ban()}>
         Block user
+      </button>
+    </div>
+  );
+}
+
+function UnBanComponent() {
+  const [text, setText] = useState("");
+  const [email, setEmail] = useState("");
+  const [unban] = useMutation(UN_BAN_USER, {
+    onError(error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error}`,
+      });
+    },
+    onCompleted: (data) => {
+      Swal.fire({
+        icon: "success",
+        title: `Success!`,
+      });
+    },
+    variables: {
+      email,
+      text,
+    },
+  });
+  return (
+    <div className={styles.inline_form}>
+      <p className="pretitle">Unban user</p>
+      <p className="nav_text">Email</p>
+      <input
+        type="text"
+        className="a_input"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <p className="nav_text">Reason</p>
+      <input
+        type="text"
+        className="a_input"
+        onChange={(e) => setText(e.target.value)}
+      />
+      <button className="b_button" onClick={() => unban()}>
+      Unban the user
       </button>
     </div>
   );

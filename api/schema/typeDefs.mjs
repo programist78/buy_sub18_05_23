@@ -96,6 +96,7 @@ const typeDefs = `#graphql
     brandDescription: String
     image: String
     zipCode: String
+    ban: Boolean
   }
 
   type AuthPayload {
@@ -350,6 +351,7 @@ input InfoStripeInput{
 
     updatetoSchema(newfield: String, value: String): [User]
     banUser(email: String, text: String): String
+    unBanUser(email: String, text: String): String
 
     getBusiness(brandname: String): BusinessIdAndPrice
   }

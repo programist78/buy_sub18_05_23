@@ -546,7 +546,7 @@ export default function SignUpPosterCom() {
               />
               <span className="checkmark"></span>
               {/* <Link href="/privacy" style={{ textDecoration: "underLine" }}> */}
-              You agree to all site policies and privacy rules
+              You confirm that you are at least 18 years old
               {/* </Link> */}
             </label>
             <p className={styles.errors}>{messageError}</p>

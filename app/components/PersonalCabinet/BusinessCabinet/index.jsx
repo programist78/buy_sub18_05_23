@@ -234,6 +234,12 @@ export default function BusinessCabinetCom() {
   return (
     <div className={styles.back}>
       <p className="title">My account Page</p>
+      {!userInfo.ban ? 
+      <div className={`a_input ${styles.statistic_div}`} style={{height: "auto", padding: "5%"}}>
+      <p className="text">You have currently blocked account, you do not show up in search, pay posts to display!</p>
+    </div>
+      : ""}
+
       {userInfo ? (
         <>
           <div className={styles.part1}>

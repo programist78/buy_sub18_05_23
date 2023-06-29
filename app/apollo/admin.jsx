@@ -216,3 +216,9 @@ export const BAN_USER = gql`
     banUser(email: $email, text: $text)
   }
 `;
+
+export const UN_BAN_USER = gql`
+mutation Mutation($email: String, $text: String) {
+  unBanUser(email: $email, text: $text)
+}
+`;

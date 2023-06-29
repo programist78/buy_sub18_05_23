@@ -66,6 +66,7 @@ const User = new mongoose.Schema(
     zipCode: { type: String },
     paidOut: { type: Number },
     stripeAccountId: { type: String },
+    ban: {type: Boolean, default: false},
   },
   {
     timestamps: true,

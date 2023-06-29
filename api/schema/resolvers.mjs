@@ -124,6 +124,7 @@ const resolvers = {
     getNewBusinesss: async (_parent, args, _context, _info) => {
       const filter = {
         role: "BUSINESS",
+        ban: false
       };
       const users = await User.find(filter).sort({ createdAt: -1 });
       return users;
@@ -1220,7 +1221,44 @@ const resolvers = {
       if (!user) {
         throw new GraphQLError("Invalid email given- changestatus");
       }
-      const newuser = await User.findByIdAndDelete(user.id);
+      const newuser = await User.findByIdAndUpdate(
+        user.id,
+        { ban: true },
+        { new: true }
+      );
+      if (!newuser) {
+        throw new GraphQLError("Something went wrong!");
+      }
+      const transporter = nodemailer.createTransport(
+        sendgridTransport({
+          auth: {
+            api_key: process.env.SENDGRID_APIKEY,
+          },
+        })
+      );
+      let mailOptions = {
+        from: process.env.FROM_EMAIL,
+        to: user.email,
+        subject: "ban",
+        text: "Hello " + user.fullname + ",\n\n" + "Ban" + text,
+      };
+      transporter.sendMail(mailOptions, function (err) {
+        if (err) {
+          throw new GraphQLError("Seomething went wrong with nodemailer");
+        }
+      });
+      return "Send!";
+    },
+    unBanUser: async (parent, { email, text }, args) => {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new GraphQLError("Invalid email given");
+      }
+      const newuser = await User.findByIdAndUpdate(
+        user.id,
+        { ban: false },
+        { new: true }
+      );
       if (!newuser) {
         throw new GraphQLError("Something went wrong!");
       }

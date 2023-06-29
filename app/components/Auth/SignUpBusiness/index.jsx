@@ -178,7 +178,7 @@ export default function SignUpBusiness() {
             </p>
             <div className="a_instrusctions">
               <p style={{ textAlign: "center", fontWeight: "600" }}>
-                Terms and Conditions (with Termination Clause) - Clients
+                Terms and conditions for businesses.
               </p>
               <p>
                 <br />
@@ -540,7 +540,7 @@ export default function SignUpBusiness() {
               />
               <span className="checkmark"></span>
               {/* <Link href="/privacy" style={{ textDecoration: "underLine" }}> */}
-              You agree to all site policies and privacy rules
+              You confirm that you are at least 18 years old
               {/* </Link> */}
             </label>
             <p className={styles.errors}>{messageError}</p>

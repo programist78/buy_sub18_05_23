@@ -6,6 +6,7 @@ export const LOGIN_USER = gql`
       token
       user {
         id
+        ban
         fullname
         email
         role
@@ -74,6 +75,7 @@ export const REGISTER_USER = gql`
         id
         fullname
         email
+        ban
         role
         socialMedia {
           instagram {
@@ -143,6 +145,7 @@ export const POSTER_COMPLETE_REGISTER = gql`
     ) {
       user {
         id
+        ban
         fullname
         email
         role
@@ -206,6 +209,7 @@ export const GETUSER_BYTOKEN = gql`
       fullname
       email
       role
+      ban
       socialMedia {
         instagram {
           name
@@ -296,6 +300,7 @@ export const GET_PROFILE = gql`
       id
       fullname
       email
+      ban
       role
       socialMedia {
         images
@@ -329,6 +334,7 @@ export const GET_ALL_PROFILES = gql`
     getProfiles {
       id
       fullname
+      ban
       email
       role
       socialMedia {
