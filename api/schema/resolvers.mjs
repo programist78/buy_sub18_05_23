@@ -603,19 +603,40 @@ const resolvers = {
       }
       let images = [];
 
+      // for (let i = 0; i < image.length; i++) {
+      //   const { createReadStream, filename, mimetype } = await image[i];
+      //   const stream = createReadStream();
+      //   const assetUniqName = fileRenamer(filename);
+      //   let extension = mimetype.split("/")[1];
+      //   const pathName = path.join(
+      //     __dirname,
+      //     `./uploads/${assetUniqName}.${extension}`
+      //   );
+      //   await stream.pipe(fs.createWriteStream(pathName));
+      //   const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+      //   images.push(urlForArray);
+      // }
       for (let i = 0; i < image.length; i++) {
-        const { createReadStream, filename, mimetype } = await image[i];
-        const stream = createReadStream();
+        const { createReadStream, filename, mimetype, encoding } = await image[i];
+        // const parts = filename.split('.');
+        // const extension = parts[parts.length - 1];
+        // const stream = createReadStream();
         const assetUniqName = fileRenamer(filename);
-        let extension = mimetype.split("/")[1];
-        const pathName = path.join(
-          __dirname,
-          `./uploads/${assetUniqName}.${extension}`
-        );
-        await stream.pipe(fs.createWriteStream(pathName));
-        const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-        images.push(urlForArray);
-      }
+        const bucketName = process.env.BUCKET_NAME;
+        const params = {
+            Bucket: bucketName,
+            Key: assetUniqName,
+            Body: createReadStream(),
+            // ACL: 'public-read',
+            ContentType: mimetype,
+          };
+          
+          const uploadResult = await s3.upload(params).promise();
+        // const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+        // await stream.pipe(fs.createWriteStream(pathName));
+        // const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+        images.push(uploadResult.Location);
+        }
       const user = await User.findByIdAndUpdate(
         id,
         {
@@ -635,19 +656,40 @@ const resolvers = {
       }
       let images = [];
 
+      // for (let i = 0; i < image.length; i++) {
+      //   const { createReadStream, filename, mimetype } = await image[i];
+      //   const stream = createReadStream();
+      //   const assetUniqName = fileRenamer(filename);
+      //   let extension = mimetype.split("/")[1];
+      //   const pathName = path.join(
+      //     __dirname,
+      //     `./uploads/${assetUniqName}.${extension}`
+      //   );
+      //   await stream.pipe(fs.createWriteStream(pathName));
+      //   const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+      //   images.push(urlForArray);
+      // }
       for (let i = 0; i < image.length; i++) {
-        const { createReadStream, filename, mimetype } = await image[i];
-        const stream = createReadStream();
+        const { createReadStream, filename, mimetype, encoding } = await image[i];
+        // const parts = filename.split('.');
+        // const extension = parts[parts.length - 1];
+        // const stream = createReadStream();
         const assetUniqName = fileRenamer(filename);
-        let extension = mimetype.split("/")[1];
-        const pathName = path.join(
-          __dirname,
-          `./uploads/${assetUniqName}.${extension}`
-        );
-        await stream.pipe(fs.createWriteStream(pathName));
-        const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-        images.push(urlForArray);
-      }
+        const bucketName = process.env.BUCKET_NAME;
+        const params = {
+            Bucket: bucketName,
+            Key: assetUniqName,
+            Body: createReadStream(),
+            // ACL: 'public-read',
+            ContentType: mimetype,
+          };
+          
+          const uploadResult = await s3.upload(params).promise();
+        // const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+        // await stream.pipe(fs.createWriteStream(pathName));
+        // const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+        images.push(uploadResult.Location);
+        }
       const user = await User.findByIdAndUpdate(
         id,
         {
@@ -687,19 +729,40 @@ const resolvers = {
       }
       let images = [];
       const { number, link, email } = info;
+      // for (let i = 0; i < args.images.length; i++) {
+      //   const { createReadStream, filename, mimetype } = await args.images[i];
+      //   const stream = createReadStream();
+      //   const assetUniqName = fileRenamer(filename);
+      //   let extension = mimetype.split("/")[1];
+      //   const pathName = path.join(
+      //     __dirname,
+      //     `./uploads/${assetUniqName}.${extension}`
+      //   );
+      //   await stream.pipe(fs.createWriteStream(pathName));
+      //   const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+      //   images.push(urlForArray);
+      // }
       for (let i = 0; i < args.images.length; i++) {
-        const { createReadStream, filename, mimetype } = await args.images[i];
-        const stream = createReadStream();
+        const { createReadStream, filename, mimetype, encoding } = await args.images[i];
+        // const parts = filename.split('.');
+        // const extension = parts[parts.length - 1];
+        // const stream = createReadStream();
         const assetUniqName = fileRenamer(filename);
-        let extension = mimetype.split("/")[1];
-        const pathName = path.join(
-          __dirname,
-          `./uploads/${assetUniqName}.${extension}`
-        );
-        await stream.pipe(fs.createWriteStream(pathName));
-        const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-        images.push(urlForArray);
-      }
+        const bucketName = process.env.BUCKET_NAME;
+        const params = {
+            Bucket: bucketName,
+            Key: assetUniqName,
+            Body: createReadStream(),
+            // ACL: 'public-read',
+            ContentType: mimetype,
+          };
+          
+          const uploadResult = await s3.upload(params).promise();
+        // const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+        // await stream.pipe(fs.createWriteStream(pathName));
+        // const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+        images.push(uploadResult.Location);
+        }
       const newuser = await User.findByIdAndUpdate(
         args.id,
         {
@@ -1078,19 +1141,40 @@ const resolvers = {
     createPosterPost: async (parent, { image, post }) => {
       let images = [];
 
+      // for (let i = 0; i < image.length; i++) {
+      //   const { createReadStream, filename, mimetype } = await image[i];
+      //   const stream = createReadStream();
+      //   const assetUniqName = fileRenamer(filename);
+      //   let extension = mimetype.split("/")[1];
+      //   const pathName = path.join(
+      //     __dirname,
+      //     `./uploads/${assetUniqName}.${extension}`
+      //   );
+      //   await stream.pipe(fs.createWriteStream(pathName));
+      //   const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+      //   images.push(urlForArray);
+      // }
       for (let i = 0; i < image.length; i++) {
-        const { createReadStream, filename, mimetype } = await image[i];
-        const stream = createReadStream();
+        const { createReadStream, filename, mimetype, encoding } = await image[i];
+        // const parts = filename.split('.');
+        // const extension = parts[parts.length - 1];
+        // const stream = createReadStream();
         const assetUniqName = fileRenamer(filename);
-        let extension = mimetype.split("/")[1];
-        const pathName = path.join(
-          __dirname,
-          `./uploads/${assetUniqName}.${extension}`
-        );
-        await stream.pipe(fs.createWriteStream(pathName));
-        const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
-        images.push(urlForArray);
-      }
+        const bucketName = process.env.BUCKET_NAME;
+        const params = {
+            Bucket: bucketName,
+            Key: assetUniqName,
+            Body: createReadStream(),
+            // ACL: 'public-read',
+            ContentType: mimetype,
+          };
+          
+          const uploadResult = await s3.upload(params).promise();
+        // const pathName = path.join(__dirname,   `./uploads/${assetUniqName}.${extension}`);
+        // await stream.pipe(fs.createWriteStream(pathName));
+        // const urlForArray = `${process.env.HOST}/${assetUniqName}.${extension}`;
+        images.push(uploadResult.Location);
+        }
       const { text, authorId, brandId, selectedReview, selectedSocial } = post;
       const brand = await User.findById(brandId);
       const author = await User.findById(authorId);
@@ -1172,45 +1256,6 @@ const resolvers = {
       }
       return "Done";
     },
-    //balance
-    // topupBalance: async (_, args, context, info) => {
-    //     const { email, money } = args
-    //     const user = await User.findOne(
-    //     {email}
-    //     );
-    //     if (!user) {
-    //         throw new GraphQLError("Invalid email given");
-    //     }
-    //     const topUp = Number(money)
-    //     const newbalance = topUp + user.balance
-    //     const newuser = await User.findByIdAndUpdate(
-    //         user.id,
-    //         {balance: newbalance},
-    //         { new: true }
-    //     );
-    //     return newuser
-    // },
-    // withdrawBalance: async (_, args, context, info) => {
-    //     const { email, money } = args
-    //     const user = await User.findOne(
-    //     {email}
-    //     );
-    //     if (!user) {
-    //         throw new GraphQLError("Invalid email given - widthDraw");
-    //     }
-    //     if (money > user.balance) {
-    //         throw new GraphQLError("Not enough to withdraw");
-    //     }
-    //     const withdraw = Number(money)
-    //     const newbalance = user.balance - withdraw
-    //     const newuser = await User.findByIdAndUpdate(
-    //         user.id,
-    //         {balance: newbalance},
-    //         { new: true }
-    //     );
-    //     return newuser
-    // },
-    //dev
     updatetoSchema: async (_, args, context, info) => {
       const { newfield, value } = args;
       const user = await User.updateMany({}, { $set: { [newfield]: value } });
