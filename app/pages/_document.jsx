@@ -19,7 +19,7 @@ export default function Document() {
 
         {/* <!-- Open Graph / Facebook --> */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://webxwiz.site/" />
+        <meta property="og:url" content="https://postfordollars.com" />
         <meta
           property="og:title"
           content="Postfordollars - Achieve more with us!"
@@ -28,11 +28,11 @@ export default function Document() {
           property="og:description"
           content="Welcome to PostForDollars - the ultimate platform that connects posters and businesses for mutually beneficial collaborations! Whether you're a business looking to promote your products or services or a poster seeking opportunities to earn rewards, PostForDollars is here to help."
         />
-        <meta property="og:image" content="https://webxwiz.site/preview.png" />
+        <meta property="og:image" content="https://postfordollars.com/preview.png" />
 
         {/* <!-- Twitter --> */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://webxwiz.site/" />
+        <meta property="twitter:url" content="https://postfordollars.com" />
         <meta
           property="twitter:title"
           content="Postfordollars - Achieve more with us!"
@@ -43,7 +43,7 @@ export default function Document() {
         />
         <meta
           property="twitter:image"
-          content="https://webxwiz.site/preview.png"
+          content="https://postfordollars.com/preview.png"
         />
 
         <link
