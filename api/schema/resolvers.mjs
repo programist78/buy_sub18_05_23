@@ -531,6 +531,7 @@ const resolvers = {
           postPrice,
           paidOut: 0,
           brandDescription: "",
+          ban: false,
           socialMedia: { instagram: "", facebook: "", twitter: "" },
         });
       } else {
@@ -560,6 +561,7 @@ const resolvers = {
           socialMedia: {},
           stripeAccountId: "",
           address: "",
+          ban: false,
         });
       }
 
@@ -904,7 +906,7 @@ const resolvers = {
       const { password, email } = args.about;
       let user = await User.findOne({ email });
       if (!user) {
-        throw new GraphQLError("Invalid nickname given");
+        throw new GraphQLError("Invalid email  given");
       }
 
       const isValidPass = await bcrypt.compare(password, user.passwordHash);
