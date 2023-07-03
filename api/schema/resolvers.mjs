@@ -32,7 +32,7 @@ const s3 = new AWS.S3({
 const resolvers = {
   Upload: GraphQLUpload,
   Query: {
-    //all
+    //getProfile accepts the user’s email and returns user information with this email. If the user is not found, the "Invalid email given" error is thrown.
     getProfile: async (_parent, { email }, _context, _info) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -40,10 +40,12 @@ const resolvers = {
       }
       return user;
     },
+    //getProfiles returns information about all users.
     getProfiles: async (_parent, args, _context, _info) => {
       const user = await User.find();
       return user;
     },
+    //getUserbyToken accepts token and returns information about the user associated with this token. If the user is not found, the "User is undefined" error is discarded.
     getUserbyToken: async (_parent, { token }, _context, _info) => {
       let info = "";
       if (token) {
@@ -56,7 +58,7 @@ const resolvers = {
       }
       return user;
     },
-    //brand
+    //getAllPendingPosterPostsforBusiness adopts brand id and returns information about all unfinished posts for this brand. If the brand is not found, the "Invalid id given" error is discarded
     getAllPendingPosterPostsforBusiness: async (
       _parent,
       { id },
@@ -75,6 +77,7 @@ const resolvers = {
       );
       return list;
     },
+    //getAllCompletedPosterPostsforBusiness adopts brand id and returns information about all completed posts for this brand. If the brand is not found, the "Invalid id given" error is discarded.
     getAllCompletedPosterPostsforBusiness: async (
       _parent,
       { id },
@@ -93,7 +96,7 @@ const resolvers = {
       );
       return list;
     },
-    //poster
+    //getAllPendingPosterPosts takes a user’s id and returns information about all pending posts for that user. If the user is not found, an “Invalid id given” error is thrown.
     getAllPendingPosterPosts: async (_parent, { id }, _context, _info) => {
       const user = await User.findById(id);
       if (!user) {
@@ -107,6 +110,7 @@ const resolvers = {
       );
       return list;
     },
+    //getAllCompletedBusinessPosts takes a user’s id and returns information about all completed posts for that user. If the user is not found, an “Invalid id given” error is thrown.
     getAllCompletedBusinessPosts: async (_parent, { id }, _context, _info) => {
       const user = await User.findById(id);
       if (!user) {
@@ -120,7 +124,7 @@ const resolvers = {
       );
       return list;
     },
-    //brand
+    //getNewBusinesss returns information about all businesses that are not banned, sorted by their creation date in descending order.
     getNewBusinesss: async (_parent, args, _context, _info) => {
       const filter = {
         role: "BUSINESS",
@@ -129,6 +133,7 @@ const resolvers = {
       const users = await User.find(filter).sort({ createdAt: -1 });
       return users;
     },
+    //getPopularBusinesss returns information about all businesses, sorted by the number of their completed posts in descending order.
     getPopularBusinesss: async (_parent, args, _context, _info) => {
       const filter = {
         role: "BUSINESS",
@@ -136,6 +141,7 @@ const resolvers = {
       const users = await User.find(filter).sort({ brandCompletedPosts: -1 });
       return users;
     },
+    //getBusinessQuery takes a brandname and returns information about the business with that brand name. If the business is not found, a “A brand called [brandname] does not exist” error is thrown.
     getBusinessQuery: async (_parent, { brandname }, _context, _info) => {
       const user = await User.findOne({ brandname });
       if (!user) {
@@ -143,6 +149,8 @@ const resolvers = {
       }
       return user;
     },
+
+    //getBusinessRegister takes a sorting argument argument and a page number page, and returns information about businesses on that page, sorted by the specified argument in descending order. The page size is 6.
     getBusinessRegister: async (
       _parent,
       { argument, page },
@@ -160,6 +168,7 @@ const resolvers = {
         .sort({ [argument]: -1 });
       return users;
     },
+    //getBusinessRegisterwAddInfo takes a sorting argument argument and a page number page, and returns information about businesses on that page that have at least one letter in their brand description, sorted by the specified argument in descending order. The page size is 6.
     getBusinessRegisterwAddInfo: async (
       _parent,
       { argument, page },
@@ -178,6 +187,7 @@ const resolvers = {
         .sort({ [argument]: -1 });
       return users;
     },
+    //getBusinessRegisterNeedAddInfo takes a sorting argument argument and a page number page, and returns information about businesses on that page that do not have a brand description, sorted by the specified argument in descending order. The page size is 6.
     getBusinessRegisterNeedAddInfo: async (
       _parent,
       { argument, page },
@@ -199,6 +209,7 @@ const resolvers = {
         .sort({ [argument]: -1 });
       return users;
     },
+    //getPosterRegister takes a sorting argument argument and a page number page, and returns information about posters on that page, sorted by the specified argument in descending order. The page size is 6.
     getPosterRegister: async (_parent, { argument, page }, _context, _info) => {
       const limit = 6;
       const skip = (page - 1) * limit;
@@ -211,6 +222,7 @@ const resolvers = {
         .sort({ [argument]: -1 });
       return users;
     },
+    //getPosterRegisterwSignup takes a sorting argument argument and a page number page, and returns information about posters on that page that do not have social media information, sorted by the specified argument in descending order. The page size is 6.
     getPosterRegisterwSignup: async (
       _parent,
       { argument, page },
@@ -230,6 +242,7 @@ const resolvers = {
 
       return users;
     },
+    //getPosterRegisterwDetails takes a sorting argument argument and a page number page, and returns information about posters on that page that have social media information, sorted by the specified argument in descending order. The page size is 6.
     getPosterRegisterwDetails: async (
       _parent,
       { argument, page },
@@ -249,6 +262,7 @@ const resolvers = {
 
       return users;
     },
+    //getBusinessInfoWPosts takes a sorting argument argument and a page number page, and returns information about posts on that page, along with details of the associated business, sorted by the specified argument in descending order. The page size is 6.
     getBusinessInfoWPosts: async (
       _parent,
       { argument, page },
@@ -276,6 +290,7 @@ const resolvers = {
 
       return postsWithUserDetails;
     },
+    // getAcceptedBusinessInfoWPosts takes a sorting argument argument and a page number page, and returns information about accepted posts on that page, along with details of the associated business, sorted by the specified argument in descending order. The page size is 6.
     getAcceptedBusinessInfoWPosts: async (
       _parent,
       { argument, page },
@@ -307,6 +322,7 @@ const resolvers = {
 
       return postsWithUserDetails;
     },
+    // getUnAcceptedBusinessInfoWPosts takes a sorting argument argument and a page number page, and returns information about unaccepted posts on that page, along with details of the associated business, sorted by the specified argument in descending order. The page size is 6
     getUnAcceptedBusinessInfoWPosts: async (
       _parent,
       { argument, page },
@@ -338,6 +354,7 @@ const resolvers = {
 
       return postsWithUserDetails;
     },
+    // getPosterInfoWPosts takes a sorting argument argument and a page number page, and returns information about posts on that page, along with details of the associated poster, sorted by the specified argument in descending order. The page size is 6.
     getPosterInfoWPosts: async (
       _parent,
       { argument, page },
@@ -364,6 +381,7 @@ const resolvers = {
 
       return postsWithUserDetails;
     },
+    // getAcceptedPosterInfoWPosts takes a sorting argument argument and a page number page, and returns information about accepted posts on that page, along with details of the associated poster, sorted by the specified argument in descending order. The page size is 6.
     getAcceptedPosterInfoWPosts: async (
       _parent,
       { argument, page },
@@ -393,6 +411,7 @@ const resolvers = {
 
       return postsWithUserDetails;
     },
+    // getUnAcceptedPosterInfoWPosts takes a sorting argument argument and a page number page, and returns information about unaccepted posts on that page, along with details of the associated poster, sorted by the specified argument in descending order. The page size is 6.
     getUnAcceptedPosterInfoWPosts: async (
       _parent,
       { argument, page },
@@ -422,6 +441,7 @@ const resolvers = {
 
       return postsWithUserDetails;
     },
+    //getBusinesswWholeInfo takes a sorting argument argument and a page number page, and returns information about businesses on that page, sorted by the specified argument in descending order. The page size is 6.
     getBusinesswWholeInfo: async (
       _parent,
       { argument, page },
@@ -440,6 +460,7 @@ const resolvers = {
 
       return users;
     },
+        //getBusinesswWholeInfo takes a sorting argument argument and a page number page, and returns information about poster on that page, sorted by the specified argument in descending order. The page size is 6.
     getPosterwWholeInfo: async (
       _parent,
       { argument, page },
@@ -461,6 +482,7 @@ const resolvers = {
   },
   Mutation: {
     //authorisation
+    //registration for posters and businesses
     registerUser: async (parent, args, social, context, _info) => {
       const {
         fullname,
@@ -571,6 +593,7 @@ const resolvers = {
       const token = await issueAuthToken({ email, role: user.role });
       return { token, user };
     },
+    //changing information for businesses
     changeUser: async (parent, { about, id }, social, context, _info) => {
       const userFind = await User.findById(id);
       if (!userFind) {
@@ -598,6 +621,7 @@ const resolvers = {
       }
       return "Done!";
     },
+    //changing image for business
     changeImage: async (parent, { image, id }, social, context, _info) => {
       const userFind = await User.findById(id);
       if (!userFind) {
@@ -651,6 +675,7 @@ const resolvers = {
       }
       return "Done!";
     },
+    //changing logo for businesses
     changeLogo: async (parent, { image, id }, social, context, _info) => {
       const userFind = await User.findById(id);
       if (!userFind) {
@@ -704,6 +729,7 @@ const resolvers = {
       }
       return "Done!";
     },
+    //finish register for posters
     registerUserComplete: async (_, args, context, info) => {
       const {
         instagramUserName,
@@ -791,118 +817,8 @@ const resolvers = {
       const token = await issueAuthToken({ email, role: user.role });
       return { token, user: newuser };
     },
-    addStripeAccountInfo: async (parent, args, social, context, _info) => {
-      const {
-        userId,
-        bankAccountNumber,
-        routingNumber,
-        businessInformation,
-        ssnLast4,
-        industry,
-        businessWebsite,
-        ownerAddressline1,
-        ownerAddresscity,
-        ownerAddressstate,
-        ownerAddresspostalCode,
-        dateOfBirthday,
-        dateOfBirthmonth,
-        dateOfBirthyear,
-        representativeName,
-        representativePhoneNumber,
-        termsOfServiceAcceptance,
-      } = args.info;
-
-      // Проверка, что пользователь с заданным userId существует
-      const user = await User.findById(userId);
-      if (!user) {
-        throw new GraphQLError("User not found");
-      }
-
-      // Проверка, что у пользователя еще нет информации о Stripe аккаунте
-      if (user.stripeAccountId) {
-        throw new GraphQLError("Stripe account information already exists");
-      }
-
-      try {
-        // Создание аккаунта Stripe
-        const account = await stripe.accounts.create({
-          type: "custom",
-          country: "US",
-          email: user.email,
-          capabilities: {
-            card_payments: { requested: true },
-            transfers: { requested: true },
-          },
-          business_type: "individual",
-          individual: {
-            ssn_last_4: ssnLast4,
-            dob: {
-              day: dateOfBirthday,
-              month: dateOfBirthmonth,
-              year: dateOfBirthyear,
-            },
-            address: {
-              line1: ownerAddressline1,
-              city: ownerAddresscity,
-              state: ownerAddressstate,
-              postal_code: ownerAddresspostalCode,
-            },
-          },
-          tos_acceptance: {
-            date: Math.floor(Date.now() / 1000), // Текущая дата в формате Unix timestamp
-            ip: context.request.ip, // IP-адрес пользователя
-            user_agent: context.request.headers["user-agent"], // User-Agent браузера пользователя
-          },
-        });
-
-        // Добавление банковского счета к аккаунту Stripe
-        const externalAccount = await stripe.accounts.createExternalAccount(
-          account.id,
-          {
-            external_account: {
-              object: "bank_account",
-              account_number: bankAccountNumber,
-              routing_number: routingNumber,
-              country: "US",
-              // Другие параметры для банковского счета, если необходимо
-            },
-          }
-        );
-
-        if (!externalAccount) {
-          throw new GraphQLError("Problem with external account creation");
-        }
-
-        // Обновление информации о Stripe аккаунте у пользователя в базе данных
-        user.stripeAccountId = account.id;
-
-        await user.save();
-        return "Stripe account information added successfully";
-      } catch (error) {
-        throw new GraphQLError(error);
-      }
-    },
-
+    //login User(for posters, businesses, admins)
     loginUser: async (_, args, context, info) => {
-      // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      // let user
-      // const { input, password } = args.about
-      // if(emailRegex.test(input)) {
-
-      //         user = await User.findOne(
-      //             {email: input}
-      //             );
-      //             if (!user) {
-      //                 throw new GraphQLError("Invalid email given");
-      //         }
-      // } else {
-      //     user = await User.findOne(
-      //         {nickname: input}
-      //         );
-      //         if (!user) {
-      //             throw new GraphQLError("Invalid nickname given");
-      //     }
-      // }
       const { password, email } = args.about;
       let user = await User.findOne({ email });
       if (!user) {
@@ -921,70 +837,7 @@ const resolvers = {
       });
       return { user, token };
     },
-    sendConfirmedEmail: async (parent, { email }, context, info) => {
-      try {
-        if (!email) {
-          throw new GraphQLError("Enter all the data required !");
-        }
-        const user = await User.findOne({ email });
-        if (!user) {
-          throw new GraphQLError("Email undefined");
-        }
-        if (user.confirmedEmail == true) {
-          throw new GraphQLError("You already confirmed the email");
-        }
-        //transporter
-        const transporter = nodemailer.createTransport(
-          sendgridTransport({
-            auth: {
-              api_key: process.env.SENDGRID_APIKEY,
-            },
-          })
-        );
-        let mailOptions = {
-          from: process.env.FROM_EMAIL,
-          to: email,
-          subject: "Account Verification Link",
-          text:
-            "Hello " +
-            user.fullname +
-            ",\n\n" +
-            "Please verify your account by clicking the link: \nhttp://localhost:3000/" +
-            "auth/confirmation/" +
-            user.confirmationCode +
-            "-" +
-            user.id +
-            "\n\nThank You!\n",
-        };
-        transporter.sendMail(mailOptions, function (err) {
-          if (err) {
-          }
-        });
-        //end trans
-        return "Done";
-      } catch (err) {
-        throw err.message;
-      }
-    },
-    changeStatus: async (parent, { id, confirmationCode }, args) => {
-      const user = await User.findById({ _id: id });
-      if (!user) {
-        throw new GraphQLError("Invalid email given- changestatus");
-      }
-      const isValidPass = confirmationCode == user.confirmationCode;
-      if (!isValidPass) {
-        throw new GraphQLError("Invalid confirmationCode given!");
-      }
-      const newuser = await User.findByIdAndUpdate(
-        id,
-        { confirmedEmail: true },
-        { new: true }
-      );
-      if (!newuser) {
-        throw new GraphQLError("Something went wrong!");
-      }
-      return "Done";
-    },
+    //forgot password for all users
     forgotPassword: async (
       parent,
       { email, confirmationCode, password },
@@ -1010,6 +863,7 @@ const resolvers = {
       }
       return "Done";
     },
+    // forgot password but in email
     forgotPasswordSend: async (parent, { email }, args) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -1050,6 +904,7 @@ const resolvers = {
       });
       return "Send!";
     },
+    //accept poster post by business
     acceptPosterPost: async (parent, { posterPostId }, context, info) => {
       const posterpost = await PosterPost.findOne({ _id: posterPostId });
       if (!posterpost) {
@@ -1099,6 +954,7 @@ const resolvers = {
       }
       return "Accept";
     },
+    //decline poster post by business
     declinePosterPost: async (parent, { posterPostId }, context, info) => {
       const posterpost = await PosterPost.findOne({ _id: posterPostId });
       if (!posterpost) {
@@ -1140,6 +996,7 @@ const resolvers = {
     //       return "Done!"
     // },
     //poster
+    //create post for poster
     createPosterPost: async (parent, { image, post }) => {
       let images = [];
 
@@ -1235,6 +1092,7 @@ const resolvers = {
       );
       return postcreate;
     },
+    //get business but in Mutaion format
     getBusiness: async (_parent, { brandname }, _context, _info) => {
       const user = await User.findOne({ brandname });
       if (!user) {
@@ -1243,26 +1101,13 @@ const resolvers = {
       return { id: user.id, postPrice: user.postPrice };
     },
     //admin
-    addAdmin: async (parent, { email }, args) => {
-      const user = await User.findOne({ email });
-      if (!user) {
-        throw new GraphQLError("User is undefined");
-      }
-      const newadmin = await User.findByIdAndUpdate(
-        user.id,
-        { role: "ADMIN" },
-        { new: true }
-      );
-      if (!newadmin) {
-        throw new GraphQLError("Something went wrong!");
-      }
-      return "Done";
-    },
+    //update all users in schema
     updatetoSchema: async (_, args, context, info) => {
       const { newfield, value } = args;
       const user = await User.updateMany({}, { $set: { [newfield]: value } });
       return user;
     },
+    //ban user by admin
     banUser: async (parent, { email, text }, args) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -1296,6 +1141,7 @@ const resolvers = {
       });
       return "Send!";
     },
+    //unban user by admin
     unBanUser: async (parent, { email, text }, args) => {
       const user = await User.findOne({ email });
       if (!user) {

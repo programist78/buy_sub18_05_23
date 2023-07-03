@@ -19,7 +19,7 @@ import { BiPencil } from "react-icons/bi";
 import { CHANGE_USER } from "../../../apollo/auth";
 import { Button, Modal as ModalAntd, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-
+import CurrencyInput from "react-currency-input-field";
 import { UploadOutlined } from "@ant-design/icons";
 export default function BusinessCabinetCom() {
   //edit Information
@@ -49,8 +49,10 @@ export default function BusinessCabinetCom() {
   }, [userInfo?.phone]);
 
   useEffect(() => {
-    setEditPostPrice(userInfo?.postPrice);
+    setEditPostPrice(userInfo?.postPrice/100);
   }, [userInfo?.postPrice]);
+
+  console.log();
 
   useEffect(() => {
     setEditAddress(userInfo?.address);
@@ -137,6 +139,9 @@ export default function BusinessCabinetCom() {
     acceptPost({ variables: { posterPostId } });
   }
 
+
+  const [numberPrice, setNumberPrice] = useState()
+
   const [changeInfo] = useMutation(CHANGE_USER, {
     onError(error) {
       Swal.fire({
@@ -154,7 +159,7 @@ export default function BusinessCabinetCom() {
     variables: {
       about: {
         websiteLink: editWebsiteLink,
-        postPrice: editPostPrice?.toString(),
+        postPrice: numberPrice?.toString(),
         phone: editPhone,
         brandDescription: editBrandDescription,
         address: editAddress,
@@ -165,6 +170,20 @@ export default function BusinessCabinetCom() {
       changeUserId: userInfo?.id,
     },
   });
+
+  const convertToNumber = () => {
+    const formattedPrice = editPostPrice.replace(",", "");
+    setNumberPrice(Number(formattedPrice))
+    setTimeout(() => changeInfo(), 0.5)
+    // changeInfo()
+  };
+
+
+
+
+
+
+  
 
   const [changeImage] = useMutation(CHANGE_IMAGE, {
     onError(error) {
@@ -234,11 +253,19 @@ export default function BusinessCabinetCom() {
   return (
     <div className={styles.back}>
       <p className="title">My account Page</p>
-      {!userInfo.ban ? 
-      <div className={`a_input ${styles.statistic_div}`} style={{height: "auto", padding: "5%"}}>
-      <p className="text">You have currently blocked account, you do not show up in search, pay posts to display!</p>
-    </div>
-      : ""}
+      {userInfo.ban ? (
+        <div
+          className={`a_input ${styles.statistic_div}`}
+          style={{ height: "auto", padding: "5%" }}
+        >
+          <p className="text">
+            You have currently blocked account, you do not show up in search,
+            pay posts to display!
+          </p>
+        </div>
+      ) : (
+        ""
+      )}
 
       {userInfo ? (
         <>
@@ -437,7 +464,7 @@ export default function BusinessCabinetCom() {
             <div className={styles.info_part}>
               {edit ? (
                 <>
-                  <button onClick={() => changeInfo()} className="b_button">
+                  <button onClick={() => convertToNumber()} className="b_button">
                     Save information
                   </button>
                   <button
@@ -487,16 +514,19 @@ export default function BusinessCabinetCom() {
                     Poster gets 70% of this sum after successfully creating a
                     post for your business
                   </p>
-                  <input
-                    // type="number"
-                    value={(editPostPrice / 100).toFixed(2)}
-                    onChange={(e) =>
-                      setEditPostPrice(parseFloat(e.target.value) * 100)
-                    }
-                    // className="a_input"
+                  <CurrencyInput
+                    id="input-example"
+                    name="input-name"
+                    prefix="$"
                     className={`a_input ${styles.custom_input}`}
-                  />
+                    placeholder="Please enter a number"
+                    defaultValue={editPostPrice}
+                    value={editPostPrice}
 
+                    decimalScale={2}
+                    onValueChange={(value, name) => setEditPostPrice(value)}
+                  />
+                  ;
                   <p className="text">
                     Business physical location : {userInfo?.address}
                   </p>

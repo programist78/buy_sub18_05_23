@@ -47,6 +47,7 @@
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
     "react-calendly": "^4.1.1",
+    "react-currency-input-field": "^3.6.11",
     "react-dom": "^18.2.0",
     "react-google-autocomplete": "^2.7.3",
     "react-google-recaptcha": "^2.1.0",
