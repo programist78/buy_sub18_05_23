@@ -655,14 +655,15 @@ const resolvers = {
       // }
       for (let i = 0; i < image.length; i++) {
         const { createReadStream, filename, mimetype, encoding } = await image[i];
-        // const parts = filename.split('.');
-        // const extension = parts[parts.length - 1];
+        const parts = filename.split('.');
+        const extension = parts[parts.length - 1];
         // const stream = createReadStream();
         const assetUniqName = fileRenamer(filename);
+        const imagename = `${assetUniqName}.${extension}`
         const bucketName = process.env.BUCKET_NAME;
         const params = {
             Bucket: bucketName,
-            Key: assetUniqName,
+            Key: imagename,
             Body: createReadStream(),
             // ACL: 'public-read',
             ContentType: mimetype,
