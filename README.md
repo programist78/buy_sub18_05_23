@@ -167,6 +167,71 @@ Open a web site in your browser: <a href="http://localhost:3000">localhost:3000<
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Folder documentation
+
+### Server part (api folder)
+config - folder for configurations (now we have only import)
+helpers - accessory folder
+helpers/FileRenamer.js - changes in image or file name
+helpers/handler.js - authorization check
+helpers/index.js - tokens processing
+helpers/validatePassword.js - validate password
+
+models - folder with all schemes for mongoDB
+models/PosterPost.js - document schema(mongoDB) for Posts by Posters
+models/User.js - document schema(mongoDB) for Users
+
+modules - modules for access to the AWS
+modules/bucket.js - module for bucket connection
+modules/strems.js - module for bucket stream connection
+
+node_modules - all modules for the project
+
+schema - Apollo Graphql Connection Scheme
+schema/index.mjs - Apollo Graphql Connection for Resolver & Typedefs
+schema/resolvers.mjs - resolvers for server queries with Apollo Graphql
+schema/typeDefs.mjs - types for server type processing thanks to Apollo Graphql
+
+uploads - folder for images & files 
+
+.env - file for saving keys
+
+package.json - configuration file with all packages
+
+server.mjs - one of the important files for file saving
+
+### Client part (app)
+.next - folder to configure Next that can not be touched
+
+apollo - folder with queries to the apolllo server
+apollo/admin.jsx - file with queries to the apolllo server for admin
+apollo/auth.jsx - file with queries to the apolllo server for authentification
+apollo/brands.jsx - file with queries to the apolllo server for businesses
+apollo/posters.jsx - file with queries to the apolllo server for posters
+
+components - folder with components for pages(here you can change text)
+pages - folder with all pages for the website(here you can change text)
+public - all images for the website
+
+redux - redux folder for proccessing information
+redux/slice - folder with all slices for proccessing information
+redux/store.jsx - configuration file for all slices
+
+static - all static images & files for the website
+
+styles - folder for styles of the website
+
+.env - file for saving keys
+
+next.config.js - configuration file for nextjs
+
+package.json - configuration file with all packages
+
+Open a web site in your browser: <a href="http://localhost:3000">localhost:3000</a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 
 <!-- CONTRIBUTING -->
 ## Contributing
