@@ -48,7 +48,6 @@ const User = new mongoose.Schema(
     },
     brandname: {
       type: String,
-      unique: true,
     },
     physicalLocation: {
       type: Object,
