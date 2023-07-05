@@ -316,7 +316,7 @@ export default function PosterCabinetCom() {
             <button className="a_button">
               {!businessPrice
                 ? `No business chosen`
-                : `$${businessPrice / 100}`}
+                : `$${businessPrice / 100 /100 * 70}`}
             </button>
             {/* <WithdrawCom /> */}
           </div>

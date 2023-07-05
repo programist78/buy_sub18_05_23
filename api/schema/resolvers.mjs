@@ -584,6 +584,7 @@ const resolvers = {
           stripeAccountId: "",
           address: "",
           ban: false,
+          brandname: ""
         });
       }
 
