@@ -435,10 +435,21 @@ const resolvers = {
             ...post._doc,
             fullname: user.fullname,
             email: user.email,
+
+            instagramNick: user.socialMedia.instagram.name,
+            facebookNick: user.socialMedia.facebook.name,
+            tiktokNick: user.socialMedia.tiktok.name,
+            instagramFollowers: user.socialMedia.instagram.followers,
+            facebookFollowers: user.socialMedia.facebook.followers,
+            tiktokFollowers: user.socialMedia.tiktok.followers,
+            
+            
+            googleNick: user.reviewMedia.google,
+            yelpNick: user.reviewMedia.yelp,
+            tripadvisorNick: user.reviewMedia.tripadvisor,
           };
         })
       );
-
       return postsWithUserDetails;
     },
     //getBusinesswWholeInfo takes a sorting argument argument and a page number page, and returns information about businesses on that page, sorted by the specified argument in descending order. The page size is 6.

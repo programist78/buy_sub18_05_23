@@ -136,6 +136,25 @@ const typeDefs = `#graphql
     selectedReview: String
   }
 
+    type PosterInfoAddInfo {
+    createdAt: String
+    fullname: String
+    confirmed: String
+    selectedSocial: String
+    selectedReview: String
+
+    instagramNick: String
+    facebookNick: String
+    tiktokNick: String
+    instagramFollowers: String
+    facebookFollowers: String
+    tiktokFollowers: String
+
+    googleNick: String
+    yelpNick: String
+    tripadvisorNick: String
+  }
+
   type BusinessWholeInfo {
     createdAt: String
     brandname: String
