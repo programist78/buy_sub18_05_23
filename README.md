@@ -167,6 +167,72 @@ Open a web site in your browser: <a href="http://localhost:3000">localhost:3000<
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Code changing
+
+How to interact with the code 
+
+### Installing Visual Studio Code:
+
+1. Download Visual Studio Code by visiting the download page at: https://code.visualstudio.com/download.
+2. Follow the on-screen instructions to install VSCode on your computer.
+
+### Installing Git:
+
+1. Go to the Git download page at: https://git-scm.com/downloads.
+2. Follow the on-screen instructions to install Git on your computer.
+
+### Creating a GitHub Account:
+
+1. Visit the GitHub website at: https://github.com.
+2. Click on the "Sign up" button and follow the instructions to create a new account.
+3. Creating a Repository on GitHub:
+
+4. After signing in to your GitHub account, click on the "New" button in the top-left corner of the page.
+5. Enter a repository name and description (optional).
+6. Click the "Create repository" button to complete the creation process.
+7. Cloning the Repository to the Local Machine:
+
+8. Open the command line or terminal on your computer.
+9. Navigate to the folder where you want to save the project.
+10. Enter the following command to clone the repository to your local machine:
+   ```sh
+   bash git clone <repository URL>
+   ```
+(where <repository URL> is the URL of the repository, which can be found on the GitHub repository page)
+### Opening the Project in Visual Studio Code:
+
+1. Launch Visual Studio Code.
+2. Click on "Open Folder" in the VSCode menu.
+3. Select the project folder you cloned in the previous step and click "Open".
+### Editing Text and Code:
+
+1. In the left panel of VSCode, you will see the project structure.
+2. Click on a file you want to edit to open it in the editor.
+3. Make the necessary changes to the text or code in the file.
+### Saving Changes:
+
+1. In VSCode, click the "Save" button in the top menu or use the "Ctrl + S" (Windows) or "Cmd + S" (Mac) keyboard shortcut to save the file.
+Adding Changes and Creating Commits:
+
+2. In VSCode, open the integrated terminal by selecting "View" in the top menu and clicking on "Terminal".
+3. In the terminal, enter the following command to add the changes to the Git index:
+   ```sh
+   git add .
+   ```
+(the dot signifies adding all modified files, you can also specify specific files by using their names)
+4. Then, create a commit with a description of the changes by entering the following command:
+   ```sh
+   git commit -m "Description of the changes"
+   ```
+### Pushing Changes to GitHub:
+
+1. In the terminal, enter the following command to push the changes to the GitHub server:
+   ```sh
+   git push origin <branch name>
+   ```
+(where <branch name> is the name of the branch you want to push the changes to, usually "master" or "main")
+2. Now you have instructions on how to use Visual Studio Code for editing text and code, as well as instructions on using Git and GitHub to manage changes and collaborate on the project.
+
 ## Folder documentation
 
 ### Server part (api folder)
