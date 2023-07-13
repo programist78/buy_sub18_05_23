@@ -578,7 +578,7 @@ export default function SignUpPosterCom() {
                 tandc@postfordollars.com.
                 <br />
                 <br />
-                Effective date: 7-1- 23
+                Effective date: 7-1-23
               </p>
             </div>
             <label className="checkbox">
