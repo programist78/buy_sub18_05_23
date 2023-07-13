@@ -1,12 +1,11 @@
-import { NextApiHandler } from 'next';
-
 import handleErrors from '@/api/middlewares/handleErrors';
 import createError from '@/api/utils/createError';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import stripePackage from "stripe";
 
-const handler: NextApiHandler = async (req, res) => {
+const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
+
+const handler = async (req, res) => {
   const body = req.body;
 
   switch (req.method) {
@@ -16,14 +15,14 @@ const handler: NextApiHandler = async (req, res) => {
           grant_type: 'authorization_code',
           code: body?.code,
         })
-        .catch((err: unknown) => {
-          throw createError(400, `${(err as any)?.message}`);
+        .catch((err) => {
+          throw createError(400, `${(err)?.message}`);
         });
 
       const account = await stripe.accounts
         ?.retrieve(result?.stripe_user_id)
-        ?.catch((err: unknown) => {
-          throw createError(400, `${(err as any)?.message}`);
+        ?.catch((err) => {
+          throw createError(400, `${(err)?.message}`);
         });
 
       const accountAnalysis = {
