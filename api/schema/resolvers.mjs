@@ -527,7 +527,7 @@ const resolvers = {
         );
       }
 
-      const avatarUrl = `postfordollars.s3.us-east-1.amazonaws.com/defaultperson.svg`;
+      const avatarUrl = `postfordollars.com/defaultperson.svg`;
 
       const salt = await bcrypt.genSalt(10);
       const passwordHash = await bcrypt.hash(password, salt);

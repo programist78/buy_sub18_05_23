@@ -81,10 +81,10 @@ const typeDefs = `#graphql
     phone: String
     pendingPosts: [String]
     completedPosts: [String]
-    balance: Int
+    balance: String
     brandPendingPosts: [String]
     brandCompletedPosts: [String]
-    postPrice: Int
+    postPrice: String
     brandname: String
     physicalLocation: Coordinates
     brandDirection: String
