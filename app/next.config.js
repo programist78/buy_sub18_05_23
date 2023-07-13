@@ -8,6 +8,7 @@ module.exports = {
       process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     ),
     STRIPE_SECRET_KEY: /** @type {string} */ (process.env.STRIPE_SECRET_KEY),
+    CAPTCHA_KEY: /** @type {string} */ (process.env.CAPTCHA_KEY),
   },
   // i18n: {
   //   locales: ["en", "ru", "uk"],

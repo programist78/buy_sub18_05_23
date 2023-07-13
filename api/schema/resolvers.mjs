@@ -509,7 +509,7 @@ const resolvers = {
         longitude,
       } = args.about;
 
-      let postPrice = 500;
+      let postPrice = 2857;
       const already_exsist = await User.findOne({ email });
       if (already_exsist) {
         throw new GraphQLError("Email already exists");
@@ -527,7 +527,7 @@ const resolvers = {
         );
       }
 
-      const avatarUrl = `${process.env.HOST}/defaultperson.svg`;
+      const avatarUrl = `postfordollars.s3.us-east-1.amazonaws.com/defaultperson.svg`;
 
       const salt = await bcrypt.genSalt(10);
       const passwordHash = await bcrypt.hash(password, salt);

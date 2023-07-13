@@ -398,10 +398,12 @@ Effective date: 7-1-23
               {/* </Link> */}
             </label>
             <p className={styles.errors}>{messageError}</p>
-            {/* <ReCAPTCHA
-              sitekey="6LcBFlwmAAAAAJWblnjYhb4ftrng3BghULF6hy8I"
+            <ReCAPTCHA
+                  sitekey={process.env.CAPTCHA_KEY}
               onChange={handleCaptchaChange}
-            /> */}
+              aria-required
+            />
+            
             <p className={styles.errors}>{messageCaptcha}</p>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import styles from "../Login/Login.module.scss";
 import { useState, useContext, useEffect } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import { AuthContext } from "../../../hooks/AuthContext";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -254,17 +253,14 @@ export default function AddPosterSocialCom() {
                 onChange={(e) => setGoogleReview(e.target.value)}
                 placeholder="Your Google"
               />
-              <a
-                href="https://accounts.google.com/signup."
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
-              </a>
+  <>
+                  <p className="nav_text">Don't have an account?</p>
+                  <button className={`b_button`}>
+                    <a href="https://accounts.google.com/signup." target="_blank" >
+                      Sign up
+                    </a>
+                  </button>
+                </>
             </div>
             <div className={styles.social_input}>
               <Image src="/yelp.svg" width={40} height={40} alt="yelp" />
@@ -275,7 +271,7 @@ export default function AddPosterSocialCom() {
                 placeholder="Your Yelp"
               />
               <a
-                href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F"
+                href=""
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -283,7 +279,12 @@ export default function AddPosterSocialCom() {
                 }}
               >
                 <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
+                <button className={`b_button`}>
+                  <a target="_blank"  href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">
+                    Sign up
+                  </a>
+                </button>
+                {/* <button className={`b_button`}>Sign up</button> */}
               </a>
             </div>
             <div className={styles.social_input}>
@@ -308,7 +309,11 @@ export default function AddPosterSocialCom() {
                 }}
               >
                 <p className="nav_text">Don't have an account?</p>
-                <button className={`b_button`}>Sign up</button>
+                <button className={`b_button`}>
+                  <a  target="_blank"  href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">
+                    Sign up
+                  </a>
+                </button>
               </a>
             </div>
             <button

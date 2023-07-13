@@ -107,7 +107,19 @@ export default function SignUpPosterCom() {
 
   const onSubmit2 = (data) => {
     event.preventDefault();
-    setTimeout(() => completeRegister(), 500);
+    completeRegister({    variables: {
+      registerUserCompleteId: posterId,
+      social: {
+        tiktokUserName,
+        tiktokFollowers,
+        instagramUserName,
+        instagramFollowers,
+        facebookUserName,
+        facebookFollowers,
+      },
+      review: { yelpReview, tripadvisorReview, googleReview },
+      images,
+    }})
     // setTimeout(() => loginUser(), 500)
   };
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
@@ -139,52 +151,23 @@ export default function SignUpPosterCom() {
     },
     onCompleted: async (data) => {
       try {
-        if (data.registerUserComplete.reviewMedia.google) {
+        if (data.registerUserComplete.user) {
           Swal.fire({
             icon: "success",
             title: `Redirecting...`,
           });
-          // window.location.href = "https://accounts.google.com";
           await router.push("/personal/poster");
-        } else if (data.registerUserComplete.reviewMedia.yelp) {
-          Swal.fire({
-            icon: "success",
-            title: `Redirecting...`,
-          });
-          // window.location.href = "https://www.yelp.com";
-          await router.push("/personal/business");
-        } else if (data.registerUserComplete.reviewMedia.tripadvisor) {
-          Swal.fire({
-            icon: "success",
-            title: `Redirecting...`,
-          });
-          // window.location.href = "https://www.tripadvisor.com";
-          await router.push("/personal/admin");
-        } else {
-          throw new Error("Invalid review website");
+        }  else {
+          throw new Error("Invalid user");
         }
         await dispatch(setUserInfo(data.registerUserComplete.user));
-        await router.push("/personal/poster");
       } catch (error) {
         console.error(error);
       }
-
       // Dispatch the action to save user info
     },
     // variables: { registerUserCompleteId: posterId, social: {tiktokUserName, tiktokFollowers, instagramUserName, instagramFollowers, facebookUserName, facebookFollowers}},
-    variables: {
-      registerUserCompleteId: posterId,
-      social: {
-        tiktokUserName,
-        tiktokFollowers,
-        instagramUserName,
-        instagramFollowers,
-        facebookUserName,
-        facebookFollowers,
-      },
-      review: { yelpReview, tripadvisorReview, googleReview },
-      images,
-    },
+
   });
   const props = {
     name: "file",
@@ -627,6 +610,11 @@ export default function SignUpPosterCom() {
               onChange={handleCaptchaChange}
               // aria-required
             /> */}
+                        <ReCAPTCHA
+              sitekey={process.env.CAPTCHA_KEY}
+              onChange={handleCaptchaChange}
+              aria-required
+            />
             <p className={styles.errors}>{messageCaptcha}</p>
             <button type="submit" className={`b_button ${styles.b_button}`}>
               Next
@@ -780,9 +768,9 @@ export default function SignUpPosterCom() {
                 <>
                   <p className="nav_text">Don't have an account?</p>
                   <button className={`b_button`}>
-                    <Link href="https://accounts.google.com/signup.">
+                    <a href="https://accounts.google.com/signup." target="_blank" >
                       Sign up
-                    </Link>
+                    </a>
                   </button>
                 </>
               </div>
@@ -805,9 +793,9 @@ export default function SignUpPosterCom() {
               >
                 <p className="nav_text">Don't have an account?</p>
                 <button className={`b_button`}>
-                  <Link href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">
+                  <a target="_blank"  href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">
                     Sign up
-                  </Link>
+                  </a>
                 </button>
                 {/* <button className={`b_button`}>Sign up</button> */}
               </a>
@@ -835,9 +823,9 @@ export default function SignUpPosterCom() {
               >
                 <p className="nav_text">Don't have an account?</p>
                 <button className={`b_button`}>
-                  <Link href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">
+                  <a  target="_blank"  href="https://www.yelp.com/signup?return_url=https%3A%2F%2Fwww.yelp.com%2F">
                     Sign up
-                  </Link>
+                  </a>
                 </button>
               </a>
             </div>

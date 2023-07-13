@@ -320,10 +320,10 @@ export default function PosterCabinetCom() {
             </button>
             {/* <WithdrawCom /> */}
           </div>
-          <p className="nav_text">
+          {/* <p className="nav_text">
             You get 70% of this sum after successfully completing the post for
             your chosen business
-          </p>
+          </p> */}
           <div className={styles.row_part}>
             <div
               className={`a_input ${styles.statistic_div}`}
