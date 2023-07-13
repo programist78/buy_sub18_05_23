@@ -16,13 +16,13 @@ const handler = async (req, res) => {
           code: body?.code,
         })
         .catch((err) => {
-          throw createError(400, `${(err)?.message}`);
+          console.log(400, (err)?.message)
         });
 
       const account = await stripe.accounts
         ?.retrieve(result?.stripe_user_id)
         ?.catch((err) => {
-          throw createError(400, `${(err)?.message}`);
+          console.log(400, (err)?.message)
         });
 
       const accountAnalysis = {
@@ -50,7 +50,7 @@ const handler = async (req, res) => {
       break;
 
     default:
-      throw createError(405, 'Method Not Allowed');
+      console.log(405, 'Method Not Allowed')
   }
 };
 
