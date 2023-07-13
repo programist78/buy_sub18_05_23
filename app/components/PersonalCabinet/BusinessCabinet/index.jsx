@@ -21,6 +21,7 @@ import { Button, Modal as ModalAntd, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CurrencyInput from "react-currency-input-field";
 import { UploadOutlined } from "@ant-design/icons";
+import ConnectStripeButton from "../../ConnectStripe";
 export default function BusinessCabinetCom() {
   //edit Information
   const [edit, setEdit] = useState(false);
@@ -439,7 +440,8 @@ export default function BusinessCabinetCom() {
               </div>
             </div>
           </div>
-          <div className={styles.payment_part}>
+          <ConnectStripeButton />
+          {/* <div className={styles.payment_part}>
             <div className={styles.pay_box}>
               <p className={`nav_text ${styles.nav_text}`}>
                 If you use paypal and or others, you must first register in
@@ -452,7 +454,7 @@ export default function BusinessCabinetCom() {
               </div>
             </div>
             <button className="b_button">Change payment information</button>
-          </div>
+          </div> */}
           <p className="pretitle">Statistic of your monthly expenses</p>
           <div className={styles.statistic_box}>
             <p className="text">Your number of monthly posts</p>
