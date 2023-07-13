@@ -1,6 +1,3 @@
-import handleErrors from '@/api/middlewares/handleErrors';
-import createError from '@/api/utils/createError';
-
 import stripePackage from "stripe";
 
 const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
@@ -62,4 +59,4 @@ export const config = {
   },
 };
 
-export default handleErrors(handler);
+export default handler;
